@@ -1,0 +1,119 @@
+/* ==========================================================
+   home.css - CSS RIÊNG CỦA TRANG CHỦ (class có tiền tố home-)
+   Dùng lại nút, thẻ, badge, màu từ base.css.
+   ========================================================== */
+
+.home-section { margin-top: 36px; }
+.home-section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.home-section-head h2 { margin: 0; }
+
+/* ---------- Hero ---------- */
+.home-hero {
+  background: var(--green-700); color: var(--white); border-radius: var(--radius);
+  display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 24px;
+  padding: 32px 40px; overflow: hidden;
+}
+.home-hero h1 { color: var(--white); font-size: 32px; margin-bottom: 10px; }
+.home-hero p { margin: 0 0 20px; color: #D5EFE1; max-width: 460px; }
+.home-hero .btn { background: var(--white); color: var(--green-900); }
+.home-hero .btn:hover { background: var(--green-100); }
+.home-hero-img { display: flex; justify-content: center; }
+.home-hero-img svg { width: 100%; max-width: 260px; height: auto; }
+
+/* ---------- Thẻ sản phẩm (dùng cho mọi khu vực) ---------- */
+.home-products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.home-product { display: flex; flex-direction: column; padding: 12px; position: relative; transition: box-shadow .15s, border-color .15s; }
+.home-product:hover { box-shadow: var(--shadow-md); border-color: #C5D8CC; }
+.home-product-img { display: block; aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: var(--green-100); }
+.home-product-img img { width: 100%; height: 100%; object-fit: cover; }
+.home-product-badge { position: absolute; top: 20px; left: 20px; background: var(--danger); color: var(--white); }
+.home-product h3 { margin: 10px 0 2px; font-size: 15px; min-height: 2.6em; }
+.home-product h3 a { color: var(--ink); }
+.home-product h3 a:hover { color: var(--green-700); }
+.home-product-spec { font-size: 13px; color: var(--ink-soft); }
+.home-product-price { margin: 6px 0 0; }
+.home-product-old { margin-left: 8px; font-size: 13px; color: var(--ink-soft); text-decoration: line-through; font-weight: 400; }
+.home-product-stars { font-size: 13px; color: var(--warning); margin: 2px 0 10px; }
+.home-product-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+.home-product-actions.single { grid-template-columns: 1fr; }
+.home-product-actions .btn { height: 34px; padding: 0 6px; font-size: 13px; }
+
+/* ---------- Flash sale ---------- */
+.home-flash { background: var(--green-900); border-radius: var(--radius); padding: 20px; }
+.home-flash-head { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px; margin-bottom: 16px; }
+.home-flash-head h2 { color: var(--white); margin: 0; letter-spacing: .5px; }
+.home-slots { display: flex; gap: 8px; flex-wrap: wrap; }
+.home-slot {
+  height: 34px; padding: 0 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 99px; background: transparent;
+  color: var(--white); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.home-slot:hover { background: rgba(255,255,255,.15); }
+.home-slot.active { background: var(--white); color: var(--green-900); border-color: var(--white); }
+.home-timer { margin-left: auto; display: flex; align-items: center; gap: 6px; color: var(--white); font-weight: 600; }
+.home-timer b { min-width: 36px; padding: 4px 6px; border-radius: var(--radius-sm); background: var(--white); color: var(--green-900); text-align: center; font-size: 18px; }
+.home-timer i { font-style: normal; }
+.home-flash-sold { font-size: 12px; color: var(--ink-soft); margin: 6px 0 10px; }
+.home-progress { height: 6px; margin-top: 4px; border-radius: 99px; background: var(--green-100); overflow: hidden; }
+.home-progress span { display: block; height: 100%; background: var(--green-500); }
+
+/* ---------- Deal sốc / Hot trend / Hàng mới về ----------
+   Mỗi tab một tông màu phối cùng xanh lá: Deal sốc = hổ phách, Hot trend = san hô, Hàng mới về = xanh ngọc.
+   Biến --accent và --soft đổi theo tab đang chọn (data-theme trên section). */
+.home-deals { --accent: var(--amber-600); --soft: var(--amber-50); }
+.home-deals[data-theme="hot"] { --accent: var(--coral-600); --soft: var(--coral-50); }
+.home-deals[data-theme="new"] { --accent: var(--teal-600);  --soft: var(--teal-50); }
+
+.home-dtabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; align-items: end; }
+.home-dtab {
+  --c: var(--amber-600);
+  display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 8px;
+  border: 1px solid var(--line); border-bottom: 0; border-radius: 12px 12px 0 0;
+  background: var(--muted); color: var(--c); font: inherit; font-size: 17px; font-weight: 800; letter-spacing: .2px; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.home-dtab[data-tab="hot"] { --c: var(--coral-600); }
+.home-dtab[data-tab="new"] { --c: var(--teal-600); }
+.home-dtab svg { width: 22px; height: 22px; flex-shrink: 0; }
+.home-dtab:hover { background: var(--white); }
+.home-dtab.active { background: var(--c); border-color: var(--c); color: var(--white); padding-top: 18px; }
+.home-dpanel { border: 2px solid var(--accent); border-radius: 0 0 12px 12px; background: var(--soft); padding: 18px; }
+
+/* ---------- Danh mục điện thoại ---------- */
+.home-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.home-pill {
+  height: 34px; padding: 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--white);
+  font: inherit; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; box-shadow: var(--shadow-xs);
+}
+.home-pill:hover { background: var(--green-100); color: var(--green-900); }
+.home-pill.active { background: var(--green-700); border-color: var(--green-700); color: var(--white); }
+
+/* ---------- Lợi ích ---------- */
+.home-benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.home-benefit { text-align: center; }
+.home-benefit-icon {
+  width: 44px; height: 44px; margin: 0 auto 8px; border-radius: 50%; background: var(--green-100); color: var(--green-700);
+  display: flex; align-items: center; justify-content: center;
+}
+.home-benefit-icon svg { width: 22px; height: 22px; }
+.home-benefit h3 { margin-bottom: 4px; }
+.home-benefit p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .home-hero { padding: 24px; }
+  .home-products { grid-template-columns: repeat(2, 1fr); }
+  .home-benefits { grid-template-columns: repeat(2, 1fr); }
+  .home-timer { margin-left: 0; }
+}
+@media (max-width: 640px) {
+  .home-hero { grid-template-columns: 1fr; text-align: center; }
+  .home-hero h1 { font-size: 24px; }
+  .home-hero p { margin-left: auto; margin-right: auto; }
+  .home-hero-img svg { max-width: 160px; }
+  .home-flash { padding: 14px; }
+  .home-products { gap: 10px; }
+  .home-product-actions { grid-template-columns: 1fr; }
+  .home-dtab { font-size: 13px; flex-direction: column; gap: 4px; padding: 10px 4px; }
+  .home-dtab.active { padding-top: 12px; }
+  .home-dpanel { padding: 10px; }
+}
