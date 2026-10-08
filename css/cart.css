@@ -1,0 +1,5 @@
+/* ==========================================================
+   cart.css - CSS RIÊNG CỦA MODULE GIỎ HÀNG VÀ THANH TOÁN (TV3)
+   Quy ước: class bắt đầu bằng "cart-" (vd: .cart-card). Không viết selector theo thẻ trần
+   (button, input, h1...) và không sửa class của base.css. Dùng lại .btn, .input, .card, .badge...
+   ========================================================== */

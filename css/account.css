@@ -1,0 +1,5 @@
+/* ==========================================================
+   account.css - CSS RIÊNG CỦA MODULE TÀI KHOẢN KHÁCH HÀNG (TV1)
+   Quy ước: class bắt đầu bằng "acc-" (vd: .acc-card). Không viết selector theo thẻ trần
+   (button, input, h1...) và không sửa class của base.css. Dùng lại .btn, .input, .card, .badge...
+   ========================================================== */
