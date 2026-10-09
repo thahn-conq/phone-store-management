@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sản phẩm - GreenPhone</title>
+
+    <!-- CSS dùng chung -->
+    <link rel="stylesheet" href="css/base.css">
+
+    <!-- CSS riêng trang sản phẩm -->
+    <link rel="stylesheet" href="css/product.css">
+</head>
+
+<body>
+
+    <!-- Header dùng chung -->
+    <div id="site-header"></div>
+
+
+    <main class="main">
+
+        <section class="prod-header">
+            <div class="container">
+
+                <h1>Sản phẩm</h1>
+
+                <p>
+                    Khám phá các sản phẩm điện thoại tại GreenPhone
+                </p>
+
+            </div>
+        </section>
+
+
+        <section class="container prod-section">
+
+            <!-- Bộ lọc -->
+            <div class="prod-filter">
+
+                <button class="prod-filter-btn active" data-brand="all">
+                    Tất cả
+                </button>
+
+                <button class="prod-filter-btn" data-brand="Apple">
+                    Apple
+                </button>
+
+                <button class="prod-filter-btn" data-brand="Samsung">
+                    Samsung
+                </button>
+
+                <button class="prod-filter-btn" data-brand="Xiaomi">
+                    Xiaomi
+                </button>
+
+                <button class="prod-filter-btn" data-brand="OPPO">
+                    OPPO
+                </button>
+
+                <button class="prod-filter-btn" data-brand="Vivo">
+                    Vivo
+                </button>
+
+            </div>
+
+
+            <!-- Thanh công cụ -->
+            <div class="prod-toolbar">
+
+                <span id="product-count">
+                    0 sản phẩm
+                </span>
+
+                <select id="product-sort">
+                    <option value="default">
+                        Sắp xếp mặc định
+                    </option>
+
+                    <option value="price-asc">
+                        Giá thấp → cao
+                    </option>
+
+                    <option value="price-desc">
+                        Giá cao → thấp
+                    </option>
+
+                    <option value="name">
+                        Tên A → Z
+                    </option>
+                </select>
+
+            </div>
+
+
+            <!-- Danh sách sản phẩm -->
+            <div id="product-list" class="prod-grid">
+                <!-- JavaScript sẽ hiển thị sản phẩm ở đây -->
+            </div>
+
+
+            <!-- Không có sản phẩm -->
+            <div id="product-empty" class="prod-empty" hidden>
+                <h3>Không tìm thấy sản phẩm</h3>
+                <p>Hãy thử tìm kiếm với từ khóa khác.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer dùng chung -->
+    <div id="site-footer"></div>
+
+
+    <!-- Data sản phẩm -->
+    <script src="data/products.js"></script>
+
+    <!-- JS dùng chung -->
+    <script src="js/common.js"></script>
+
+    <!-- JS riêng trang sản phẩm -->
+    <script src="js/product.js"></script>
+
+</body>
+</html>
