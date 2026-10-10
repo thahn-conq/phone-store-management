@@ -10,7 +10,8 @@ const KEYS = {
   currentUser: "currentUser",  // người đang đăng nhập (null = khách vãng lai)
   cart: "shopping_cart",       // giỏ hàng
   orders: "orders",            // đơn hàng
-  location: "location"         // khu vực nhận hàng đã chọn ở header
+  location: "location",        // khu vực nhận hàng đã chọn ở header
+  theme: "theme"               // giao diện sáng / tối: "light" | "dark" (không có = theo hệ thống)
 };
 
 /* ---- 2. BẢN ĐỒ LIÊN KẾT CÁC TRANG ----
@@ -24,8 +25,8 @@ const PAGES = {
   compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
   cart:          { url: "#", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
   checkout:      { url: "#", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
-  login:         { url: "#", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
-  account:       { url: "#", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
+  login:         { url: "login.html", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
+  account:       { url: "account.html", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
   orders:        { url: "#", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },
   info:          { url: "#", title: "Trang thông tin",          module: "Khung chung" }
 };
@@ -106,8 +107,13 @@ function addToCart(variantId, quantity = 1) {
 function formatPrice(n) { return Number(n).toLocaleString("vi-VN") + "₫"; }
 function showToast(msg, isError = false) {
   let t = document.querySelector(".toast");
-  if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
-  t.textContent = msg;
+  if (!t) {
+    t = document.createElement("div");
+    t.className = "toast";
+    document.body.appendChild(t);
+  }
+  t.innerHTML = `<span class="toast-icon" aria-hidden="true">${isError ? ICON.alert : ICON.check}</span><span class="toast-message"></span>`;
+  t.querySelector(".toast-message").textContent = msg;
   t.classList.toggle("error", isError);
   t.classList.add("show");
   clearTimeout(showToast.timer);
@@ -214,9 +220,39 @@ const ICON = {
   pin:    svg('<path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'),
   locate: svg('<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'),
   check:  svg('<path d="M20 6L9 17l-5-5"/>'),
+  alert:  svg('<path d="M10.3 3.7 2.4 17.4A2 2 0 0 0 4.1 20h15.8a2 2 0 0 0 1.7-2.6L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>'),
+  up:     svg('<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>'),
+  back:   svg('<path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>'),
+  sun:    svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', 'class="i-sun"'),
+  moon:   svg('<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>', 'class="i-moon"'),
   /* mũi tên tam giác chỉ xuống (đặc) */
   caret:  '<svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z" fill="currentColor"/></svg>'
 };
+
+/* ---- 8b. GIAO DIỆN SÁNG / TỐI ----
+   Thuộc tính data-theme trên <html> được đặt sớm bằng đoạn script nhỏ trong <head> (tránh nháy màu khi tải trang).
+   Chưa chọn lần nào thì mặc định giao diện sáng; bấm nút ở góc trên bên phải thì ghi nhớ lựa chọn. */
+function currentTheme() {
+  return document.documentElement.dataset.theme || load(KEYS.theme) || "light";
+}
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  const label = theme === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
+  btn.setAttribute("aria-label", label);
+  btn.title = label;
+}
+function toggleTheme() {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  const root = document.documentElement;
+  root.classList.add("theme-anim");                       // đổi màu mượt trong 0,45 giây
+  applyTheme(next);
+  save(KEYS.theme, next);
+  clearTimeout(toggleTheme.timer);
+  toggleTheme.timer = setTimeout(() => root.classList.remove("theme-anim"), 450);
+}
+/* Không tự đổi theo hệ điều hành: giao diện mặc định luôn là sáng. */
 
 /* ---- 9. HEADER (kiểu CellphoneS, dựng theo phong cách shadcn) ---- */
 function closeMenus() {
@@ -242,19 +278,30 @@ function renderHeader() {
   if (!box) return;
   const user = getCurrentUser();
 
-  /* Đăng nhập / Đăng ký gộp một nút; đã đăng nhập thì hiện tên */
+  /* Đăng nhập / Đăng ký gộp một nút; đã đăng nhập thì hiện tên.
+     Nút Đăng xuất không đặt cạnh avatar nữa; đăng xuất vẫn có thể thực hiện
+     từ trang tài khoản nếu module tài khoản cần dùng hàm logout(). */
   const accountHtml = user
-    ? `<a ${pageAttrs("account")} class="hbtn">${ICON.user}<span class="hbtn-text">${user.fullName}</span></a>
-       <a href="#" id="btn-logout" class="logout-link">Đăng xuất</a>`
+    ? `<a ${pageAttrs("account")} class="hbtn" title="Tài khoản của tôi">${ICON.user}<span class="hbtn-text">${user.fullName}</span></a>`
     : `<a ${pageAttrs("login")} class="hbtn" title="Đăng nhập / Đăng ký">${ICON.user}<span class="hbtn-text">Đăng nhập</span></a>`;
+
+  /* Nút quay lại: chỉ hiện trên các trang con, không hiện ở trang chủ.
+     history.back() giữ đúng trang người dùng vừa truy cập; nếu mở trực tiếp
+     một trang thì chuyển về trang chủ để không bị đứng ở trang hiện tại. */
+  const currentFile = location.pathname.split("/").pop() || "index.html";
+  const isHomePage = currentFile === "" || currentFile === "index.html";
+  const backButtonHtml = isHomePage
+    ? ""
+    : `<button type="button" class="hbtn header-back-btn" id="btn-back" title="Quay lại">${ICON.back}<span class="hbtn-text">Quay lại</span></button>`;
 
   /* Chữ chạy: ưu đãi minh họa (đổi nội dung tại đây) */
   const promos = [
-    "Miễn phí vận chuyển cho đơn từ 300.000₫",
-    "Sản phẩm chính hãng, giá bán rõ ràng",
-    "Flash sale mỗi ngày 20h - 22h",
-    "Đăng ký thành viên mới để nhận ưu đãi",
-    "Giá tốt mỗi tuần, cập nhật liên tục"
+    "Công Thành đẹp trai",
+    "quá quá đẹp trai",
+    "tối nay leo td lq",
+    "không có tí vibecode nào",
+    "sao em ko rep tin nhắn anh",
+    "H oi rep a"
   ];
   const promoGroup = hidden => `<div class="marquee-group" ${hidden ? 'aria-hidden="true"' : ""}>${promos.map(t => `<span>${t}</span>`).join("")}</div>`;
 
@@ -264,14 +311,18 @@ function renderHeader() {
       <div class="container strip-row">
         <div class="marquee" aria-label="Ưu đãi"><div class="marquee-track">${promoGroup(false)}${promoGroup(true)}</div></div>
         <div class="strip-links">
+          <a href="https://www.google.com/maps/search/?api=1&query=GreenPhone" target="_blank" rel="noopener noreferrer">${ICON.pin}Truy cập cửa hàng gần nhất</a>
           <a ${pageAttrs("orders")}>${ICON.order}Tra cứu đơn hàng</a>
           <a href="tel:19000000" class="strip-hotline">${ICON.phone}Hotline: 1900 0000</a>
+          <!-- Nút đổi giao diện sáng / tối: góc trên cùng bên phải -->
+          <button type="button" class="theme-toggle" id="theme-toggle">${ICON.moon}${ICON.sun}</button>
         </div>
       </div>
     </div>
 
     <div class="container header-main">
-      <a ${pageAttrs("home")} class="logo"><span class="logo-mark">${ICON.leaf}</span>GreenPhone</a>
+      ${backButtonHtml}
+      <a ${pageAttrs("home")} class="logo" title="Về trang chủ"><span class="logo-mark">${ICON.leaf}</span>GreenPhone</a>
 
       <!-- Danh mục (mũi tên tam giác chỉ xuống, bấm để mở) -->
       <div class="cat-wrap">
@@ -324,9 +375,14 @@ function renderHeader() {
     </div>
   </header>`;
 
-  /* Đăng xuất */
-  const out = document.getElementById("btn-logout");
-  if (out) out.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); logout(); });
+  /* Nút quay lại */
+  const back = document.getElementById("btn-back");
+  if (back) {
+    back.addEventListener("click", () => {
+      if (window.history.length > 1) window.history.back();
+      else location.href = pageUrl("home");
+    });
+  }
 
   /* Hai menu thả xuống; bấm ra ngoài hoặc nhấn Esc để đóng */
   setupMenu("cat-btn", "cat-menu");
@@ -342,6 +398,9 @@ function renderHeader() {
     if (pageUrl("products") === "#") { e.preventDefault(); showToast("Tìm kiếm thuộc module Sản phẩm, đang được xây dựng"); }
   });
 
+  document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+  applyTheme(currentTheme());
+
   updateLocationLabel();
   updateCartBadge();
 }
@@ -350,38 +409,55 @@ function renderHeader() {
 function renderFooter() {
   const box = document.getElementById("site-footer");
   if (!box) return;
+
+  /* Nội dung footer nằm ở data/footer.js để dễ chỉnh sửa. */
+  const f = typeof FOOTER_DATA !== "undefined" ? FOOTER_DATA : {
+    support: { title: "Tổng đài hỗ trợ (minh họa)", purchase: "1900 0000", purchaseHours: "(8h00 - 21h30)", complaint: "1900 0001", complaintHours: "(8h00 - 21h00)", email: "hotro@greenphone.vn" },
+    paymentMethods: ["Tiền mặt (COD)", "Chuyển khoản", "Thanh toán online"],
+    newsletter: { title: "Đăng ký nhận tin khuyến mãi", emailPlaceholder: "Nhập email của bạn", phonePlaceholder: "Nhập số điện thoại", note: "Nhận thông tin ưu đãi và sản phẩm mới (chức năng minh họa)." },
+    policies: [], services: [], socialTitle: "Kết nối với GreenPhone", aboutTitle: "Về dự án", aboutText: "", modules: [], copyright: "© 2026 GreenPhone", bottomNote: ""
+  };
+
   const info = t => `<li><a ${pageAttrs("info")}>${t}</a></li>`;
+  const policyLinks = f.policies.map(info).join("");
+  const serviceLinks = f.services.map(info).join("");
+  const paymentChips = f.paymentMethods.map(t => `<span>${t}</span>`).join("");
+  const moduleTags = f.modules.map(t => `<span>${t}</span>`).join("");
+
   box.innerHTML = `
   <footer class="site-footer">
     <div class="container footer-grid">
 
       <div class="footer-col">
-        <h4>Tổng đài hỗ trợ (minh họa)</h4>
+        <h4>${f.support.title}</h4>
         <ul class="footer-contact">
-          <li>Mua hàng, bảo hành <b>1900 0000</b> <span>(8h00 - 21h30)</span></li>
-          <li>Khiếu nại, góp ý <b>1900 0001</b> <span>(8h00 - 21h00)</span></li>
-          <li>Email <b>hotro@greenphone.vn</b></li>
+          <li>Mua hàng, bảo hành <b>${f.support.purchase}</b> <span>${f.support.purchaseHours}</span></li>
+          <li>Khiếu nại, góp ý <b>${f.support.complaint}</b> <span>${f.support.complaintHours}</span></li>
+          <li>Email <b>${f.support.email}</b></li>
         </ul>
 
         <h4>Phương thức thanh toán</h4>
-        <div class="pay-chips"><span>Tiền mặt (COD)</span><span>Chuyển khoản</span><span>Thanh toán online</span></div>
+        <div class="pay-chips">${paymentChips}</div>
 
-        <h4>Đăng ký nhận tin khuyến mãi</h4>
+        <h4>${f.newsletter.title}</h4>
         <form class="news-form" id="newsletter-form" novalidate>
-          <input type="email" class="input" id="news-email" placeholder="Nhập email của bạn" aria-label="Email nhận tin">
+          <div class="news-field">
+            <label for="news-phone">Số điện thoại</label>
+            <input type="tel" class="input" id="news-phone" placeholder="${f.newsletter.phonePlaceholder}" aria-label="Số điện thoại nhận tin" inputmode="tel" autocomplete="tel">
+          </div>
+          <div class="news-field">
+            <label for="news-email">Gmail</label>
+            <input type="email" class="input" id="news-email" placeholder="${f.newsletter.emailPlaceholder}" aria-label="Gmail nhận tin" autocomplete="email">
+          </div>
           <button type="submit" class="btn">Đăng ký</button>
         </form>
-        <p class="footer-note">Nhận thông tin ưu đãi và sản phẩm mới (chức năng minh họa).</p>
+        <p class="footer-note">${f.newsletter.note}</p>
       </div>
 
       <div class="footer-col">
         <h4>Thông tin về chính sách</h4>
         <ul class="footer-links">
-          ${info("Mua hàng và thanh toán online")}
-          ${info("Chính sách giao hàng")}
-          ${info("Chính sách đổi trả")}
-          ${info("Chính sách bảo hành")}
-          ${info("Chính sách bảo mật thông tin")}
+          ${policyLinks}
           <li><a ${pageAttrs("orders")}>Tra cứu đơn hàng</a></li>
         </ul>
       </div>
@@ -389,18 +465,14 @@ function renderFooter() {
       <div class="footer-col">
         <h4>Dịch vụ và thông tin khác</h4>
         <ul class="footer-links">
-          ${info("Giới thiệu GreenPhone")}
-          ${info("Hệ thống cửa hàng")}
-          ${info("Câu hỏi thường gặp")}
-          ${info("Liên hệ hợp tác")}
-          ${info("Tuyển dụng")}
+          ${serviceLinks}
           <li><a ${pageAttrs("compare")}>So sánh sản phẩm</a></li>
           <li><a ${pageAttrs("cart")}>Giỏ hàng</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Kết nối với GreenPhone</h4>
+        <h4>${f.socialTitle}</h4>
         <div class="social">
           <a ${pageAttrs("info")} aria-label="YouTube" title="YouTube">▶</a>
           <a ${pageAttrs("info")} aria-label="Facebook" title="Facebook">f</a>
@@ -408,29 +480,45 @@ function renderFooter() {
           <a ${pageAttrs("info")} aria-label="TikTok" title="TikTok">♪</a>
           <a ${pageAttrs("info")} aria-label="Zalo" title="Zalo">Z</a>
         </div>
-        <h4>Về dự án</h4>
-        <p class="footer-note">Website bán điện thoại di động, được xây dựng trong khuôn khổ bài tập lớn môn Thiết kế Web. Chỉ có giao diện khách hàng, dữ liệu là dữ liệu mẫu.</p>
+        <h4>${f.aboutTitle}</h4>
+        <p class="footer-note">${f.aboutText}</p>
         <h4>Các module</h4>
-        <div class="module-tags">
-          <span>Tài khoản</span><span>Sản phẩm và tìm kiếm</span><span>Giỏ hàng và Thanh toán</span><span>Đơn hàng</span>
-        </div>
+        <div class="module-tags">${moduleTags}</div>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="container footer-bottom-row">
-        <span class="footer-brand"><span class="logo-mark">${ICON.leaf}</span>© 2026 GreenPhone - Bài tập lớn Thiết kế Web</span>
-        <span>Thông tin liên hệ và dữ liệu sản phẩm chỉ mang tính minh họa.</span>
+        <span class="footer-brand"><span class="logo-mark">${ICON.leaf}</span>${f.copyright}</span>
+        <span>${f.bottomNote}</span>
       </div>
     </div>
   </footer>`;
 
-  /* Đăng ký nhận tin: chỉ kiểm tra email và báo thành công (chưa lưu đi đâu) */
+  /* Đăng ký nhận tin: kiểm tra cả email và số điện thoại. */
   document.getElementById("newsletter-form").addEventListener("submit", e => {
     e.preventDefault();
-    const input = document.getElementById("news-email");
-    if (!isValidEmail(input.value)) { input.classList.add("is-error"); showToast("Email chưa đúng định dạng", true); return; }
-    input.classList.remove("is-error"); input.value = "";
+    const email = document.getElementById("news-email");
+    const phone = document.getElementById("news-phone");
+    const phoneClean = phone.value.replace(/[\s().-]/g, "");
+    const validPhone = /^(0\d{9}|\+84\d{9})$/.test(phoneClean);
+
+    email.classList.remove("is-error");
+    phone.classList.remove("is-error");
+
+    if (!isValidEmail(email.value)) {
+      email.classList.add("is-error");
+      showToast("Email chưa đúng định dạng", true);
+      return;
+    }
+    if (!validPhone) {
+      phone.classList.add("is-error");
+      showToast("Số điện thoại chưa đúng định dạng", true);
+      return;
+    }
+
+    email.value = "";
+    phone.value = "";
     showToast("Đã đăng ký nhận tin khuyến mãi");
   });
 }
@@ -447,6 +535,24 @@ function renderFloatingContact() {
   document.body.appendChild(a);
 }
 
+/* ---- 11b. NÚT "LÊN ĐẦU" nằm ngay trên nút Liên hệ; chỉ hiện khi đã cuộn xuống ---- */
+function renderBackToTop() {
+  if (document.querySelector(".back-to-top")) return;
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "back-to-top";
+  b.setAttribute("aria-label", "Lên đầu trang");
+  b.innerHTML = ICON.up + "<span>Lên đầu</span>";
+  b.addEventListener("click", () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
+  document.body.appendChild(b);
+  const toggle = () => b.classList.toggle("show", window.scrollY > 320);
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+}
+
 /* ---- 12. Liên kết trang chưa làm (url "#"): báo thuộc module nào ---- */
 document.addEventListener("click", e => {
   const a = e.target.closest("a[data-page]");
@@ -457,5 +563,5 @@ document.addEventListener("click", e => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderHeader(); renderFooter(); renderFloatingContact(); wireLinks();
+  renderHeader(); renderFooter(); renderFloatingContact(); renderBackToTop(); wireLinks();
 });
