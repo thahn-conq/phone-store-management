@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng ký - GreenPhone</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/account.css">
+</head>
+
+<body>
+
+<div class="register-page">
+
+    <div class="register-container">
+
+        <!-- =========================
+             TIÊU ĐỀ
+        ========================== -->
+
+        <h1 class="register-title">
+            Đăng ký trở thành GREEN MEMBER
+        </h1>
+
+
+        <!-- =========================
+             HÌNH MINH HỌA
+        ========================== -->
+
+        <div class="register-mascot">
+            <img src="images/register-mascot.png"
+                 alt="SMEMBER">
+        </div>
+
+
+        <!-- =========================
+             ĐĂNG KÝ MXH
+        ========================== -->
+
+        <p class="social-title">
+            Đăng ký bằng tài khoản mạng xã hội
+        </p>
+
+
+        <div class="register-social">
+
+            <button type="button" class="social-btn">
+
+                <span class="google-icon" aria-hidden="true">G</span>
+
+                Google
+
+            </button>
+
+
+            <button type="button" class="social-btn">
+
+                <span class="zalo-icon" aria-hidden="true">Zalo</span>
+
+                Zalo
+
+            </button>
+
+        </div>
+
+
+        <div class="register-or">
+            Hoặc điền thông tin sau
+        </div>
+
+
+        <!-- =========================
+             FORM
+        ========================== -->
+
+        <form id="registerForm">
+
+
+            <!-- =========================
+                 THÔNG TIN CÁ NHÂN
+            ========================== -->
+
+            <section class="register-section">
+
+                <h2>
+                    Thông tin cá nhân
+                </h2>
+
+
+                <div class="register-grid">
+
+
+                    <!-- HỌ VÀ TÊN -->
+
+                    <div class="register-field">
+
+                        <label for="fullname">
+                            Họ và tên
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullname"
+                            name="fullname"
+                            placeholder="Nhập họ và tên"
+                        >
+
+                        <small id="fullnameError"></small>
+
+                    </div>
+
+
+                    <!-- NGÀY SINH -->
+
+                    <div class="register-field">
+
+                        <label for="birthday">
+                            Ngày sinh
+                        </label>
+
+                        <input
+                            type="date"
+                            id="birthday"
+                            name="birthday"
+                        >
+
+                    </div>
+
+
+                    <!-- SỐ ĐIỆN THOẠI -->
+
+                    <div class="register-field">
+
+                        <label for="phone">
+                            Số điện thoại
+                        </label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            placeholder="Nhập số điện thoại"
+                        >
+
+                        <small id="phoneError"></small>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="register-field">
+
+                        <label for="email">
+                            Email
+                            <span>(Không bắt buộc)</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Nhập email"
+                        >
+
+                        <small id="emailError"></small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 MẬT KHẨU
+            ========================== -->
+
+            <section class="register-section password-section">
+
+                <h2>
+                    Tạo mật khẩu
+                </h2>
+
+
+                <div class="register-grid">
+
+
+                    <!-- MẬT KHẨU -->
+
+                    <div class="register-field">
+
+                        <label for="password">
+                            Mật khẩu
+                        </label>
+
+                        <div class="register-password">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Nhập mật khẩu của bạn"
+                            >
+
+                            <button
+                                type="button"
+                                id="showPassword"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                        <small id="passwordError"></small>
+
+                        <p class="password-note">
+                            ● Mật khẩu tối thiểu 6 ký tự,
+                            có ít nhất 1 chữ số và 1 chữ
+                        </p>
+
+                    </div>
+
+
+                    <!-- NHẬP LẠI -->
+
+                    <div class="register-field">
+
+                        <label for="confirmPassword">
+                            Nhập lại mật khẩu
+                        </label>
+
+                        <div class="register-password">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Nhập lại mật khẩu của bạn"
+                            >
+
+                            <button
+                                type="button"
+                                id="showConfirmPassword"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                        <small id="confirmPasswordError"></small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 ĐIỀU KHOẢN
+            ========================== -->
+
+            <div class="register-policy">
+
+                Bằng việc Đăng ký, bạn đã đọc và đồng ý với
+
+                <a href="#">
+                    Điều khoản sử dụng
+                </a>
+
+                và
+
+                <a href="#">
+                    Chính sách bảo mật
+                </a>
+
+                của CellphoneS.
+
+            </div>
+
+
+            <!-- ==================================================
+     HỌC SINH / SINH VIÊN
+================================================== -->
+
+<div class="register-option">
+
+    <div class="option-title">
+
+        Tôi là Học sinh - sinh viên /
+        Giáo viên - giảng viên
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="studentSwitch"
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="option-description">
+
+        🎁 Nhận thêm ưu đãi tới
+        <b>700k/sản phẩm</b> với G-Student / G-Teacher
+
+        <a href="#">
+            Xem chi tiết >
+        </a>
+
+    </div>
+
+
+    <!-- FORM HỌC SINH / SINH VIÊN -->
+
+    <div
+        class="extra-form"
+        id="studentForm"
+    >
+
+        <!-- ĐỐI TƯỢNG -->
+
+        <div class="radio-group">
+
+            <label>
+                <input
+                    type="radio"
+                    name="studentType"
+                    value="student"
+                    checked
+                >
+                Học sinh - sinh viên
+            </label>
+
+
+            <label>
+                <input
+                    type="radio"
+                    name="studentType"
+                    value="teacher"
+                >
+                Giáo viên - giảng viên
+            </label>
+
+
+            <label>
+                <input
+                    type="radio"
+                    name="studentType"
+                    value="newstudent"
+                >
+                Tân sinh viên
+            </label>
+
+        </div>
+
+
+        <!-- CẤP HỌC + TÊN TRƯỜNG -->
+
+        <div class="register-grid">
+
+            <div class="register-field">
+
+                <label>
+                    Cấp học
+                </label>
+
+                <select id="educationLevel">
+                    <option value="" selected disabled>
+                        Chọn cấp học
+                    </option>
+                    <option value="tieuhoc">Tiểu học</option>
+                    <option value="thcs">THCS</option>
+                    <option value="thpt">THPT</option>
+                    <option value="caodang">Cao đẳng</option>
+                    <option value="daihoc">Đại học</option>
+                    <option value="saudaihoc">Sau đại học</option>
+                </select>
+
+            </div>
+
+
+            <div class="register-field">
+
+                <label>
+                    Tên trường
+                </label>
+
+                <input
+                    type="text"
+                    id="schoolName"
+                    placeholder="Nhập tên trường"
+                >
+
+            </div>
+
+
+            <!-- MÃ SINH VIÊN -->
+
+            <div class="register-field">
+
+                <label>
+                    Mã học sinh/sinh viên
+                </label>
+
+                <input
+                    type="text"
+                    id="studentId"
+                    placeholder="Nhập mã học sinh/sinh viên"
+                >
+
+            </div>
+
+
+            <!-- HỌ TÊN TRÊN THẺ -->
+
+            <div class="register-field">
+
+                <label>
+                    Họ tên trên thẻ
+                </label>
+
+                <input
+                    type="text"
+                    id="cardName"
+                    placeholder="Nhập họ tên trên thẻ"
+                >
+
+            </div>
+
+
+            <!-- NGÀY HẾT HẠN -->
+
+            <div class="register-field">
+
+                <label>
+                    Ngày hết hạn thẻ hoặc ra trường dự kiến
+                </label>
+
+                <input
+                    type="date"
+                    id="studentExpiry"
+                >
+
+            </div>
+
+
+            <!-- EMAIL TRƯỜNG -->
+
+            <div class="register-field">
+
+                <label>
+                    Email trường
+                    <span>(Không bắt buộc)</span>
+                </label>
+
+                <input
+                    type="email"
+                    id="schoolEmail"
+                    placeholder="Nhập email trường"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- TẢI ẢNH THẺ -->
+
+        <div class="upload-section">
+
+            <h3>
+                Tải ảnh thẻ
+            </h3>
+
+            <p>
+                Nếu thẻ sinh viên không có niên khóa,
+                vui lòng bổ sung thêm hình ảnh xác minh
+                thời gian học
+            </p>
+
+
+            <div class="upload-grid">
+
+                <!-- MẶT TRƯỚC -->
+
+                <div class="upload-box">
+
+                    <label>
+                        Mặt trước
+                    </label>
+
+                    <div class="upload-area">
+
+                        <div class="upload-icon">
+                            ⇧
+                        </div>
+
+                        <div>
+                            Kéo thả hoặc
+                            <span>Chọn file</span>
+                            tải lên
+                        </div>
+
+                        <small>
+                            Định dạng: .JPG, .JPEG, .PNG,
+                            .WEBP, .HEIC, .HEIF, .HEVC -
+                            Tối đa 10 MB
+                        </small>
+
+                        <input
+                            type="file"
+                            id="studentCardFront"
+                            accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.hevc"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- MẶT SAU -->
+
+                <div class="upload-box">
+
+                    <label>
+                        Mặt sau
+                    </label>
+
+                    <div class="upload-area">
+
+                        <div class="upload-icon">
+                            ⇧
+                        </div>
+
+                        <div>
+                            Kéo thả hoặc
+                            <span>Chọn file</span>
+                            tải lên
+                        </div>
+
+                        <small>
+                            Định dạng: .JPG, .JPEG, .PNG,
+                            .WEBP, .HEIC, .HEIF, .HEVC -
+                            Tối đa 10 MB
+                        </small>
+
+                        <input
+                            type="file"
+                            id="studentCardBack"
+                            accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.hevc"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MÃ GIỚI THIỆU -->
+
+        <div class="register-field referral-field">
+
+            <label>
+                Nhập mã giới thiệu
+                <span>(không bắt buộc)</span>
+            </label>
+
+            <input
+                type="text"
+                placeholder="Nhập mã giới thiệu (chỉ nhập số)"
+            >
+
+            <div class="referral-note">
+                🎁 Nhận ngay mã giảm
+                <b>50% tối đa 100k</b>
+                khi hồ sơ được duyệt thành công
+
+                <a href="#">
+                    Xem chi tiết >
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+           <!-- ==================================================
+     DOANH NGHIỆP
+================================================== -->
+
+<div class="register-option">
+
+    <div class="option-title">
+
+        Tôi là Khách hàng Doanh nghiệp
+
+        <label class="switch">
+
+            <input
+                type="checkbox"
+                id="businessSwitch"
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="option-description">
+
+        🎁 G-Business nhận <b>ưu đãi độc quyền</b> lên đến
+        <b>1 triệu/đơn hàng</b>, chiết khấu doanh nghiệp đến 8%
+
+        <a href="#">
+            Xem chi tiết >
+        </a>
+
+    </div>
+
+
+    <!-- FORM DOANH NGHIỆP -->
+
+    <div
+        class="extra-form"
+        id="businessForm"
+    >
+
+        <div class="register-grid">
+
+
+            <!-- MÃ SỐ THUẾ -->
+
+            <div class="register-field">
+
+                <label>
+                    Mã số thuế
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nhập mã số thuế"
+                >
+
+            </div>
+
+
+            <!-- TÊN CÔNG TY -->
+
+            <div class="register-field">
+
+                <label>
+                    Tên công ty
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nhập tên công ty"
+                >
+
+            </div>
+
+
+            <!-- ĐỊA CHỈ -->
+
+            <div class="register-field">
+
+                <label>
+                    Địa chỉ công ty
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nhập địa chỉ công ty"
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="register-field">
+
+                <label>
+                    Địa chỉ email công ty
+                </label>
+
+                <input
+                    type="email"
+                    placeholder="Nhập địa chỉ email công ty"
+                >
+
+            </div>
+
+
+            <!-- CCCD -->
+
+            <div class="register-field">
+
+                <label>
+                    CCCD/ Hộ chiếu người được ủy quyền
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nhập CCCD/ Hộ chiếu người được ủy quyền"
+                >
+
+            </div>
+
+
+            <!-- GHI CHÚ -->
+
+            <div class="register-field">
+
+                <label>
+                    Ghi chú
+                    <span>(Không bắt buộc)</span>
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Nhập ghi chú"
+                >
+
+            </div>
+
+
+            <!-- GIẤY PHÉP -->
+
+            <div class="upload-box">
+
+                <label>
+                    Giấy phép kinh doanh
+                </label>
+
+                <div class="upload-area">
+
+                    <button
+                        type="button"
+                        class="sample-btn"
+                    >
+                        Xem file mẫu
+                    </button>
+
+                    <div class="upload-icon">
+                        ⇧
+                    </div>
+
+                    <div>
+                        Kéo thả hoặc
+                        <span>Chọn file</span>
+                        tải lên
+                    </div>
+
+                    <small>
+                        Định dạng: .JPG, .JPEG, .PNG,
+                        .WEBP, .HEIC, .HEIF, .HEVC,
+                        .PDF - Tối đa 5 MB
+                    </small>
+
+                    <input
+                        type="file"
+                            id="businessLicense"
+                            accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.hevc,.pdf"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- GIẤY ỦY QUYỀN -->
+
+            <div class="upload-box">
+
+                <label>
+                    Giấy ủy quyền
+                </label>
+
+                <div class="upload-area">
+
+                    <button
+                        type="button"
+                        class="sample-btn"
+                    >
+                        Xem file mẫu
+                    </button>
+
+                    <div class="upload-icon">
+                        ⇧
+                    </div>
+
+                    <div>
+                        Kéo thả hoặc
+                        <span>Chọn file</span>
+                        tải lên
+                    </div>
+
+                    <small>
+                        Định dạng: .JPG, .JPEG, .PNG,
+                        .WEBP, .HEIC, .HEIF, .HEVC,
+                        .PDF - Tối đa 5 MB
+                    </small>
+
+                    <input
+                        type="file"
+                            id="authorizationPaper"
+                            accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.hevc,.pdf"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+            <!-- =========================
+                 BUTTON
+            ========================== -->
+
+            <div class="register-actions">
+
+                <a
+                    href="login.html"
+                    class="btn-back-login"
+                >
+                    <span>‹</span>
+
+                    Quay lại đăng nhập
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn-finish-register"
+                >
+                    Hoàn tất đăng ký
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+    const registerParams = new URLSearchParams(window.location.search);
+    if (registerParams.get("modal") === "1") {
+        document.body.classList.add("register-modal-mode");
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+        const type = registerParams.get("type");
+        const studentSwitch = document.getElementById("studentSwitch");
+        const businessSwitch = document.getElementById("businessSwitch");
+
+        if (type === "business" && businessSwitch) {
+            businessSwitch.checked = true;
+            businessSwitch.dispatchEvent(new Event("change", { bubbles: true }));
+        } else if (type === "student" && studentSwitch) {
+            studentSwitch.checked = true;
+            studentSwitch.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+    });
+</script>
+<script src="js/account.js"></script>
+
+</body>
+</html>
