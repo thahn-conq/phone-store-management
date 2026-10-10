@@ -1,6 +1,5 @@
 /* ==========================================================
-   base.css - NỀN TẢNG CHUNG CHO CẢ NHÓM (xanh lá + trắng, phong cách shadcn/ui)
-   Phong cách shadcn: viền mảnh, bo góc vừa, bóng nhẹ, vòng focus (ring), nút cao 36px.
+   base.css - NỀN TẢNG CHUNG CHO CẢ NHÓM (Tông xanh lá + trắng)
    Quy tắc: KHÔNG sửa file này riêng lẻ. Cần đổi thì báo đội trưởng.
    Mỗi module viết CSS riêng trong file khác (vd: css/cart.css)
    và đặt tên class có tiền tố module: acc-, prod-, cart-, ord-
@@ -8,7 +7,7 @@
 
 /* 1. BIẾN MÀU, FONT, KÍCH THƯỚC - đổi 1 chỗ, cả web đổi theo */
 :root {
-  --green-900: #0A4F33;   /* tiêu đề đậm, thanh trên cùng, footer */
+  --green-900: #0A4F33;   /* chữ tiêu đề đậm, footer */
   --green-700: #0F7B4F;   /* MÀU CHÍNH: nút, link, header */
   --green-500: #22A06B;   /* hover, điểm nhấn */
   --green-100: #E6F4EC;   /* nền nhạt, badge, hover dòng */
@@ -17,35 +16,33 @@
   --ink: #17251E;         /* chữ chính */
   --ink-soft: #5B6B63;    /* chữ phụ */
   --line: #DCE6E0;        /* viền */
-  --danger: #D64545;      /* giá bán, lỗi, xóa */
+  --danger: #D64545;      /* lỗi, xóa */
   --warning: #E8A317;
-
-  /* Tông phối thêm cho hợp với xanh lá (dùng cho khu vực nhấn như Deal sốc, Hot trend, Hàng mới về) */
-  --amber-600: #D97706;  --amber-50: #FFF7E6;
-  --coral-600: #E4572E;  --coral-50: #FDEEE9;
-  --teal-600: #0F8B8D;   --teal-50: #E3F5F4;
-  --muted: #F1F5F3;      /* nền xám xanh nhạt (inactive, vùng phụ) */
-
-  --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --radius: 10px;         /* thẻ */
-  --radius-sm: 6px;       /* nút, ô nhập */
+  --muted: #F1F5F3;
   --ring: 0 0 0 3px rgba(34, 160, 107, .3);
   --shadow-xs: 0 1px 2px rgba(10, 40, 25, .06);
-  --shadow: 0 1px 3px rgba(10, 40, 25, .09), 0 1px 2px rgba(10, 40, 25, .05);
   --shadow-md: 0 6px 16px rgba(10, 40, 25, .12);
+
+  --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 2px 10px rgba(10, 79, 51, .08);
   --container: 1200px;
 }
 
 /* 2. RESET */
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; font-family: var(--font); font-size: 15px; line-height: 1.6; color: var(--ink); background: var(--bg); }
+body {
+  margin: 0; font-family: var(--font); font-size: 15px; line-height: 1.6;
+  color: var(--ink); background: var(--bg);
+}
 img { max-width: 100%; display: block; }
 a { color: var(--green-700); text-decoration: none; }
 a:hover { color: var(--green-500); }
-h1, h2, h3, h4 { color: var(--green-900); line-height: 1.3; margin: 0 0 .5em; }
+h1, h2, h3 { color: var(--green-900); line-height: 1.3; margin: 0 0 .5em; }
 h1 { font-size: 28px; } h2 { font-size: 22px; } h3 { font-size: 17px; }
 ul { list-style: none; margin: 0; padding: 0; }
-:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--radius-sm); }
+:focus-visible { outline: 3px solid var(--green-500); outline-offset: 2px; }
 
 /* 3. BỐ CỤC CHUNG */
 .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 16px; }
@@ -59,60 +56,44 @@ ul { list-style: none; margin: 0; padding: 0; }
 .text-soft { color: var(--ink-soft); }
 .price { color: var(--danger); font-weight: 700; }
 
-/* 4. NÚT BẤM (kiểu shadcn Button): <button class="btn btn-primary"> */
+/* 4. NÚT BẤM: <button class="btn btn-primary"> */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 0 16px;
-  border: 1px solid transparent; border-radius: var(--radius-sm); font: inherit; font-size: 14px; font-weight: 500;
-  white-space: nowrap; cursor: pointer; transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px 18px; border: 1.5px solid transparent; border-radius: var(--radius-sm);
+  font: inherit; font-weight: 600; cursor: pointer; transition: background .15s, color .15s;
 }
-.btn:focus-visible { box-shadow: var(--ring); }
-.btn-primary { background: var(--green-700); color: var(--white); box-shadow: var(--shadow-xs); }
+.btn-primary { background: var(--green-700); color: var(--white); }
 .btn-primary:hover { background: var(--green-500); color: var(--white); }
-.btn-outline { background: var(--white); color: var(--ink); border-color: var(--line); box-shadow: var(--shadow-xs); }
-.btn-outline:hover { background: var(--green-100); color: var(--green-900); }
-.btn-secondary { background: var(--green-100); color: var(--green-900); }
-.btn-secondary:hover { background: #D3EBDD; color: var(--green-900); }
-.btn-ghost { background: transparent; color: var(--ink); }
-.btn-ghost:hover { background: var(--green-100); color: var(--green-900); }
+.btn-outline { background: var(--white); color: var(--green-700); border-color: var(--green-700); }
+.btn-outline:hover { background: var(--green-100); }
 .btn-danger { background: var(--danger); color: var(--white); }
-.btn-sm { height: 32px; padding: 0 12px; font-size: 13px; }
-.btn-lg { height: 44px; padding: 0 24px; font-size: 15px; }
 .btn-block { width: 100%; }
-.btn:disabled { opacity: .5; cursor: not-allowed; pointer-events: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
 
-/* 5. FORM (kiểu shadcn Input): <div class="form-group"><label>..</label><input class="input"></div> */
+/* 5. FORM: <div class="form-group"><label>..</label><input class="input"></div> */
 .form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
 .input, select.input, textarea.input {
-  width: 100%; height: 36px; padding: 0 12px; font: inherit; font-size: 14px; color: var(--ink);
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); box-shadow: var(--shadow-xs);
-  transition: border-color .15s, box-shadow .15s;
+  width: 100%; padding: 10px 12px; font: inherit; color: var(--ink);
+  background: var(--white); border: 1.5px solid var(--line); border-radius: var(--radius-sm);
 }
-textarea.input { height: auto; padding: 8px 12px; }
-.input::placeholder { color: var(--ink-soft); opacity: .8; }
-.input:focus { outline: none; border-color: var(--green-500); box-shadow: var(--ring); }
+.input:focus { border-color: var(--green-700); outline: none; box-shadow: 0 0 0 3px var(--green-100); }
 .input.is-error { border-color: var(--danger); }
-.input.is-error:focus { box-shadow: 0 0 0 3px rgba(214, 69, 69, .25); }
 .error-text { color: var(--danger); font-size: 13px; margin-top: 4px; min-height: 1em; }
 
-/* 6. THẺ & BADGE (kiểu shadcn Card, Badge) */
-.card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-xs); padding: 16px; }
-.badge {
-  display: inline-flex; align-items: center; padding: 2px 8px; font-size: 12px; font-weight: 600; line-height: 1.5;
-  border-radius: var(--radius-sm); background: var(--green-100); color: var(--green-900);
-}
-.badge-danger { background: var(--danger); color: var(--white); }
-.badge-outline { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+/* 6. THẺ & BADGE */
+.card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; }
+.badge { display: inline-block; padding: 2px 10px; font-size: 12px; font-weight: 600; border-radius: 99px; background: var(--green-100); color: var(--green-900); }
+.badge-danger { background: #FBE5E5; color: var(--danger); }
 
-/* 7. THÔNG BÁO NỔI (kiểu shadcn Toast) - gọi showToast("...") trong common.js */
+/* 7. THÔNG BÁO NỔI (toast) - gọi showToast("...") trong common.js */
 .toast {
-  position: fixed; right: 20px; bottom: 84px; z-index: 999; max-width: min(360px, calc(100vw - 40px));
-  padding: 12px 16px; font-size: 14px; background: var(--white); color: var(--ink);
-  border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow-md);
-  opacity: 0; transform: translateY(10px); transition: .25s; pointer-events: none;
+  position: fixed; right: 20px; bottom: 136px; z-index: 999; padding: 12px 18px;
+  background: var(--green-900); color: var(--white); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); transition: .25s; pointer-events: none;
 }
 .toast.show { opacity: 1; transform: none; }
-.toast.error { color: var(--danger); border-color: #F0C2C2; }
+.toast.error { background: var(--danger); }
 
 /* 8. MENU THẢ XUỐNG (kiểu shadcn DropdownMenu) - dùng cho Danh mục, Khu vực */
 .menu {
@@ -202,9 +183,9 @@ textarea.input { height: auto; padding: 8px 12px; }
 
 /* Nút hotline ghim góc phải dưới */
 .float-contact {
-  position: fixed; right: 16px; bottom: 16px; z-index: 120; display: flex; align-items: center; gap: 8px;
-  height: 46px; padding: 0 18px; background: var(--green-700); color: var(--white); border-radius: 99px;
-  font-weight: 600; box-shadow: var(--shadow-md);
+  position: fixed; right: 16px; bottom: 16px; z-index: 120; display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 180px; height: 60px; padding: 0 18px; background: var(--green-700); color: var(--white); border-radius: 999px;
+  font-weight: 700; font-size: 17px; box-shadow: var(--shadow-md);
 }
 .float-contact:hover { background: var(--green-500); color: var(--white); }
 .float-contact svg { width: 22px; height: 22px; }
@@ -278,4 +259,26 @@ textarea.input { height: auto; padding: 8px 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }   /* chữ chạy vẫn chạy, rê chuột vào để dừng */
+}
+
+/* Nút "Lên đầu": nằm ngay trên nút Liên hệ, chỉ hiện khi đã cuộn xuống */
+.back-to-top {
+  position: fixed; right: 16px; bottom: 92px; z-index: 120; display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 180px; height: 60px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--white); color: var(--green-900); font: inherit; font-size: 17px; font-weight: 700; cursor: pointer;
+  box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity .2s, transform .2s, background .15s;
+}
+.back-to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.back-to-top:hover { background: var(--green-100); }
+.back-to-top svg { width: 22px; height: 22px; stroke-width: 2.2; }
+.toast { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 12px 22px; border-radius: 12px; }
+.toast-icon { display: grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; background: #18a56b; color: #fff; }
+.toast-icon svg { width: 17px; height: 17px; stroke-width: 2.6; }
+.toast.error .toast-icon { background: var(--danger); }
+.toast-message { line-height: 1.35; }
+@media (max-width: 640px) {
+  .back-to-top { width: 46px; height: 46px; padding: 0; bottom: 72px; }
+  .float-contact { width: 46px; height: 46px; padding: 0; }
+  .back-to-top span { display: none; }
 }
