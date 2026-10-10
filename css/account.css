@@ -1,5 +1,3950 @@
-/* ==========================================================
-   account.css - CSS RIÊNG CỦA MODULE TÀI KHOẢN KHÁCH HÀNG (TV1)
-   Quy ước: class bắt đầu bằng "acc-" (vd: .acc-card). Không viết selector theo thẻ trần
-   (button, input, h1...) và không sửa class của base.css. Dùng lại .btn, .input, .card, .badge...
-   ========================================================== */
+/* =========================================================
+   ACCOUNT.CSS
+   LOGIN / REGISTER / ACCOUNT
+========================================================= */
+
+
+/* =========================================================
+   MÀU CHỦ ĐẠO
+========================================================= */
+
+:root {
+    --green: #087443;
+    --green-dark: #065b35;
+    --green-light: #eaf5ef;
+    --bg: #f3f4f6;
+    --border: #e5e5e5;
+    --text: #222;
+    --gray: #777;
+}
+
+
+/* =========================================================
+   LOGIN - CHỈ ÁP DỤNG CHO .account-page
+========================================================= */
+
+.account-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    background: #fff;
+}
+
+
+/* =========================================================
+   BÊN TRÁI LOGIN
+========================================================= */
+
+.account-left {
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 20px 70px 30px;
+
+    background: #fff;
+    color: var(--text);
+
+    border-radius: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.account-brand {
+    width: 100%;
+    margin-bottom: 22px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.brand-logo {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--green);
+}
+
+.account-brand img {
+    max-width: 405px;
+    height: auto;
+    display: block;
+}
+
+.account-left h1 {
+    max-width: 700px;
+
+    margin: 0 0 10px;
+
+    font-size: 28px;
+    line-height: 1.35;
+    font-weight: 500;
+
+    color: #111;
+}
+
+.account-left h1 span {
+    color: var(--green);
+    font-weight: 700;
+}
+
+.account-subtitle {
+    max-width: 700px;
+
+    margin: 0 0 34px;
+
+    font-size: 20px;
+    line-height: 1.5;
+
+    color: #222;
+}
+
+
+/* =========================================================
+   KHỐI ƯU ĐÃI
+========================================================= */
+
+.account-benefits {
+    width: 100%;
+    max-width: 680px;
+
+    padding: 27px 35px 25px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    background:
+        radial-gradient(
+            circle at 70% 40%,
+            rgba(255,255,255,.8),
+            transparent 50%
+        ),
+        linear-gradient(
+            135deg,
+            #f7f7f7,
+            #e8e8e8
+        );
+
+    border-radius: 24px;
+
+    position: relative;
+    isolation: isolate;
+}
+
+.account-benefits::before,
+.account-benefits::after {
+    content: "";
+
+    position: absolute;
+
+    width: 75px;
+    height: 75px;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+.account-benefits::before {
+    top: -2px;
+    left: -2px;
+
+    border-top: 6px solid var(--green);
+    border-left: 6px solid var(--green);
+
+    border-radius: 30px 0 0 0;
+}
+
+.account-benefits::after {
+    top: -2px;
+    right: -2px;
+
+    border-top: 6px solid var(--green);
+    border-right: 6px solid var(--green);
+
+    border-radius: 0 30px 0 0;
+}
+
+.account-benefits > * {
+    position: relative;
+    z-index: 2;
+}
+
+.benefit-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    text-align: left;
+}
+
+.benefit-item > span {
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border-radius: 0;
+
+    color: var(--green);
+
+    font-size: 20px;
+}
+
+.benefit-item p {
+    margin: 0;
+
+    color: #222;
+
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+.account-benefits a {
+    margin-top: 4px;
+
+    color: var(--green);
+
+    font-size: 15px;
+    font-weight: 500;
+
+    text-align: center;
+    text-decoration: none;
+}
+
+.account-benefits a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   ẢNH / MASCOT LOGIN
+========================================================= */
+
+.account-left > img {
+    max-width: 500px;
+    width: 80%;
+
+    margin-top: 12px;
+
+    object-fit: contain;
+}
+
+.account-banner {
+    width: 100%;
+    max-width: 520px;
+
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.account-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* =========================================================
+   BÊN PHẢI LOGIN
+========================================================= */
+
+.account-right {
+    min-height: 100vh;
+
+    padding: 70px 70px 50px;
+
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-left: 1px solid #f2f2f2;
+
+    box-sizing: border-box;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 480px;
+}
+
+.login-box h2 {
+    margin: 0 0 38px;
+
+    text-align: center;
+
+    color: var(--green);
+
+    font-size: 32px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FORM LOGIN
+========================================================= */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #222;
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    height: 53px;
+
+    padding: 0 15px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d7d7d7;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 15px;
+
+    transition: .2s;
+}
+
+.form-group input::placeholder {
+    color: #c7c7c7;
+}
+
+.form-group input:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 2px rgba(8,116,67,.08);
+}
+
+.form-group input.error {
+    border-color: #d00000;
+}
+
+.form-group small {
+    display: block;
+
+    min-height: 18px;
+
+    margin-top: 5px;
+
+    color: #d00000;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   REGISTER PASSWORD
+========================================================= */
+
+.register-password {
+    position: relative;
+    width: 100%;
+}
+
+
+/* Ô nhập mật khẩu */
+
+.register-password input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 48px 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #fff;
+
+    font-size: 14px;
+    color: #222;
+
+    transition: .2s;
+}
+
+.register-password input::placeholder {
+    color: #c5c9d0;
+}
+
+.register-password input:focus {
+    border-color: var(--green);
+
+    box-shadow: 0 0 0 2px rgba(8,116,67,.10);
+}
+
+
+/* =========================================================
+   NÚT CON MẮT
+========================================================= */
+
+.register-password button {
+    position: absolute;
+
+    top: 50%;
+    right: 8px;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+    margin: 0;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #666;
+
+    font-size: 17px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 2;
+}
+
+.register-password button:hover {
+    background: #f3f4f6;
+
+    color: var(--green);
+}
+
+.register-password button:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   PASSWORD NOTE
+========================================================= */
+
+.password-note {
+    margin: 7px 0 0;
+
+    color: #666;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* =========================================================
+   BUTTON LOGIN
+========================================================= */
+
+.btn-login {
+    width: 100%;
+    height: 52px;
+
+    margin-top: 2px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--green);
+
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn-login:hover {
+    background: var(--green-dark);
+}
+
+
+/* =========================================================
+   QUÊN MẬT KHẨU
+========================================================= */
+
+.forgot-password {
+    display: block;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: var(--green);
+
+    font-size: 15px;
+
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   DIVIDER LOGIN
+========================================================= */
+
+.login-divider {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    margin: 42px 0 27px;
+
+    color: #888;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #ddd;
+}
+
+
+/* =========================================================
+   SOCIAL LOGIN
+========================================================= */
+
+.social-login {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.social-login button {
+    height: 65px;
+
+    border: 1px solid #eee;
+    border-radius: 10px;
+
+    background: #fff;
+
+    box-shadow: 0 3px 15px rgba(0,0,0,.04);
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: .2s;
+}
+
+.social-login button:hover {
+    border-color: var(--green);
+
+    box-shadow:
+        0 5px 20px rgba(8,116,67,.10);
+}
+
+
+/* =========================================================
+   ĐĂNG KÝ TỪ TRANG LOGIN
+========================================================= */
+
+.register-text {
+    margin-top: 52px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 15px;
+}
+
+.register-text a {
+    color: var(--green);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* =========================================================
+   REGISTER
+   Chỉ áp dụng cho trang đăng ký - không ảnh hưởng LOGIN/PROFILE
+========================================================= */
+
+.register-page {
+    min-height: 100vh;
+    padding: 30px 20px 45px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+
+/* =========================================================
+   TIÊU ĐỀ ĐĂNG KÝ
+========================================================= */
+
+.register-title {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.register-title h1 {
+    margin: 0;
+    color: var(--green);
+    font-size: 30px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.register-title p {
+    margin: 8px 0 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.register-mascot {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 45px;
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.social-title {
+    margin-bottom: 12px;
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+}
+
+.register-social {
+    width: 100%;
+    max-width: 545px;
+    margin: 0 auto 24px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.social-btn {
+    height: 60px;
+
+    border: 1px solid #eee;
+    border-radius: 10px;
+
+    background: #fff;
+
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.register-or {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin: 22px 0 28px;
+
+    color: #777;
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-or::before,
+.register-or::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #ddd;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.register-section {
+    margin-bottom: 24px;
+}
+
+.register-section h2 {
+    margin: 0 0 20px;
+
+    padding: 0;
+
+    border: 0;
+
+    color: #222;
+
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FORM 2 CỘT
+========================================================= */
+
+.register-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 16px;
+}
+
+.register-field {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.register-field.full {
+    grid-column: 1 / -1;
+}
+
+.register-field label {
+    margin-bottom: 7px;
+
+    color: #222;
+
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 500;
+}
+
+.register-field input,
+.register-field select {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #fff;
+    color: #222;
+
+    font-size: 14px;
+
+    transition: .2s;
+}
+
+.register-field input::placeholder {
+    color: #c7cbd1;
+}
+
+.register-field input:focus,
+.register-field select:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 2px rgba(8,116,67,.10);
+}
+
+.register-field small {
+    min-height: 18px;
+    margin-top: 5px;
+
+    color: #d00000;
+    font-size: 12px;
+}
+
+.password-note {
+    margin-top: 6px;
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   HỌC SINH / SINH VIÊN - DOANH NGHIỆP
+   Toggle nằm ngay cạnh tiêu đề giống ảnh
+========================================================= */
+
+.option {
+    width: 100%;
+    margin: 0 0 34px;
+}
+
+.option-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    min-height: 30px;
+}
+
+.option-title {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+.switch {
+    position: relative;
+
+    display: inline-block;
+
+    flex: 0 0 auto;
+
+    width: 48px;
+    height: 28px;
+}
+
+.switch input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.slider {
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 999px;
+
+    background: #cfd1d6;
+
+    cursor: pointer;
+
+    transition: background .2s ease;
+}
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+
+    top: 3px;
+    left: 3px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+
+    transition: transform .2s ease;
+}
+
+.switch input:checked + .slider {
+    background: var(--green);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+
+/* =========================================================
+   THANH ƯU ĐÃI
+========================================================= */
+
+.option-description {
+    width: 100%;
+
+    min-height: 30px;
+
+    margin: 4px 0 0;
+    padding: 5px 9px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 6px;
+
+    background: #f5f5f5;
+
+    color: #333;
+
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.option-description a {
+    margin-left: 4px;
+
+    color: #2f80ed;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.option-description a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FORM MỞ RỘNG
+   Mặc định ẩn, bật toggle -> .active
+========================================================= */
+
+.extra-form {
+    display: none;
+
+    width: 100%;
+
+    margin: -10px 0 28px;
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 0;
+}
+
+.extra-form.active {
+    display: block;
+}
+
+.extra-form h3 {
+    margin: 0 0 18px;
+
+    color: #222;
+
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RADIO
+========================================================= */
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin: 0 0 18px;
+}
+
+.radio-item {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #222;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.radio-item input {
+    width: 20px;
+    height: 20px;
+
+    margin: 0;
+
+    accent-color: #2f80ed;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   UPLOAD FILE
+========================================================= */
+
+.upload-section {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.upload-section h3 {
+    margin: 0 0 6px;
+
+    color: #111;
+
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.upload-section > p {
+    margin: 0 0 20px;
+
+    color: #222;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   2 Ô UPLOAD - MẶT TRƯỚC / MẶT SAU
+========================================================= */
+
+.upload-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+.upload-box {
+    min-width: 0;
+}
+
+.upload-box > label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #222;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   KHUNG KÉO THẢ
+========================================================= */
+
+.upload-area {
+    position: relative;
+
+    width: 100%;
+    min-height: 138px;
+
+    padding: 18px 15px;
+
+    box-sizing: border-box;
+
+    border: 1px dashed #cfd3d8;
+    border-radius: 9px;
+
+    background: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #222;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+}
+
+
+/* =========================================================
+   ICON UPLOAD
+========================================================= */
+
+.upload-icon {
+    margin-bottom: 10px;
+
+    color: #222;
+
+    font-size: 27px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   "CHỌN FILE"
+========================================================= */
+
+.upload-area span {
+    color: var(--green);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ĐỊNH DẠNG FILE
+========================================================= */
+
+.upload-area small {
+    display: block;
+
+    max-width: 360px;
+
+    margin-top: 8px;
+
+    color: #999;
+
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   ẨN INPUT FILE MẶC ĐỊNH
+========================================================= */
+
+.upload-area input[type="file"] {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   REGISTER AGREE / BUTTON
+========================================================= */
+
+.register-agree {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: 20px 0;
+
+    color: #666;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.register-agree input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+
+    margin-top: 1px;
+
+    flex-shrink: 0;
+
+    accent-color: var(--green);
+}
+
+.register-agree a {
+    color: var(--green);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.register-agree a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   REGISTER ACTIONS
+========================================================= */
+
+.register-actions {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   QUAY LẠI ĐĂNG NHẬP
+========================================================= */
+
+.btn-back-login {
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn-back-login span {
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 300;
+}
+
+.btn-back-login:hover {
+    border-color: var(--green);
+
+    color: var(--green);
+
+    background: #fff;
+}
+
+
+/* =========================================================
+   HOÀN TẤT ĐĂNG KÝ
+========================================================= */
+
+.btn-finish-register {
+    width: 100%;
+    height: 52px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--green);
+    border-radius: 8px;
+
+    background: var(--green);
+
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease;
+}
+
+.btn-finish-register:hover {
+    background: var(--green-dark);
+
+    border-color: var(--green-dark);
+}
+
+.btn-finish-register:active {
+    transform: translateY(1px);
+}
+
+.btn-finish-register:disabled {
+    background: #cfd3d8;
+
+    border-color: #cfd3d8;
+
+    color: #fff;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   REGISTER MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .register-page {
+        padding: 20px 12px 35px;
+    }
+
+    .register-container {
+        max-width: 100%;
+    }
+
+    .register-title h1 {
+        font-size: 25px;
+    }
+
+    .register-social {
+        grid-template-columns: 1fr;
+    }
+
+    .register-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .register-field.full {
+        grid-column: auto;
+    }
+
+    .option-title {
+        font-size: 17px;
+    }
+
+    .radio-group {
+        gap: 14px;
+    }
+
+    .radio-item {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   ACCOUNT - HEADER
+========================================================= */
+
+.profile-page {
+    min-height: 100vh;
+
+    background: #f1f2f4;
+
+    color: #222;
+}
+
+
+/* HEADER */
+
+.profile-topbar {
+    height: 72px;
+
+    background: var(--green);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 0 50px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+.profile-logo {
+    width: 210px;
+
+    font-size: 27px;
+    font-weight: 800;
+
+    flex-shrink: 0;
+}
+
+.profile-search {
+    flex: 1;
+
+    max-width: 850px;
+
+    height: 44px;
+
+    margin: 0 35px;
+
+    position: relative;
+}
+
+.profile-search input {
+    width: 100%;
+    height: 100%;
+
+    padding: 0 20px 0 48px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.profile-search-icon {
+    position: absolute;
+
+    left: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #555;
+
+    font-size: 20px;
+}
+
+.profile-top-links {
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+.profile-top-links a {
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   PROFILE - KHUNG USER
+========================================================= */
+
+.profile-wrapper {
+    width: calc(100% - 80px);
+
+    max-width: 1540px;
+
+    margin: 14px auto 40px;
+}
+
+
+/* USER SUMMARY */
+
+.profile-summary {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 20px 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.1fr
+        1fr
+        1.1fr
+        1fr;
+
+    gap: 20px;
+
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+
+/* USER */
+
+.profile-user {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.profile-avatar {
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #eaf5ef;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+}
+
+.profile-user-name {
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.profile-user-phone {
+    margin-top: 5px;
+
+    color: #888;
+
+    font-size: 13px;
+}
+
+.profile-user-update {
+    margin-top: 8px;
+
+    color: #555;
+
+    font-size: 12px;
+}
+
+
+/* STAT */
+
+.profile-summary-stat {
+    min-height: 80px;
+
+    padding-left: 20px;
+
+    border-left: 3px solid var(--green);
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.profile-summary-icon {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+
+    background: #eaf5ef;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+.profile-summary-stat strong {
+    display: block;
+
+    font-size: 27px;
+
+    color: #222;
+}
+
+.profile-summary-stat span {
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* CHANNEL */
+
+.profile-channel {
+    border-left: 1px solid #eee;
+
+    padding-left: 25px;
+}
+
+.profile-channel-title {
+    font-size: 13px;
+
+    color: #555;
+
+    margin-bottom: 8px;
+}
+
+.profile-channel-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.profile-channel-logo {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 7px;
+
+    background: var(--green);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.profile-channel-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   THANH NHANH
+========================================================= */
+
+.profile-shortcuts {
+    margin-top: 13px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 15px 20px;
+
+    display: grid;
+
+    grid-template-columns: repeat(6, 1fr);
+
+    gap: 10px;
+}
+
+.profile-shortcut {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 12px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: .2s;
+}
+
+.profile-shortcut:hover {
+    background: var(--green-light);
+
+    color: var(--green);
+}
+
+.profile-shortcut-icon {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    background: #f4f4f4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PROFILE MAIN
+========================================================= */
+
+.profile-main {
+    display: grid;
+
+    grid-template-columns: 320px 1fr;
+
+    gap: 14px;
+
+    margin-top: 14px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.profile-sidebar {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 10px 0;
+
+    position: sticky;
+
+    top: 85px;
+}
+
+.profile-menu {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.profile-menu-item {
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 24px;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    color: #222;
+
+    font-size: 15px;
+
+    transition: .15s;
+}
+
+.profile-menu-item:hover {
+    background: #f5f7f6;
+
+    color: var(--green);
+}
+
+.profile-menu-item.active {
+    background: #eaf5ef;
+
+    color: var(--green);
+
+    border-left: 4px solid var(--green);
+
+    font-weight: 600;
+}
+
+.profile-menu-icon {
+    width: 25px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+.profile-menu-divider {
+    height: 1px;
+
+    background: #eee;
+
+    margin: 8px 20px;
+}
+
+.profile-menu-item.profile-logout {
+    color: #444;
+
+    margin-top: 3px;
+}
+
+.profile-menu-item.profile-logout:hover {
+    background: #fff2f2;
+
+    color: #d00000;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.profile-content {
+    min-width: 0;
+}
+
+
+/* THÔNG BÁO */
+
+.profile-notice {
+    min-height: 58px;
+
+    margin-bottom: 12px;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #76aefc;
+
+    background: #edf5ff;
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 14px;
+}
+
+.profile-notice-icon {
+    font-size: 20px;
+}
+
+.profile-notice-text {
+    flex: 1;
+}
+
+.profile-notice a {
+    color: #2879e8;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.profile-notice-close {
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   2 CỘT
+========================================================= */
+
+.profile-two-column {
+    display: grid;
+
+    grid-template-columns: 1.6fr 1fr;
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+.profile-card {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+}
+
+.profile-card-title {
+    margin: 0 0 15px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+/* EMPTY */
+
+.profile-empty {
+    min-height: 210px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: #999;
+}
+
+.profile-empty-icon {
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+
+    background: #f8e9eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    font-size: 43px;
+}
+
+.profile-empty p {
+    margin: 4px 0;
+
+    font-size: 14px;
+}
+
+.profile-empty a {
+    color: var(--green);
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CAM KẾT THU CŨ
+========================================================= */
+
+.profile-tradein {
+    margin-bottom: 14px;
+}
+
+.profile-tradein-content {
+    min-height: 160px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+}
+
+.profile-tradein-icon {
+    font-size: 55px;
+
+    margin-bottom: 10px;
+}
+
+.profile-tradein-content p {
+    color: #999;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   SẢN PHẨM YÊU THÍCH
+========================================================= */
+
+.profile-favorite {
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   CHƯƠNG TRÌNH NỔI BẬT
+========================================================= */
+
+.profile-featured {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.profile-feature-box {
+    min-height: 130px;
+
+    border-radius: 10px;
+
+    background: #f4f4f4;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: var(--green);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .profile-wrapper {
+        width: calc(100% - 30px);
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .profile-main {
+        grid-template-columns: 260px 1fr;
+    }
+
+    .profile-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .profile-topbar {
+        padding: 0 20px;
+    }
+
+    .profile-logo {
+        width: auto;
+    }
+
+    .profile-search {
+        margin: 0 15px;
+    }
+
+    .profile-top-links {
+        display: none;
+    }
+
+    .profile-main {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        position: static;
+    }
+
+    .profile-menu {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .profile-two-column {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .account-page {
+        display: block;
+    }
+
+    .account-left {
+        display: none;
+    }
+
+    .account-right {
+        min-height: 100vh;
+
+        padding: 25px 18px;
+    }
+
+    .register-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .register-field.full {
+        grid-column: auto;
+    }
+
+    .register-container {
+        padding: 25px 18px;
+    }
+
+
+    .profile-topbar {
+        height: 60px;
+    }
+
+    .profile-logo {
+        font-size: 22px;
+    }
+
+    .profile-search {
+        display: none;
+    }
+
+    .profile-wrapper {
+        width: calc(100% - 16px);
+
+        margin-top: 8px;
+    }
+
+    .profile-summary {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+    .profile-summary-stat {
+        border-left: none;
+
+        border-top: 1px solid #eee;
+
+        padding: 15px 0 0;
+    }
+
+    .profile-channel {
+        border-left: none;
+
+        border-top: 1px solid #eee;
+
+        padding: 15px 0 0;
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .profile-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-featured {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   ACCOUNT MANAGEMENT - BACK / PROFILE / FORMS
+========================================================= */
+
+.profile-back-btn {
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.10);
+    color: #fff;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.profile-back-btn:hover {
+    background: rgba(255,255,255,.22);
+}
+
+.profile-logo {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.account-panel {
+    display: none;
+    margin-bottom: 14px;
+    scroll-margin-top: 90px;
+    border: 1px solid #e6ebe8;
+    box-shadow: 0 3px 14px rgba(10, 79, 51, .06);
+}
+
+.account-panel.is-open {
+    display: block;
+    animation: accountPanelIn .2s ease;
+}
+
+@keyframes accountPanelIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.account-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.account-panel-desc {
+    margin: -7px 0 16px;
+    color: #718078;
+    font-size: 13px;
+}
+
+.account-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+}
+
+.account-form-grid .form-group.full {
+    grid-column: 1 / -1;
+}
+
+.account-form .form-group {
+    margin-bottom: 15px;
+}
+
+.account-form .input {
+    min-height: 44px;
+    padding: 9px 12px;
+}
+
+.account-form textarea.input {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.account-form .btn {
+    min-height: 42px;
+}
+
+.account-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 14px;
+}
+
+.account-action-btn {
+    min-height: 42px;
+}
+
+.password-box {
+    position: relative;
+    width: 100%;
+}
+
+.password-box .input,
+.password-box input {
+    width: 100%;
+    padding-right: 50px !important;
+}
+
+.password-toggle,
+.register-password button,
+.password-box > button {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    width: 36px;
+    height: 36px;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #66736d;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.password-toggle:hover,
+.register-password button:hover,
+.password-box > button:hover {
+    background: #eef5f1;
+    color: var(--green);
+}
+
+.password-toggle:focus,
+.register-password button:focus,
+.password-box > button:focus {
+    outline: 2px solid rgba(8,116,67,.25);
+    outline-offset: 1px;
+}
+
+/* Mắt nằm ngang, bên trong ô mật khẩu */
+.form-group .password-box {
+    display: block;
+}
+
+.form-group .password-box input {
+    height: 44px;
+    box-sizing: border-box;
+}
+
+/* Header trang tài khoản */
+.profile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.profile-back-btn + .profile-logo {
+    flex-shrink: 0;
+}
+
+@media (max-width: 650px) {
+    .profile-topbar {
+        gap: 8px;
+    }
+
+    .profile-back-btn {
+        padding: 0 10px;
+        font-size: 13px;
+    }
+
+    .account-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-form-grid .form-group.full {
+        grid-column: auto;
+    }
+
+    .account-action-row {
+        flex-direction: column;
+    }
+
+    .account-action-btn {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   LOGIN - CÂN ĐỐI 2 CỘT
+   Nội dung account-left nằm ngang cùng khối đăng nhập bên phải
+========================================================= */
+.account-page {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
+    align-items: stretch;
+}
+
+.account-left,
+.account-right {
+    min-width: 0;
+}
+
+.account-left {
+    justify-content: center;
+}
+
+.account-left > * {
+    max-width: 680px;
+}
+
+.account-right {
+    justify-content: center;
+}
+
+.login-box {
+    margin: 0 auto;
+}
+
+/* Mắt đăng nhập: luôn nằm ngang bên trong ô */
+.login-box .password-box {
+    position: relative;
+    width: 100%;
+}
+
+.login-box .password-box input {
+    width: 100%;
+    height: 53px;
+    padding-right: 52px;
+    box-sizing: border-box;
+}
+
+.login-box .password-box button {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    width: 38px;
+    height: 38px;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #66736d;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.login-box .password-box button:hover {
+    background: #eef5f1;
+    color: var(--green);
+}
+
+/* =========================================================
+   QUÊN MẬT KHẨU
+========================================================= */
+.forgot-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 18px;
+    box-sizing: border-box;
+    background: #f7faf8;
+}
+
+.forgot-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 34px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e6ebe8;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(8,116,67,.08);
+}
+
+.forgot-logo {
+    display: block;
+    margin-bottom: 24px;
+    color: var(--green);
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.forgot-card h1 {
+    margin: 0;
+    color: var(--text);
+    font-size: 27px;
+    text-align: center;
+}
+
+.forgot-card > p {
+    margin: 9px 0 26px;
+    color: #6f7773;
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: center;
+}
+
+.forgot-card .form-group {
+    margin-bottom: 18px;
+}
+
+.forgot-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.forgot-btn {
+    min-height: 48px;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.forgot-btn-primary {
+    border: 1px solid var(--green);
+    background: var(--green);
+    color: #fff;
+}
+
+.forgot-btn-primary:hover {
+    background: var(--green-dark);
+}
+
+.forgot-btn-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d6ddd9;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+}
+
+.forgot-message {
+    min-height: 20px;
+    margin: 14px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.forgot-message.error {
+    color: #c62828;
+}
+
+.forgot-message.success {
+    color: var(--green);
+}
+
+@media (max-width: 900px) {
+    .account-page {
+        grid-template-columns: 1fr;
+    }
+
+    .account-left {
+        min-height: auto;
+        padding: 50px 28px 30px;
+    }
+
+    .account-right {
+        min-height: auto;
+        padding: 30px 28px 50px;
+    }
+}
+
+@media (max-width: 520px) {
+    .forgot-card {
+        padding: 25px 18px;
+        border-radius: 14px;
+    }
+
+    .forgot-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Trạng thái file đã chọn / kéo thả */
+.upload-area.has-file {
+    border-color: var(--green);
+    background: var(--green-light);
+}
+
+.upload-area.dragging {
+    border-color: var(--green);
+    background: #f0faf4;
+}
+
+/* =========================================================
+   CẬP NHẬT THEO GIAO DIỆN THAM CHIẾU
+========================================================= */
+
+/* Login: hai nửa cân bằng, nội dung nằm cùng một mặt phẳng ngang */
+.account-page {
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    align-items: stretch;
+}
+
+.account-left,
+.account-right {
+    min-height: 100vh;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.account-left {
+    padding: 48px clamp(28px, 5vw, 72px);
+    justify-content: center;
+}
+
+.account-left > * {
+    width: min(100%, 700px);
+}
+
+.account-brand {
+    margin-bottom: 18px;
+}
+
+.brand-logo {
+    color: var(--green);
+    font-size: 31px;
+    letter-spacing: -.4px;
+}
+
+.brand-leaf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 8px 50% 8px;
+    background: var(--green);
+    color: #fff;
+    font-size: 20px;
+    transform: rotate(-28deg);
+}
+
+.account-benefits {
+    max-width: 700px;
+    padding: 27px 34px 24px;
+    gap: 12px;
+}
+
+.account-benefits::before,
+.account-benefits::after {
+    border-color: var(--green);
+}
+
+.account-benefits a {
+    color: var(--green);
+}
+
+.account-right {
+    padding: 48px clamp(28px, 5vw, 72px);
+    border-left: 1px solid #ededed;
+}
+
+.login-box {
+    max-width: 490px;
+}
+
+/* Google / Zalo giống kiểu nút trong ảnh tham chiếu */
+.social-login button,
+.register-social .social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #151515;
+}
+
+.google-logo,
+.google-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    font-size: 21px;
+    font-weight: 800;
+    font-family: Arial, sans-serif;
+    background: conic-gradient(from -45deg, #4285f4 0 25%, #34a853 25% 45%, #fbbc05 45% 65%, #ea4335 65% 85%, #4285f4 85% 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.zalo-logo,
+.zalo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 31px;
+    height: 25px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 7px 7px 7px 2px;
+    background: #0b84ff;
+    color: #fff;
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 800;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================================================
+   MODAL ĐĂNG KÝ TỪ "ĐĂNG KÝ NGAY"
+========================================================= */
+.register-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.register-modal.is-open {
+    display: flex;
+}
+
+.register-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .56);
+    backdrop-filter: blur(3px);
+}
+
+.register-modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 900px);
+    height: min(92vh, 820px);
+    overflow: hidden;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba(0,0,0,.28);
+    display: flex;
+    flex-direction: column;
+}
+
+.register-modal-header {
+    min-height: 58px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e7e7e7;
+    background: #fff;
+}
+
+.register-modal-header h2 {
+    margin: 0;
+    font-size: 17px;
+    color: #202020;
+}
+
+.register-modal-close {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: #f4f4f4;
+    color: #666;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.register-modal-close:hover {
+    background: #e9e9e9;
+    color: #111;
+}
+
+.register-modal-dialog iframe {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    background: #fff;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* =========================================================
+   THÔNG TIN CÁ NHÂN + SỔ ĐỊA CHỈ
+========================================================= */
+.account-visible-info,
+.account-visible-address {
+    margin-bottom: 14px;
+}
+
+.account-visible-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.account-inline-edit {
+    border: 0;
+    background: transparent;
+    color: var(--green);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.account-inline-edit:hover {
+    text-decoration: underline;
+}
+
+.account-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    row-gap: 0;
+}
+
+.account-info-grid > div {
+    min-width: 0;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid #ececec;
+}
+
+.account-info-grid span {
+    color: #74808a;
+    flex: 0 0 auto;
+}
+
+.account-info-grid strong {
+    color: #171717;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.visible-address-empty {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    color: #89939d;
+}
+
+.visible-address-empty p {
+    margin: 0 0 6px;
+}
+
+.visible-address-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f7f4;
+    font-size: 30px;
+}
+
+.visible-address-card {
+    min-height: 110px;
+    padding: 16px;
+    box-sizing: border-box;
+    border: 1px solid #e5e9e7;
+    border-radius: 10px;
+    background: #fbfdfc;
+}
+
+@media (max-width: 900px) {
+    .account-page {
+        grid-template-columns: 1fr;
+    }
+
+    .account-left,
+    .account-right {
+        min-height: auto;
+    }
+
+    .account-info-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .register-modal {
+        padding: 0;
+    }
+
+    .register-modal-dialog {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+
+
+.profile-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.profile-logo-leaf {
+    width: 31px;
+    height: 31px;
+    border-radius: 50% 8px 50% 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--green);
+    font-size: 20px;
+    transform: rotate(-28deg);
+}
+
+
+/* =========================================================
+   ĐĂNG KÝ TRONG POPUP - GIAO DIỆN RIÊNG
+   Không tác động tới trang register.html thông thường.
+========================================================= */
+.modal-register-page {
+    min-height: 100%;
+    padding: 18px 18px 86px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.modal-register-page .register-container {
+    max-width: 100%;
+    margin: 0;
+}
+
+.modal-register-page .register-title,
+.modal-register-page .register-mascot,
+.modal-register-page .social-title,
+.modal-register-page .register-social,
+.modal-register-page .register-or {
+    display: none;
+}
+
+.modal-register-page .register-section:first-of-type {
+    margin-top: 0;
+}
+
+.modal-register-page .register-section h2 {
+    display: none;
+}
+
+.modal-register-page .register-grid {
+    gap: 16px;
+}
+
+.modal-register-page .register-option {
+    margin-top: 14px;
+    border-radius: 8px;
+}
+
+.modal-register-page .register-option .option-title {
+    font-size: 16px;
+}
+
+.modal-register-page .register-option .option-description {
+    font-size: 13px;
+}
+
+.modal-register-page .register-actions {
+    position: sticky;
+    bottom: 0;
+    margin: 18px -18px -86px;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,.98);
+    border-top: 1px solid #e7e7e7;
+    z-index: 10;
+}
+
+@media (max-width: 760px) {
+    .modal-register-page {
+        padding: 14px 12px 82px;
+    }
+
+    .modal-register-page .register-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-register-page .register-field.full {
+        grid-column: auto;
+    }
+
+    .modal-register-page .register-actions {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+}
+
+
+/* =========================================================
+   REGISTER POPUP - SÁT MÉP PHẢI
+   Dùng riêng cho các modal đăng ký, không ảnh hưởng trang chủ.
+========================================================= */
+.register-modal {
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0;
+}
+
+.register-modal-dialog {
+    width: min(920px, 94vw);
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 16px 0 0 16px;
+    animation: registerDrawerIn .24s ease;
+}
+
+@keyframes registerDrawerIn {
+    from { transform: translateX(100%); opacity: .8; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.register-modal-backdrop {
+    background: rgba(0,0,0,.52);
+}
+
+@media (max-width: 760px) {
+    .register-modal-dialog {
+        width: 100vw;
+        border-radius: 0;
+    }
+}
+
+/* =========================================================
+   GIAO DIỆN DARK / LIGHT
+   Chỉ áp dụng cho các trang dùng account.js.
+========================================================= */
+.account-theme-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 7000;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #dfe4e1;
+    border-radius: 50%;
+    background: rgba(255,255,255,.94);
+    color: #333;
+    box-shadow: 0 5px 18px rgba(0,0,0,.12);
+    cursor: pointer;
+    font-size: 19px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: .2s ease;
+}
+
+.account-theme-toggle:hover {
+    transform: translateY(-1px);
+}
+
+body.theme-dark {
+    background: #111615 !important;
+    color: #edf3ef;
+}
+
+body.theme-dark .account-theme-toggle {
+    background: #202725;
+    border-color: #3a4541;
+    color: #fff;
+}
+
+body.theme-dark .account-page,
+body.theme-dark .account-left,
+body.theme-dark .account-right,
+body.theme-dark .login-box,
+body.theme-dark .register-page,
+body.theme-dark .register-container,
+body.theme-dark .forgot-page {
+    background: #111615;
+    color: #edf3ef;
+}
+
+body.theme-dark .account-left h1,
+body.theme-dark .account-subtitle,
+body.theme-dark .account-left,
+body.theme-dark .login-box h2,
+body.theme-dark .form-group label,
+body.theme-dark .register-section h2,
+body.theme-dark .register-field label,
+body.theme-dark .register-option .option-title,
+body.theme-dark .forgot-card h1,
+body.theme-dark .forgot-card label,
+body.theme-dark .password-note,
+body.theme-dark .register-policy,
+body.theme-dark .register-policy a,
+body.theme-dark .register-or {
+    color: #edf3ef;
+}
+
+body.theme-dark .account-benefits,
+body.theme-dark .forgot-card,
+body.theme-dark .register-social .social-btn,
+body.theme-dark .register-field input,
+body.theme-dark .register-field select,
+body.theme-dark .login-box input,
+body.theme-dark .forgot-card input,
+body.theme-dark .account-panel,
+body.theme-dark .profile-card,
+body.theme-dark .profile-content,
+body.theme-dark .profile-sidebar {
+    background: #1a211f;
+    color: #edf3ef;
+    border-color: #35413d;
+}
+
+body.theme-dark .register-field input::placeholder,
+body.theme-dark .login-box input::placeholder,
+body.theme-dark .forgot-card input::placeholder {
+    color: #7e8985;
+}
+
+body.theme-dark .option-description,
+body.theme-dark .referral-note,
+body.theme-dark .profile-notice {
+    background: #202825;
+    color: #dfe8e3;
+    border-color: #35413d;
+}
+
+body.theme-dark .btn-back-login,
+body.theme-dark .forgot-btn-back {
+    background: #1a211f;
+    color: #edf3ef;
+    border-color: #3a4642;
+}
+
+body.theme-dark .register-or::before,
+body.theme-dark .register-or::after,
+body.theme-dark .register-modal-header {
+    border-color: #35413d;
+}
+
+body.theme-dark .register-modal-dialog,
+body.theme-dark .register-modal-header,
+body.theme-dark .register-modal-dialog iframe {
+    background: #151b19;
+}
+
+body.theme-dark .register-modal-header h2 {
+    color: #edf3ef;
+}
+
+body.theme-dark .modal-register-page {
+    background: #151b19;
+    color: #edf3ef;
+}
+
+body.theme-dark .modal-register-page .register-field input,
+body.theme-dark .modal-register-page .register-field select {
+    background: #1b2421;
+    color: #edf3ef;
+    border-color: #3a4742;
+}
+
+body.theme-dark .profile-menu-item,
+body.theme-dark .profile-user-name,
+body.theme-dark .profile-card-title,
+body.theme-dark .account-info-grid strong {
+    color: #edf3ef;
+}
+
+body.theme-dark .profile-menu-divider,
+body.theme-dark .account-info-grid > div {
+    border-color: #35413d;
+}
+
+/* =========================================================
+   FORM ĐĂNG KÝ GIỐNG ẢNH THAM CHIẾU
+========================================================= */
+.register-page {
+    background: #fff;
+}
+
+.register-container {
+    max-width: 960px;
+}
+
+.register-title {
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+.register-title::first-line {
+    color: var(--green);
+}
+
+.register-mascot img {
+    width: 115px;
+    max-width: 115px;
+    height: 165px;
+    object-fit: contain;
+}
+
+.register-mascot {
+    min-height: 165px;
+    margin-bottom: 12px;
+}
+
+.register-social {
+    max-width: 545px;
+}
+
+.register-option {
+    margin-bottom: 34px;
+}
+
+.option-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.register-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    padding: 12px 0;
+    margin-top: 18px;
+    background: rgba(255,255,255,.97);
+    box-shadow: 0 -8px 25px rgba(0,0,0,.06);
+}
+
+body.theme-dark .register-actions {
+    background: rgba(17,22,21,.97);
+}
+
+/* Popup riêng: ẩn phần tài khoản cơ bản, chỉ hiển thị form G-Student/G-Business */
+.modal-register-page .register-section,
+.modal-register-page .register-policy {
+    display: none;
+}
+
+.modal-register-page .register-option {
+    margin-top: 0;
+}
+
+.modal-register-page .register-option:first-of-type {
+    margin-top: 0;
+}
+
+.modal-register-page .register-option .option-description {
+    margin-bottom: 14px;
+}
+
+.modal-register-page .extra-form.active {
+    margin-top: 10px;
+}
+
+.modal-register-page .register-actions {
+    position: sticky;
+    bottom: 0;
+    margin: 18px 0 0;
+    padding: 12px 0;
+    background: rgba(255,255,255,.98);
+    box-shadow: 0 -8px 20px rgba(0,0,0,.06);
+}
+
+.modal-register-page .register-actions .btn-back-login {
+    display: none;
+}
+
+.modal-register-page .register-actions .btn-finish-register {
+    width: 100%;
+}
+
+body.theme-dark .modal-register-page .register-actions {
+    background: rgba(21,27,25,.98);
+}
+
+body.is-register-iframe .account-theme-toggle {
+    display: none;
+}
+
+/* =========================================================
+   REGISTER DRAWER - HEADER ỔN ĐỊNH
+   Nút X luôn nằm sát bên trái, Dark/Light không đè lên drawer.
+========================================================= */
+.register-modal-header {
+    position: relative;
+    justify-content: flex-start;
+    gap: 12px;
+    min-height: 68px;
+    padding: 0 20px 0 58px;
+    flex-shrink: 0;
+}
+
+.register-modal-close {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    flex: none;
+}
+
+.register-modal-header h2 {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding-right: 8px;
+}
+
+/* Khi drawer mở, tuyệt đối không để nút Dark/Light của trang cha
+   nổi trên drawer hoặc che nút X. */
+body.modal-open .account-theme-toggle,
+.register-modal.is-open ~ .account-theme-toggle {
+    display: none !important;
+}
+
+.register-modal-dialog {
+    position: relative;
+}
+
+
+/* =========================================================
+   REGISTER PAGE - GIAO DIỆN SMEMBER THEO MẪU
+   Chỉ áp dụng cho trang đăng ký chính.
+   Popup đăng ký (.modal-register-page) không bị ảnh hưởng.
+========================================================= */
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) {
+    min-height: 100vh;
+    padding: 48px 20px 24px;
+    background: #fff;
+    color: #111;
+}
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-container { width:100%; max-width:960px; margin:0 auto; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-title { margin:0 0 42px; color:#087443; font-size:40px; line-height:1.2; font-weight:700; text-align:center; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-mascot { min-height:165px; height:165px; margin:0 0 30px; text-align:center; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-mascot img { width:115px; height:165px; object-fit:contain; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .social-title { margin:0 0 22px; color:#6d7480; font-size:18px; line-height:1.4; text-align:center; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-social { max-width:545px; margin:0 auto 24px; gap:18px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .social-btn { height:72px; border:1px solid #ededed; border-radius:10px; background:#fff; box-shadow:0 4px 18px rgba(0,0,0,.06); font-size:18px; font-weight:500; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-or { margin:22px 0 30px; color:#6d7480; font-size:18px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-section { margin-bottom:28px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-section h2 { margin:0 0 22px; color:#111; font-size:22px; line-height:1.35; font-weight:700; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-grid { grid-template-columns:1fr 1fr; gap:20px 18px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-field label { margin-bottom:8px; color:#111; font-size:16px; font-weight:500; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-field label span { color:#9aa0a8; font-size:13px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-field input,
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-field select { min-height:58px; border:1px solid #d4d7dc; border-radius:9px; padding:0 16px; background:#fff; font-size:16px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .password-note { margin:7px 0 0; color:#555e68; font-size:14px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-policy { margin:34px 0 42px; padding:0 0 34px; border-bottom:1px dashed #d9dce1; color:#20242a; font-size:16px; line-height:1.6; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-policy a { color:#287cf0; font-weight:600; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-option { margin:0 0 48px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .option-title { display:flex; align-items:center; gap:10px; color:#111; font-size:21px; line-height:1.35; font-weight:700; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .switch { width:50px; height:29px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .slider { background:#d0d2d7; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .switch input:checked + .slider { background:#2f80ed; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .option-description { min-height:30px; margin:5px 0 0; padding:5px 9px; border-radius:6px; background:#f5f5f6; color:#4c535b; font-size:14px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .option-description b { color:#111; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .option-description a { color:#287cf0; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .extra-form { margin:16px 0 0; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .radio-group { gap:20px; margin-bottom:20px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .radio-group label { display:inline-flex; align-items:center; gap:7px; color:#222; font-size:16px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .radio-group input { width:20px; height:20px; accent-color:#2f80ed; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .upload-section { margin-top:26px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .upload-section h3 { font-size:22px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .upload-section > p { font-size:15px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .upload-area { min-height:138px; border-radius:9px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .referral-note { background:#f5f5f6; border-radius:6px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-actions { position:sticky; bottom:0; z-index:20; margin:26px 0 0; padding:14px 0 12px; background:rgba(255,255,255,.98); box-shadow:0 -10px 28px rgba(0,0,0,.05); }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .btn-back-login,
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .btn-finish-register { height:58px; border-radius:9px; font-size:18px; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .btn-finish-register { border-color:#087443; background:#087443; }
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .btn-finish-register:hover { border-color:#056438; background:#056438; }
+body.theme-dark .register-page:not(.modal-register-page) { background:#111; color:#f5f5f5; }
+body.theme-dark .register-page:not(.modal-register-page) .register-title { color:#35c982; }
+body.theme-dark .register-page:not(.modal-register-page) .register-section h2,
+body.theme-dark .register-page:not(.modal-register-page) .register-field label,
+body.theme-dark .register-page:not(.modal-register-page) .option-title,
+body.theme-dark .register-page:not(.modal-register-page) .register-policy,
+body.theme-dark .register-page:not(.modal-register-page) .radio-group label { color:#f5f5f5; }
+body.theme-dark .register-page:not(.modal-register-page) .register-field input,
+body.theme-dark .register-page:not(.modal-register-page) .register-field select,
+body.theme-dark .register-page:not(.modal-register-page) .social-btn,
+body.theme-dark .register-page:not(.modal-register-page) .btn-back-login { background:#1b1b1b; color:#f5f5f5; border-color:#3b3b3b; }
+body.theme-dark .register-page:not(.modal-register-page) .option-description,
+body.theme-dark .register-page:not(.modal-register-page) .referral-note { background:#202020; color:#ddd; }
+body.theme-dark .register-page:not(.modal-register-page) .register-actions { background:rgba(17,17,17,.98); }
+@media (max-width:650px) {
+ body:not(.is-register-iframe) .register-page:not(.modal-register-page) { padding:28px 14px 20px; }
+ body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-title { font-size:30px; margin-bottom:30px; }
+ body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-grid,
+ body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-actions { grid-template-columns:1fr; }
+}
+
+
+/* LỊCH SỬ MUA HÀNG */
+.order-history-page[hidden] { display:none !important; }
+.order-history-heading { display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+.order-date-filter { display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#555; font-size:14px; }
+.order-date-filter input { min-height:42px; padding:8px 10px; border:1px solid #d7d7dc; border-radius:9px; color:inherit; background:var(--surface, #fff); }
+.order-date-filter button { min-height:40px; border:1px solid #d7d7dc; border-radius:8px; padding:0 13px; background:transparent; color:inherit; cursor:pointer; }
+.order-status-tabs { display:flex; gap:0; overflow-x:auto; margin:18px 0 22px; border-bottom:1px solid #e4e4e7; }
+.order-status-tab { flex:0 0 auto; min-width:112px; padding:13px 16px; border:0; border-bottom:2px solid transparent; background:transparent; color:#777985; font:inherit; cursor:pointer; }
+.order-status-tab.active { color:#087443; border-bottom-color:#087443; font-weight:700; }
+.order-history-list { display:grid; gap:14px; }
+.order-history-empty { min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#9699a3; text-align:center; }
+.order-empty-illustration { display:grid; place-items:center; width:110px; height:110px; border-radius:50%; background:#eaf5ef; font-size:48px; }
+.order-history-empty p { margin:0; }
+.order-history-empty a { color:#087443; text-decoration:none; }
+.order-history-card { border:1px solid #e3e5e8; border-radius:12px; padding:18px; background:var(--surface, #fff); }
+.order-history-card-head,.order-history-card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.order-history-card-head { padding-bottom:13px; border-bottom:1px solid #eceef0; }
+.order-history-meta { display:grid; gap:8px; padding:14px 0; color:#737782; }
+.order-history-card-foot { justify-content:flex-end; color:#087443; }
+.order-status-pill { display:inline-flex; padding:6px 10px; border-radius:99px; font-size:13px; font-weight:600; background:#fff5db; color:#956400; }
+.order-status-pill.status-processing { background:#eaf2ff; color:#2464b5; }
+.order-status-pill.status-shipping { background:#e8f6ff; color:#0876a8; }
+.order-status-pill.status-completed { background:#e8f7ef; color:#087443; }
+.order-status-pill.status-cancelled { background:#fff0f0; color:#c62828; }
+body.theme-dark .order-history-card, body.theme-dark .order-date-filter input { background:#1b2420; color:#f3f7f4; border-color:#35443c; }
+body.theme-dark .order-history-heading .profile-card-title, body.theme-dark .order-history-meta { color:#f3f7f4; }
+body.theme-dark .order-status-tabs { border-color:#35443c; }
+body.theme-dark .order-status-tab { color:#c3cdc7; }
+body.theme-dark .order-status-tab.active { color:#64d59a; border-bottom-color:#64d59a; }
+body.theme-dark .order-history-empty { color:#c3cdc7; }
+@media(max-width:700px) { .order-date-filter { width:100%; } .order-date-filter input { flex:1 1 130px; min-width:0; } .order-status-tab { min-width:auto; padding:12px; } .order-history-card { padding:14px; } }
+
+
+/* =========================================================
+   REGISTER MODAL: HIỂN THỊ ĐÚNG LOẠI ĐĂNG KÝ ĐƯỢC CHỌN
+   Không sửa các file nền/khóa; chỉ tác động iframe popup.
+========================================================= */
+body.is-register-iframe .modal-register-page .register-option:not(.modal-selected-option) {
+    display: none !important;
+}
+body.is-register-iframe .modal-register-page .option-title,
+body.is-register-iframe .modal-register-page .option-description {
+    display: none !important;
+}
+body.is-register-iframe .modal-register-page .register-option {
+    margin: 0 !important;
+}
+body.is-register-iframe .modal-register-page .extra-form.active {
+    display: block;
+    margin-top: 0 !important;
+}
+
+/* Nút Dark/Light nằm ngay trong header popup, cùng hàng với tiêu đề. */
+.register-modal-theme-toggle {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dfe7e2;
+    border-radius: 50%;
+    background: #f3f8f5;
+    color: #087443;
+    font-size: 21px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    transition: background .2s ease, transform .2s ease;
+}
+.register-modal-theme-toggle:hover { transform: translateY(-1px); }
+body.theme-dark .register-modal-theme-toggle {
+    background: #202725;
+    border-color: #3a4541;
+    color: #fff;
+}
+.register-modal-header { gap: 12px; }
+.register-modal-header h2 { flex: 1; }
+
+/* Bổ sung tương phản chữ trong popup ở Dark mode. */
+body.theme-dark .modal-register-page,
+body.theme-dark .modal-register-page p,
+body.theme-dark .modal-register-page .register-or,
+body.theme-dark .modal-register-page .register-section h2,
+body.theme-dark .modal-register-page .register-field label,
+body.theme-dark .modal-register-page .radio-group,
+body.theme-dark .modal-register-page .radio-group label,
+body.theme-dark .modal-register-page .register-policy,
+body.theme-dark .modal-register-page .register-policy a,
+body.theme-dark .modal-register-page .password-note,
+body.theme-dark .modal-register-page .register-option,
+body.theme-dark .modal-register-page .option-title,
+body.theme-dark .modal-register-page .extra-form,
+body.theme-dark .modal-register-page .register-field small,
+body.theme-dark .modal-register-page .register-field span {
+    color: #edf5f0;
+}
+body.theme-dark .modal-register-page .register-field input,
+body.theme-dark .modal-register-page .register-field select,
+body.theme-dark .modal-register-page .register-password button {
+    background-color: #1b2421;
+    color: #edf5f0;
+    border-color: #3a4742;
+}
+body.theme-dark .modal-register-page input::placeholder { color: #aebbb4; }
+body.theme-dark .modal-register-page .option-description,
+body.theme-dark .modal-register-page .referral-note {
+    background: #202825; color: #edf5f0; border-color: #35413d;
+}
+body.theme-dark .modal-register-page .register-actions {
+    background: rgba(21,27,25,.98);
+    border-color: #35413d;
+}
+body.theme-dark .modal-register-page .btn-finish-register { color: #fff; }
+
+
+/* =========================================================
+   GREENPHONE ACCOUNT PAGES — HEADER THEME + DARK CONTRAST
+   Chỉ bổ sung cho login/register/profile/forgot-password.
+========================================================= */
+.account-page-header {
+    min-height: 66px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 10px clamp(18px, 4vw, 64px);
+    background: linear-gradient(110deg, #087443, #0a8a50);
+    color: #fff;
+    position: relative;
+    z-index: 30;
+}
+.account-header-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: -.4px;
+}
+.account-header-brand span {
+    width: 34px; height: 34px; display: inline-grid; place-items: center;
+    border-radius: 50%; background: #fff; color: #087443; font-size: 23px;
+}
+.account-theme-toggle.account-theme-inline {
+    position: static !important;
+    inset: auto !important;
+    flex: 0 0 46px;
+    width: 46px; height: 46px;
+    display: inline-grid; place-items: center;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 50%;
+    background: rgba(15,35,25,.88);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,.16);
+    font-size: 23px; line-height: 1;
+    cursor: pointer;
+    transition: transform .2s, background .2s, border-color .2s;
+}
+.account-theme-toggle.account-theme-inline:hover { transform: translateY(-1px) rotate(8deg); background: #10251b; border-color: rgba(255,255,255,.7); }
+.account-form-heading { display:flex; align-items:center; justify-content:center; gap:14px; position:relative; margin-bottom:30px; }
+.account-form-heading h2 { margin:0 !important; flex:1; }
+.account-form-heading .account-theme-inline { position:absolute !important; right:0; top:50%; transform:translateY(-50%); }
+.account-form-heading .account-theme-inline:hover { transform:translateY(-50%) rotate(8deg); }
+.profile-topbar .profile-theme-toggle { margin-left:auto; margin-right:4px; }
+.register-page-header + .register-page { padding-top: 28px; }
+.forgot-page-header + .forgot-page { min-height: calc(100vh - 66px); }
+
+/* Make all dark-mode text readable, including elements with old hard-coded black colors. */
+body.theme-dark { background:#101713 !important; color:#f4f8f5 !important; color-scheme:dark; }
+body.theme-dark .account-page,
+body.theme-dark .account-left,
+body.theme-dark .account-right,
+body.theme-dark .register-page,
+body.theme-dark .register-container,
+body.theme-dark .forgot-page { background:#101713 !important; color:#f4f8f5 !important; }
+body.theme-dark .account-left h1,
+body.theme-dark .account-subtitle,
+body.theme-dark .benefit-item p,
+body.theme-dark .form-group label,
+body.theme-dark .login-box h2,
+body.theme-dark .register-title,
+body.theme-dark .register-section h2,
+body.theme-dark .register-field label,
+body.theme-dark .register-policy,
+body.theme-dark .option-title,
+body.theme-dark .radio-group label,
+body.theme-dark .upload-section,
+body.theme-dark .upload-section h3,
+body.theme-dark .upload-section p,
+body.theme-dark .forgot-card,
+body.theme-dark .forgot-card h1,
+body.theme-dark .forgot-card p,
+body.theme-dark .forgot-card label,
+body.theme-dark .register-text,
+body.theme-dark .login-divider,
+body.theme-dark .password-note,
+body.theme-dark .register-or,
+body.theme-dark .social-title,
+body.theme-dark .register-field small,
+body.theme-dark .register-field label span { color:#f1f5f2 !important; }
+body.theme-dark .account-benefits { background:linear-gradient(135deg,#1b2821,#17231c) !important; border:1px solid #2d4637; }
+body.theme-dark .account-benefits a,
+body.theme-dark .forgot-password,
+body.theme-dark .register-text a,
+body.theme-dark .register-policy a { color:#65d99a !important; }
+body.theme-dark .form-group input,
+body.theme-dark .register-field input,
+body.theme-dark .register-field select,
+body.theme-dark .register-password input,
+body.theme-dark .forgot-card input,
+body.theme-dark .password-box input,
+body.theme-dark .register-social .social-btn,
+body.theme-dark .social-login button,
+body.theme-dark .btn-back-login { background:#1b2821 !important; color:#f4f8f5 !important; border-color:#3a5144 !important; }
+body.theme-dark input::placeholder,
+body.theme-dark textarea::placeholder { color:#aab8af !important; opacity:1; }
+body.theme-dark .option-description,
+body.theme-dark .referral-note { background:#202d25 !important; color:#dce8df !important; }
+body.theme-dark .option-description b { color:#f4f8f5 !important; }
+body.theme-dark .register-actions { background:rgba(16,23,19,.97) !important; }
+body.theme-dark .login-divider::before,
+body.theme-dark .login-divider::after { background:#405047 !important; }
+body.theme-dark .account-right { border-left-color:#293a30 !important; }
+body.theme-dark .forgot-card { background:#17231c !important; border-color:#2e4336 !important; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+body.theme-dark .register-page-header + .register-page,
+body.theme-dark .forgot-page-header + .forgot-page { background:#101713 !important; }
+body.theme-dark .register-page-header .account-header-brand,
+body.theme-dark .forgot-page-header .account-header-brand { color:#fff !important; }
+body.theme-dark .register-page:not(.modal-register-page) .register-field input,
+body.theme-dark .register-page:not(.modal-register-page) .register-field select { background:#1b2821 !important; color:#f4f8f5 !important; border-color:#3a5144 !important; }
+body.theme-dark .register-page:not(.modal-register-page) .register-policy { border-bottom-color:#34473b !important; }
+body.theme-dark .register-page:not(.modal-register-page) .register-actions { box-shadow:0 -10px 28px rgba(0,0,0,.25) !important; }
+body.theme-dark .account-theme-toggle.account-theme-inline { background:#1c2b22; color:#fff; border-color:#3a5144; }
+@media (max-width: 760px) {
+  .account-page-header { min-height:58px; padding:8px 14px; }
+  .account-header-brand { font-size:21px; }
+  .account-theme-toggle.account-theme-inline { width:42px; height:42px; flex-basis:42px; }
+  .account-form-heading { padding-top:42px; }
+  .account-form-heading .account-theme-inline { top:0; right:0; transform:none; }
+  .account-form-heading .account-theme-inline:hover { transform:rotate(8deg); }
+}
+
+/* Subtle branded backdrop for the login split layout. */
+.account-page {
+  background: radial-gradient(ellipse at 12% 12%, rgba(8,116,67,.08), transparent 36%),
+              radial-gradient(ellipse at 88% 86%, rgba(8,138,80,.07), transparent 34%), #fff;
+}
+.account-left {
+  background: radial-gradient(circle at 12% 18%, rgba(8,116,67,.055), transparent 30%),
+              linear-gradient(145deg, #ffffff 0%, #f7fbf8 100%);
+}
+.account-right {
+  background: radial-gradient(circle at 92% 8%, rgba(8,116,67,.055), transparent 32%), #fff;
+}
+.account-benefits { box-shadow: 0 18px 48px rgba(8,70,42,.07); }
+body.theme-dark .account-page {
+  background: radial-gradient(ellipse at 12% 12%, rgba(20,145,85,.12), transparent 36%),
+              radial-gradient(ellipse at 88% 86%, rgba(20,145,85,.09), transparent 34%), #101713 !important;
+}
+body.theme-dark .account-left {
+  background: radial-gradient(circle at 12% 18%, rgba(20,145,85,.10), transparent 30%),
+              linear-gradient(145deg, #111a15 0%, #101713 100%) !important;
+}
+body.theme-dark .account-right {
+  background: radial-gradient(circle at 92% 8%, rgba(20,145,85,.09), transparent 32%), #101713 !important;
+}
+
+
+/* =========================================================
+   PROFILE HEADER POLISH — compact theme control + stable logo
+   ========================================================= */
+.profile-topbar .profile-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 220px;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: -.45px;
+}
+.profile-topbar .profile-logo-leaf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: #fff;
+    color: #087443;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.profile-topbar .profile-theme-toggle.account-theme-inline {
+    position: relative !important;
+    inset: auto !important;
+    margin: 0 0 0 18px !important;
+    flex: 0 0 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.28) !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,.13) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    font-size: 16px !important;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.profile-topbar .profile-theme-toggle.account-theme-inline:hover {
+    transform: rotate(16deg) !important;
+    background: rgba(255,255,255,.24) !important;
+    border-color: rgba(255,255,255,.65) !important;
+}
+.profile-topbar .profile-top-links { flex-shrink: 0; }
+@media (max-width: 900px) {
+    .profile-topbar .profile-logo { width: auto; font-size: 22px; }
+    .profile-topbar .profile-theme-toggle.account-theme-inline { margin-left: 10px !important; }
+}
+@media (max-width: 520px) {
+    .profile-topbar { gap: 8px; padding: 0 12px; }
+    .profile-topbar .profile-logo { font-size: 19px; gap: 6px; }
+    .profile-topbar .profile-logo-leaf { width: 30px; height: 30px; flex-basis: 30px; font-size: 16px; }
+    .profile-topbar .profile-theme-toggle.account-theme-inline { width: 28px !important; height: 28px !important; flex-basis: 28px !important; min-width: 28px; margin-left: auto !important; }
+}
+
+/* Registration is a standalone page: no separate logo header bar. */
+.register-page { padding-top: 28px; }
+body.theme-dark .register-page { padding-top: 28px; }
+
+
+/* GreenPhone brand mark and compact theme control (requested visual refresh). */
+.gp-leaf-mark {
+    width: 40px; height: 40px; flex: 0 0 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-sizing: border-box; border-radius: 14px;
+    background: #fff; color: #087443;
+}
+.gp-leaf-mark svg { width: 24px; height: 24px; display: block; }
+.gp-leaf-mark svg path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.brand-logo .gp-leaf-mark { vertical-align: middle; margin-right: 8px; }
+.profile-logo .gp-leaf-mark { width: 40px; height: 40px; margin-right: 6px; vertical-align: middle; }
+.forgot-logo { display: inline-flex !important; align-items: center; justify-content: center; gap: 11px; }
+.forgot-logo .gp-leaf-mark { background: #087443; color: #fff; }
+.forgot-logo .gp-leaf-mark svg path { stroke: #fff; }
+.account-theme-toggle.account-theme-inline.profile-theme-toggle {
+    flex: 0 0 40px !important; width: 40px !important; height: 40px !important;
+    min-width: 40px; padding: 0; border-radius: 50%;
+    background: rgba(255,255,255,.08) !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    color: #e9f4ed !important; box-shadow: none;
+}
+.gp-theme-moon { width: 20px; height: 20px; display: block; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.theme-dark .gp-leaf-mark { background: #f8fbf9; color: #087443; }
+body.theme-dark .forgot-logo .gp-leaf-mark { background: #087443; color: #fff; }
+body.theme-dark .forgot-logo .gp-leaf-mark svg path { stroke: #fff; }
+@media (max-width: 700px) {
+    .gp-leaf-mark { width: 36px; height: 36px; flex-basis: 36px; border-radius: 12px; }
+    .gp-leaf-mark svg { width: 22px; height: 22px; }
+}
+
+
+/* REGISTER BRAND COLORS: consistent green CTA on page and popup. */
+body .register-page .btn-finish-register { background:#087443; border-color:#087443; color:#fff; }
+body .register-page .btn-finish-register:hover { background:#056438; border-color:#056438; }
+body.theme-dark .register-page .btn-finish-register { color:#fff; }
+
+
+/* FIX PACK: centered registration mascot, functional compact theme icon, readable dark profile. */
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-mascot {
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+}
+body:not(.is-register-iframe) .register-page:not(.modal-register-page) .register-mascot img {
+    display:block !important;
+    margin:0 auto !important;
+}
+.account-theme-toggle svg { width:20px; height:20px; display:block; }
+.gp-theme-sun { fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.profile-topbar .profile-theme-toggle.account-theme-inline {
+    flex:0 0 38px !important; width:38px !important; height:38px !important;
+    min-width:38px !important; margin-left:auto !important; margin-right:0 !important;
+}
+body.theme-dark .profile-wrapper,
+body.theme-dark .profile-main,
+body.theme-dark .profile-content,
+body.theme-dark .profile-detail,
+body.theme-dark .profile-sidebar {
+    color:#f3f7f4 !important;
+}
+body.theme-dark .profile-summary,
+body.theme-dark .profile-shortcuts,
+body.theme-dark .profile-main-content,
+body.theme-dark .profile-panel,
+body.theme-dark .profile-card,
+body.theme-dark .profile-content,
+body.theme-dark .profile-section,
+body.theme-dark .profile-featured,
+body.theme-dark .profile-detail,
+body.theme-dark .profile-form-card {
+    background:#1a2520 !important;
+    color:#f3f7f4 !important;
+    border-color:#34483c !important;
+    box-shadow:0 8px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+body.theme-dark .profile-summary *,
+body.theme-dark .profile-shortcuts *,
+body.theme-dark .profile-main *,
+body.theme-dark .profile-wrapper * {
+    border-color:rgba(190,220,201,.18);
+}
+body.theme-dark .profile-user-name,
+body.theme-dark .profile-summary-stat strong,
+body.theme-dark .profile-channel-name,
+body.theme-dark .profile-shortcut span,
+body.theme-dark .profile-menu-item,
+body.theme-dark .profile-panel h2,
+body.theme-dark .profile-panel h3,
+body.theme-dark .profile-main h2,
+body.theme-dark .profile-main h3,
+body.theme-dark .profile-detail strong,
+body.theme-dark .profile-form-card label,
+body.theme-dark .profile-content label {
+    color:#f4f8f5 !important;
+}
+body.theme-dark .profile-user-phone,
+body.theme-dark .profile-user-update,
+body.theme-dark .profile-summary-stat span,
+body.theme-dark .profile-channel-title,
+body.theme-dark .profile-channel-box small,
+body.theme-dark .profile-detail label,
+body.theme-dark .profile-muted,
+body.theme-dark .profile-main p {
+    color:#b9c9bf !important;
+}
+body.theme-dark .profile-notice {
+    background:linear-gradient(120deg,#202e26,#1a2821) !important;
+    color:#edf6f0 !important;
+    border-color:#34483c !important;
+    box-shadow:0 5px 16px rgba(0,0,0,.18) !important;
+}
+body.theme-dark .profile-notice *,
+body.theme-dark .profile-notice-close { color:#edf6f0 !important; }
+body.theme-dark .profile-main input,
+body.theme-dark .profile-main select,
+body.theme-dark .profile-main textarea {
+    background:#111a15 !important; color:#f4f8f5 !important;
+    border-color:#405649 !important;
+}
+body.theme-dark .profile-menu-item.active {
+    background:#244b36 !important; color:#fff !important;
+}
+body.theme-dark .profile-shortcut-icon,
+body.theme-dark .profile-summary-icon {
+    background:#263a2e !important;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
