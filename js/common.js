@@ -25,8 +25,8 @@ const PAGES = {
   compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
   cart:          { url: "#", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
   checkout:      { url: "#", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
-  login:         { url: "#", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
-  account:       { url: "#", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
+  login:         { url: "login.html", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
+  account:       { url: "account.html", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
   orders:        { url: "#", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },
   info:          { url: "#", title: "Trang thông tin",          module: "Khung chung" }
 };
@@ -222,6 +222,7 @@ const ICON = {
   check:  svg('<path d="M20 6L9 17l-5-5"/>'),
   alert:  svg('<path d="M10.3 3.7 2.4 17.4A2 2 0 0 0 4.1 20h15.8a2 2 0 0 0 1.7-2.6L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>'),
   up:     svg('<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>'),
+  back:   svg('<path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>'),
   sun:    svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', 'class="i-sun"'),
   moon:   svg('<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>', 'class="i-moon"'),
   /* mũi tên tam giác chỉ xuống (đặc) */
@@ -277,11 +278,21 @@ function renderHeader() {
   if (!box) return;
   const user = getCurrentUser();
 
-  /* Đăng nhập / Đăng ký gộp một nút; đã đăng nhập thì hiện tên */
+  /* Đăng nhập / Đăng ký gộp một nút; đã đăng nhập thì hiện tên.
+     Nút Đăng xuất không đặt cạnh avatar nữa; đăng xuất vẫn có thể thực hiện
+     từ trang tài khoản nếu module tài khoản cần dùng hàm logout(). */
   const accountHtml = user
-    ? `<a ${pageAttrs("account")} class="hbtn">${ICON.user}<span class="hbtn-text">${user.fullName}</span></a>
-       <a href="#" id="btn-logout" class="logout-link">Đăng xuất</a>`
+    ? `<a ${pageAttrs("account")} class="hbtn" title="Tài khoản của tôi">${ICON.user}<span class="hbtn-text">${user.fullName}</span></a>`
     : `<a ${pageAttrs("login")} class="hbtn" title="Đăng nhập / Đăng ký">${ICON.user}<span class="hbtn-text">Đăng nhập</span></a>`;
+
+  /* Nút quay lại: chỉ hiện trên các trang con, không hiện ở trang chủ.
+     history.back() giữ đúng trang người dùng vừa truy cập; nếu mở trực tiếp
+     một trang thì chuyển về trang chủ để không bị đứng ở trang hiện tại. */
+  const currentFile = location.pathname.split("/").pop() || "index.html";
+  const isHomePage = currentFile === "" || currentFile === "index.html";
+  const backButtonHtml = isHomePage
+    ? ""
+    : `<button type="button" class="hbtn header-back-btn" id="btn-back" title="Quay lại">${ICON.back}<span class="hbtn-text">Quay lại</span></button>`;
 
   /* Chữ chạy: ưu đãi minh họa (đổi nội dung tại đây) */
   const promos = [
@@ -310,7 +321,8 @@ function renderHeader() {
     </div>
 
     <div class="container header-main">
-      <a ${pageAttrs("home")} class="logo"><span class="logo-mark">${ICON.leaf}</span>GreenPhone</a>
+      ${backButtonHtml}
+      <a ${pageAttrs("home")} class="logo" title="Về trang chủ"><span class="logo-mark">${ICON.leaf}</span>GreenPhone</a>
 
       <!-- Danh mục (mũi tên tam giác chỉ xuống, bấm để mở) -->
       <div class="cat-wrap">
@@ -363,9 +375,14 @@ function renderHeader() {
     </div>
   </header>`;
 
-  /* Đăng xuất */
-  const out = document.getElementById("btn-logout");
-  if (out) out.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); logout(); });
+  /* Nút quay lại */
+  const back = document.getElementById("btn-back");
+  if (back) {
+    back.addEventListener("click", () => {
+      if (window.history.length > 1) window.history.back();
+      else location.href = pageUrl("home");
+    });
+  }
 
   /* Hai menu thả xuống; bấm ra ngoài hoặc nhấn Esc để đóng */
   setupMenu("cat-btn", "cat-menu");
