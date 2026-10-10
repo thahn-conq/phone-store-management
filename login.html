@@ -12,6 +12,8 @@
 
 <body>
 
+<a href="index.html" class="login-back-btn" aria-label="Quay lại trang trước" title="Quay lại"><span aria-hidden="true">←</span></a>
+
 <div class="account-page">
 
     <!-- BÊN TRÁI -->
@@ -39,7 +41,7 @@
             <div class="benefit-item"><span>⭐</span><p><b>Thăng hạng</b> nhận voucher đến 300.000₫</p></div>
             <div class="benefit-item"><span>🎓</span><p><b>G-Student / G-Teacher</b> ưu đãi thêm đến 10%</p></div>
             <div class="benefit-item"><span>💼</span><p><b>G-Business</b> nhận ưu đãi độc quyền, chiết khấu đến 8%</p></div>
-            <a href="register.html" id="benefit-register-link">Xem chi tiết chính sách ưu đãi ›</a>
+            <a href="#" id="benefit-register-link" aria-label="Yêu cầu đăng nhập để xem chi tiết chính sách ưu đãi">Xem chi tiết chính sách ưu đãi ›</a>
 
         </div>
 
@@ -127,15 +129,15 @@
 
             <div class="social-login">
 
-                <button type="button" class="social-provider social-google" aria-label="Đăng nhập bằng Google">
+                <a href="https://accounts.google.com/" target="_blank" rel="noopener noreferrer" class="social-provider social-google" aria-label="Đăng nhập bằng Google">
                     <span class="google-logo" aria-hidden="true">G</span>
                     <span>Google</span>
-                </button>
+                </a>
 
-                <button type="button" class="social-provider social-zalo" aria-label="Đăng nhập bằng Zalo">
+                <a href="https://id.zalo.me/" target="_blank" rel="noopener noreferrer" class="social-provider social-zalo" aria-label="Đăng nhập bằng Zalo">
                     <span class="zalo-logo" aria-hidden="true">Zalo</span>
                     <span>Zalo</span>
-                </button>
+                </a>
 
             </div>
 
@@ -168,5 +170,13 @@
 
 <script src="js/account.js"></script>
 
+<script>
+    // Chi tiết ưu đãi chỉ dành cho khách hàng đã đăng nhập.
+    document.getElementById('benefit-register-link')?.addEventListener('click', function (event) {
+        event.preventDefault();
+        alert('Vui lòng đăng nhập để xem chi tiết chính sách ưu đãi.');
+        document.getElementById('phone')?.focus();
+    });
+</script>
 </body>
 </html>
