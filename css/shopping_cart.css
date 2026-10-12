@@ -1,0 +1,495 @@
+/* ==========================================================
+   BỔ SUNG STYLE CELLPHONES NÂNG CAO (Prefix: cart-)
+   ========================================================== */
+
+/* Nút bấm xem thông tin nhanh trên thẻ sản phẩm */
+.cart-item-title-link {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-block;
+  transition: color .15s;
+}
+.cart-item-title-link:hover {
+  color: var(--green-700);
+  text-decoration: underline;
+}
+.cart-item-quickview-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--green-700);
+  background: var(--green-100);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+  width: fit-content;
+}
+.cart-item-quickview-btn:hover {
+  background: #D2ECDC;
+}
+
+.cart-item-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.cart-item-price {
+  color: var(--danger);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.cart-item-old-price {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+/* Các tiện ích đi kèm trong dòng sản phẩm giống ảnh CellphoneS */
+.cart-item-extras {
+  grid-column: 2 / -1;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+.cart-extra-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cart-extra-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+}
+.cart-extra-link {
+  color: var(--green-700);
+  font-weight: 600;
+  cursor: pointer;
+}
+.cart-extra-link:hover {
+  text-decoration: underline;
+}
+
+/* Khối Mua Kèm Tiết Kiệm Hơn (Ảnh 4 CellphoneS) */
+.cart-addons-box {
+  margin-top: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.cart-addons-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.cart-addons-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green-900);
+}
+.cart-addons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.cart-addon-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+.cart-addon-info {
+  font-size: 13px;
+}
+.cart-addon-name {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* ================= MODAL / POPUP ================= */
+.cart-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 40, 25, 0.6);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.cart-modal-backdrop.show {
+  display: flex;
+}
+.cart-modal-box {
+  background: var(--white);
+  width: 100%;
+  max-width: 580px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalFadeIn .2s ease-out;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cart-modal-close {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+.cart-modal-close:hover {
+  color: var(--danger);
+}
+.cart-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cart-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.cart-modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+.cart-modal-footer {
+  padding: 14px 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: var(--bg);
+}
+
+/* Bảng thông số kỹ thuật bên trong Modal Chi Tiết */
+.cart-spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+.cart-spec-table tr:nth-child(even) {
+  background: var(--bg);
+}
+.cart-spec-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.cart-spec-label {
+  font-weight: 600;
+  color: var(--ink-soft);
+  width: 140px;
+}
+
+/* Modal Bảo hành mở rộng */
+.cart-warranty-alert {
+  background: var(--green-100);
+  border: 1px solid rgba(15, 123, 79, 0.2);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+.cart-warranty-alert p {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+.cart-warranty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cart-warranty-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.cart-warranty-item:hover {
+  background: var(--muted);
+  border-color: var(--green-500);
+}
+.cart-warranty-item input {
+  margin-top: 4px;
+  accent-color: var(--green-700);
+}
+.cart-warranty-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 640px) {
+  .cart-addons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Khống chế kích thước icon SVG ở dải cam kết trên cùng */
+.cart-policy-item svg {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+/* Khống chế icon giỏ hàng trống nếu có */
+.cart-final-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  background: var(--green-100);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 800;
+}
+.cart-final-total .cart-total-price {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--danger);
+}
+#cart-coupon-message { font-size: 12px; }
+
+.cart-coupon {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+.cart-coupon h3 { margin: 0 0 12px; font-size: 16px; }
+.cart-coupon-form { display: flex; gap: 8px; }
+.cart-coupon-form .input { flex: 1; min-width: 0; }
+.cart-coupon-form .btn { flex-shrink: 0; white-space: nowrap; }
+.cart-coupon-hint, #coupon-message { font-size: 12px; margin: 10px 0 0; }
+.cart-coupon .cart-extra-link { background: none; border: 0; padding: 0; margin-top: 10px; }
+#coupon-discount-row[hidden] { display: none; }
+
+.cart-qr-box {
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.cart-qr-img-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.cart-qr-img-wrap img {
+  display: block;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+}
+
+.cart-qr-details {
+  overflow-wrap: anywhere;
+}
+
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 320px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.cart-empty h2,
+.cart-empty p {
+  margin: 0;
+}
+
+.cart-empty-icon {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+/* Đảm bảo khung chứa không bị vỡ layout */
+.cart-policy-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--green-100);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+/* 1. ÉP KÍCH THƯỚC ẢNH SẢN PHẨM TRONG GIỎ HÀNG KHÔNG ĐƯỢC TO QUÁ */
+.cart-item-img {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
+  object-fit: contain !important;
+  background: var(--green-100);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  display: block;
+}
+
+/* 2. CHỐNG VỠ BỐ CỤC THẺ DÒNG SẢN PHẨM */
+.cart-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+/* 3. KHỐNG CHẾ ICON SVG TOÀN BỘ TRANG GIỎ HÀNG */
+.cart-policy-item svg {
+  width: 18px !important;
+  height: 18px !important;
+  flex-shrink: 0;
+}
+/* ==========================================================
+   FIX LỆCH KHUNG TĂNG GIẢM SỐ LƯỢNG & CĂN CHỈNH CART ITEM
+   ========================================================== */
+
+/* 1. Khung chỉnh số lượng: Ép chặt nằm ngang trên 1 dòng */
+.cart-qty-ctrl {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--white) !important;
+  overflow: hidden !important;
+  height: 32px !important;
+  width: fit-content !important;
+  flex-shrink: 0 !important;
+}
+
+/* Nút trừ và nút cộng */
+.cart-qty-btn {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 28px !important;
+  text-align: center !important;
+  border: none !important;
+  background: var(--muted) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  color: var(--ink) !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+.cart-qty-btn:hover {
+  background: var(--green-100) !important;
+  color: var(--green-900) !important;
+}
+
+/* Ô input hiển thị số lượng */
+.cart-qty-input {
+  width: 44px !important;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid var(--line) !important;
+  border-right: 1px solid var(--line) !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--ink) !important;
+  outline: none !important;
+  background: var(--white) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 2. Căn hàng ngang cho Thẻ Sản Phẩm */
+.cart-item {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  background: var(--white) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  margin-bottom: 12px !important;
+}
+
+.cart-item-info {
+  flex: 1 1 200px !important;
+  min-width: 0 !important;
+}
+
+.cart-item-col-qty {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.cart-btn-del {
+  background: none !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--ink-soft) !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+}
+.cart-btn-del:hover {
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
+}

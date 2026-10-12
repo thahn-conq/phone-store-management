@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenPhone - Thanh toán</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/shopping_cart.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main class="main">
+    <div class="container">
+      <div class="cart-breadcrumb">
+        <a data-page="home">Trang chủ</a> / <a data-page="cart">Giỏ hàng</a> / <span>Thanh toán</span>
+      </div>
+
+      <h1 class="cart-page-title">Thông tin đặt hàng</h1>
+
+      <div class="cart-layout" id="checkout-layout" style="display:grid; grid-template-columns:minmax(0,1.55fr) minmax(280px,390px); gap:20px; align-items:flex-start;">
+        <!-- Cột trái: Form thông tin & Phương thức thanh toán -->
+        <div class="cart-col-main" style="min-width:0;">
+          <div class="card cart-card-section">
+            <h2 class="cart-section-title">1. Thông tin người nhận</h2>
+            <form id="checkout-form" novalidate>
+              <div class="form-group">
+                <label for="fullName">Họ và tên khách hàng <span class="price">*</span></label>
+                <input type="text" id="fullName" class="input" placeholder="Ví dụ: Nguyen van A">
+                <div class="error-text" id="err-fullName"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Số điện thoại liên hệ <span class="price">*</span></label>
+                <input type="tel" id="phoneNumber" class="input" placeholder="Ví dụ: 0987654321">
+                <div class="error-text" id="err-phoneNumber"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="province">Tỉnh / Thành phố <span class="price">*</span></label>
+                <select id="province" class="input">
+                  <option value="">-- Chọn tỉnh / thành phố --</option>
+                </select>
+                <div class="error-text" id="err-province"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="district">Quận / Huyện <span class="price">*</span></label>
+                <select id="district" class="input" disabled>
+                  <option value="">-- Chọn quận / huyện --</option>
+                </select>
+                <div class="error-text" id="err-district"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="ward">Phường / Xã <span class="price">*</span></label>
+                <select id="ward" class="input" disabled>
+                  <option value="">-- Chọn phường / xã --</option>
+                </select>
+                <div class="error-text" id="err-ward"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Địa chỉ nhận hàng chi tiết <span class="price">*</span></label>
+                <input type="text" id="address" class="input" placeholder="Số nhà, tên đường, tòa nhà, khu phố...">
+                <div class="error-text" id="err-address"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="orderNote">Ghi chú giao hàng (không bắt buộc)</label>
+                <textarea id="orderNote" class="input" rows="2" placeholder="Ví dụ: Giao vào giờ hành chính, gọi trước khi đến..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="cart-pay-option" style="padding: 10px 12px; display: flex; align-items: flex-start; gap: 10px;">
+                  <input type="checkbox" id="confirm-order" style="margin-top: 3px;">
+                  <span>Xác nhận thông tin nhận hàng, sản phẩm và phương thức thanh toán là chính xác.</span>
+                </label>
+                <div class="error-text" id="err-confirm-order"></div>
+              </div>
+            </form>
+          </div>
+
+          <div class="card cart-card-section">
+            <h2 class="cart-section-title">2. Chọn phương thức thanh toán</h2>
+            
+            <div class="cart-pay-methods">
+              <label class="cart-pay-option">
+                <input type="radio" name="paymentMethod" value="COD" checked>
+                <div class="cart-pay-info">
+                  <strong>Thanh toán khi nhận hàng (COD)</strong>
+                  <span class="text-soft">Thanh toán bằng tiền mặt khi shipper giao máy tới nơi.</span>
+                </div>
+              </label>
+
+              <label class="cart-pay-option">
+                <input type="radio" name="paymentMethod" value="QR">
+                <div class="cart-pay-info">
+                  <strong>Chuyển khoản VietQR (Quét mã ngân hàng)</strong>
+                  <span class="text-soft">Mã QR tạo tự động đúng số tiền, xác nhận nhanh chóng.</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Khung hiện mã QR khi chọn phương thức QR -->
+            <div class="cart-qr-box" id="cart-qr-box" style="display: none;">
+              <div class="cart-qr-head">
+                <span class="badge">Quét mã để chuyển khoản</span>
+                <p class="text-soft">Mở ứng dụng Ngân hàng bất kỳ hoặc Ví điện tử để quét mã bên dưới:</p>
+              </div>
+              <div class="cart-qr-img-wrap">
+                <img id="cart-qr-img" src="" alt="Mã QR thanh toán">
+              </div>
+              <div class="cart-qr-details">
+                <p>Ngân hàng: <b id="qr-bank-name">MB Bank (Quân Đội)</b></p>
+                <p>Số tài khoản: <b id="qr-account-no">0339597863</b></p>
+                <p>Chủ tài khoản: <b id="qr-account-name">CHU THI HUONG</b></p>
+                <p>Số tiền: <b class="price" id="qr-amount-text">0đ</b></p>
+                <p>Nội dung CK: <b id="qr-memo-text">GP...</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột phải: Tóm tắt đơn hàng thanh toán -->
+        <div class="cart-col-side" style="position:sticky; top:16px; align-self:flex-start;">
+          <div class="card cart-summary" style="max-height:calc(100vh - 120px); overflow:auto;">
+            <h2 class="cart-summary-title">Đơn hàng của bạn</h2>
+            
+            <div class="cart-checkout-items" id="checkout-items-list">
+              <!-- Render các món mua -->
+            </div>
+
+            <div class="cart-summary-line">
+              <span class="text-soft">Tạm tính:</span>
+              <b id="checkout-subtotal">0đ</b>
+            </div>
+            <div class="cart-summary-line">
+              <span class="text-soft">Phí vận chuyển:</span>
+              <span class="badge" id="checkout-shipping">Miễn phí</span>
+            </div>
+            <section class="cart-coupon" aria-labelledby="coupon-title">
+              <h3 id="coupon-title">🎟 Mã giảm giá</h3>
+              <form id="coupon-form" class="cart-coupon-form">
+                <input id="coupon-code" class="input" aria-label="Mã giảm giá" placeholder="Nhập mã giảm giá" aria-describedby="coupon-message">
+                <button class="btn btn-primary" type="submit">Áp dụng</button>
+              </form>
+              <p class="cart-coupon-hint">Mã dùng thử: <b>GREEN100</b> — giảm 100.000đ cho đơn từ 1 triệu.</p>
+              <p id="coupon-message" role="status" aria-live="polite"></p>
+              <button id="coupon-remove" type="button" class="cart-extra-link" hidden>Bỏ mã giảm giá</button>
+            </section>
+            <div class="cart-summary-line" id="coupon-discount-row" hidden>
+              <span>Giảm giá từ mã:</span>
+              <b class="price" id="coupon-discount">0đ</b>
+            </div>
+            <hr class="cart-hr">
+            <div class="cart-summary-line cart-total-line">
+              <span>Tổng thanh toán:</span>
+              <span class="price cart-total-price" id="checkout-total">0đ</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-submit-order">
+              Xác nhận đặt hàng
+            </button>
+            <p class="cart-note text-soft">Bằng cách ấn đặt hàng, bạn đồng ý với chính sách mua hàng của GreenPhone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data/products.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

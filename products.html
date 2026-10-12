@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenPhone - Danh sách điện thoại</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="main">
+    <div class="container">
+      <section class="home-section">
+        <div class="home-section-head" style="margin-bottom: 20px;">
+          <h2 id="products-title">Danh sách điện thoại</h2>
+          <span class="text-soft" id="products-count"></span>
+        </div>
+        <div class="home-products" id="product-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data/products.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof PRODUCTS === "undefined") return;
+
+      const params = new URLSearchParams(window.location.search);
+      const brand = (params.get("brand") || "all").trim();
+      const q = (params.get("q") || "").trim().toLowerCase();
+      let list = [...PRODUCTS];
+
+      if (brand && brand !== "all") {
+        list = list.filter(product => product.brand === brand);
+      }
+
+      if (q) {
+        list = list.filter(product => {
+          const haystack = `${product.name} ${product.brand} ${product.description}`.toLowerCase();
+          return haystack.includes(q);
+        });
+      }
+
+      const title = document.getElementById("products-title");
+      const count = document.getElementById("products-count");
+      if (title) title.textContent = brand && brand !== "all" ? `Điện thoại ${brand}` : "Danh sách điện thoại";
+      if (count) count.textContent = `${list.length} sản phẩm`;
+
+      renderList("product-grid", list);
+    });
+  </script>
+</body>
+</html>
