@@ -1,3 +1,18 @@
+/* Resolve the shared { variantId, quantity } contract without changing storage keys. */
+function resolveCartItems(items = getCart()) {
+  if (!Array.isArray(items)) return [];
+  return items.filter(item => item && Number.isInteger(Number(item.quantity)) && Number(item.quantity) > 0)
+    .map(item => {
+      const found = findVariant(item.variantId);
+      if (!found) return item.name && Number.isFinite(Number(item.price)) ? { ...item, quantity: Number(item.quantity), selected: item.selected !== false } : null;
+      const { product, variant } = found;
+      return { ...item, id: product.id, name: product.name, color: variant.color,
+        storage: variant.storage, price: variant.price, originalPrice: variant.originalPrice,
+        image: variant.image || product.image, quantity: Number(item.quantity),
+        selected: item.selected !== false, warrantyPrice: Number(item.warrantyPrice) || 0 };
+    }).filter(Boolean);
+}
+
 /* ==========================================================
    js/checkout.js - XỬ LÝ THANH TOÁN, QR CODE & ĐƠN HÀNG
    ========================================================== */
@@ -12,117 +27,69 @@ const BANK_CONFIG = {
   accountName: "CHU THI HUONG"
 };
 
-const ADDRESS_DATA = {
-  "Hà Nội": {
-    "Quận Ba Đình": ["Phường Phúc Xá", "Phường Trúc Bạch", "Phường Cống Vị"],
-    "Quận Cầu Giấy": ["Phường Dịch Vọng", "Phường Mai Dịch", "Phường Yên Hòa"],
-    "Quận Hoàn Kiếm": ["Phường Hàng Trống", "Phường Lý Thái Tổ", "Phường Chương Dương Độ"],
-    "Quận Tây Hồ": ["Phường Bưởi", "Phường Nhật Tân", "Phường Xuân La"],
-    "Quận Đống Đa": ["Phường Nam Đồng", "Phường Khâm Thiên", "Phường Trung Liệt"]
-  },
-  "Thành phố Hồ Chí Minh": {
-    "Quận 1": ["Phường Bến Nghé", "Phường Đa Kao", "Phường Nguyễn Thái Bình"],
-    "Quận 3": ["Phường 1", "Phường 2", "Phường 5"],
-    "Quận 7": ["Phường Tân Phú", "Phường Tân Hưng", "Phường Phú Mỹ"],
-    "Thủ Đức": ["Phường Linh Xuân", "Phường Bình Thọ", "Phường Tam Bình"],
-    "Quận 5": ["Phường 4", "Phường 7", "Phường 8"]
-  },
-  "Đà Nẵng": {
-    "Hải Châu": ["Phường Nam Dương", "Phường Thuận Phước", "Phường Bình Hiên"],
-    "Sơn Trà": ["Phường An Hải Bắc", "Phường Thọ Quang", "Phường Mân Thái"],
-    "Ngũ Hành Sơn": ["Phường Mỹ An", "Phường Khuê Mỹ", "Phường Hòa Quý"],
-    "Liên Chiểu": ["Phường Hòa Khánh Nam", "Phường Hòa Khánh Bắc", "Phường Hòa Minh"]
-  },
-  "Hải Phòng": {
-    "Hồng Bàng": ["Phường Sở Dầu", "Phường Quán Toan", "Phường Gia Viễn"],
-    "Ngô Quyền": ["Phường Lạch Tray", "Phường Máy Chai", "Phường Vạn Mỹ"],
-    "Lê Chân": ["Phường An Biên", "Phường An Dương", "Phường Hoà Nghĩa"],
-    "Kiến An": ["Phường Đồng Hòa", "Phường Nam Hồng", "Phường Trực Ninh"]
-  },
-  "Cần Thơ": {
-    "Ninh Kiều": ["Phường Cái Khế", "Phường An Khánh", "Phường Tân An"],
-    "Bình Thủy": ["Phường Bình Thủy", "Phường Thới An Đông", "Phường Trà Nóc"],
-    "Cái Răng": ["Phường Hưng Phú", "Phường Lê Bình", "Phường Tân Phú"],
-    "Ô Môn": ["Phường Châu Văn Liêm", "Phường Thới An", "Phường Thới Hòa"]
-  }
-};
+// Danh sách 34 tỉnh, thành phố; phường/xã do khách hàng tự nhập.
+const CHECKOUT_PROVINCES = [
+  "Tỉnh An Giang",
+  "Tỉnh Bắc Ninh",
+  "Tỉnh Cà Mau",
+  "Tỉnh Cao Bằng",
+  "Thành phố Cần Thơ",
+  "Thành phố Đà Nẵng",
+  "Tỉnh Đắk Lắk",
+  "Tỉnh Điện Biên",
+  "Tỉnh Đồng Nai",
+  "Tỉnh Đồng Tháp",
+  "Tỉnh Gia Lai",
+  "Thành phố Hà Nội",
+  "Tỉnh Hà Tĩnh",
+  "Thành phố Hải Phòng",
+  "Thành phố Hồ Chí Minh",
+  "Thành phố Huế",
+  "Tỉnh Hưng Yên",
+  "Tỉnh Khánh Hòa",
+  "Tỉnh Lai Châu",
+  "Tỉnh Lạng Sơn",
+  "Tỉnh Lào Cai",
+  "Tỉnh Lâm Đồng",
+  "Tỉnh Nghệ An",
+  "Tỉnh Ninh Bình",
+  "Tỉnh Phú Thọ",
+  "Tỉnh Quảng Ngãi",
+  "Tỉnh Quảng Ninh",
+  "Tỉnh Quảng Trị",
+  "Tỉnh Sơn La",
+  "Tỉnh Tây Ninh",
+  "Tỉnh Thái Nguyên",
+  "Tỉnh Thanh Hóa",
+  "Tỉnh Tuyên Quang",
+  "Tỉnh Vĩnh Long"
+];
 
 function formatCheckoutMoney(amount) {
   return Number(amount || 0).toLocaleString("vi-VN") + "đ";
 }
 
 function getSelectedCartItems() {
-  return getCart().filter(item => item.selected !== false);
+  return resolveCartItems().filter(item => item.selected !== false);
 }
 
 function populateProvinceOptions() {
   const provinceSelect = document.getElementById("province");
   if (!provinceSelect) return;
-  const provinces = Object.keys(ADDRESS_DATA);
+  const provinces = CHECKOUT_PROVINCES;
   provinceSelect.innerHTML = '<option value="">-- Chọn tỉnh / thành phố --</option>' +
     provinces.map(name => `<option value="${name}">${name}</option>`).join("");
 }
 
-function fillSelect(select, placeholder, values) {
-  if (!select) return;
-  select.innerHTML = `<option value="">${placeholder}</option>` +
-    values.map(value => `<option value="${value}">${value}</option>`).join("");
-}
-
-function updateAddressCascade() {
-  const provinceSelect = document.getElementById("province");
-  const districtSelect = document.getElementById("district");
-  const wardSelect = document.getElementById("ward");
-
-  if (!provinceSelect || !districtSelect || !wardSelect) return;
-
-  const selectedProvince = provinceSelect.value;
-  const districtData = selectedProvince && ADDRESS_DATA[selectedProvince] ? Object.keys(ADDRESS_DATA[selectedProvince]) : [];
-
-  fillSelect(districtSelect, "-- Chọn quận / huyện --", districtData);
-  districtSelect.disabled = districtData.length === 0;
-
-  const firstDistrict = districtData[0] || "";
-  const wardData = selectedProvince && ADDRESS_DATA[selectedProvince] && firstDistrict && ADDRESS_DATA[selectedProvince][firstDistrict]
-    ? ADDRESS_DATA[selectedProvince][firstDistrict]
-    : [];
-
-  fillSelect(wardSelect, "-- Chọn phường / xã --", wardData);
-  wardSelect.disabled = wardData.length === 0;
-
-  districtSelect.onchange = () => {
-    const chosenDistrict = districtSelect.value;
-    const wards = selectedProvince && ADDRESS_DATA[selectedProvince] && chosenDistrict && ADDRESS_DATA[selectedProvince][chosenDistrict]
-      ? ADDRESS_DATA[selectedProvince][chosenDistrict]
-      : [];
-    fillSelect(wardSelect, "-- Chọn phường / xã --", wards);
-    wardSelect.disabled = wards.length === 0;
-  };
-}
-
 function initAddressForm() {
   populateProvinceOptions();
-  const provinceSelect = document.getElementById("province");
-  const districtSelect = document.getElementById("district");
-  const wardSelect = document.getElementById("ward");
-
-  if (!provinceSelect || !districtSelect || !wardSelect) return;
-
-  provinceSelect.addEventListener("change", updateAddressCascade);
-  districtSelect.addEventListener("change", () => {
-    const province = provinceSelect.value;
-    const district = districtSelect.value;
-    const wards = province && ADDRESS_DATA[province] && district && ADDRESS_DATA[province][district] ? ADDRESS_DATA[province][district] : [];
-    fillSelect(wardSelect, "-- Chọn phường / xã --", wards);
-    wardSelect.disabled = wards.length === 0;
-  });
 }
 
 function initCheckoutPage() {
   const cart = getSelectedCartItems();
   if (cart.length === 0) {
     alert("Bạn chưa chọn sản phẩm nào để thanh toán!");
-    window.location.href = "cart.html";
+    window.location.href = "shopping_cart.html";
     return;
   }
 
@@ -250,7 +217,6 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
   const fullNameInput = document.getElementById("fullName");
   const phoneInput = document.getElementById("phoneNumber");
   const provinceInput = document.getElementById("province");
-  const districtInput = document.getElementById("district");
   const wardInput = document.getElementById("ward");
   const addressInput = document.getElementById("address");
   const noteInput = document.getElementById("orderNote");
@@ -259,17 +225,16 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
   const fullName = fullNameInput.value.trim();
   const phone = phoneInput.value.trim();
   const province = provinceInput ? provinceInput.value.trim() : "";
-  const district = districtInput ? districtInput.value.trim() : "";
   const ward = wardInput ? wardInput.value.trim() : "";
   const address = addressInput ? addressInput.value.trim() : "";
   const note = noteInput ? noteInput.value.trim() : "";
   const confirmOrder = !!(confirmInput && confirmInput.checked);
 
-  ["fullName", "phoneNumber", "province", "district", "ward", "address", "confirm-order"].forEach(key => {
+  ["fullName", "phoneNumber", "province", "ward", "address", "confirm-order"].forEach(key => {
     const el = document.getElementById("err-" + key);
     if (el) el.innerText = "";
   });
-  [fullNameInput, phoneInput, provinceInput, districtInput, wardInput, addressInput].forEach(el => {
+  [fullNameInput, phoneInput, provinceInput, wardInput, addressInput].forEach(el => {
     if (el) el.classList.remove("is-error");
   });
   const confirmErr = document.getElementById("err-confirm-order");
@@ -290,26 +255,20 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
     isValid = false;
   }
 
-  if (!province) {
-    document.getElementById("err-province").innerText = "Vui lòng chọn tỉnh / thành phố.";
+  if (!CHECKOUT_PROVINCES.includes(province)) {
+    document.getElementById("err-province").innerText = "Vui lòng chọn tỉnh / thành phố trong danh sách.";
     if (provinceInput) provinceInput.classList.add("is-error");
     isValid = false;
   }
 
-  if (!district) {
-    document.getElementById("err-district").innerText = "Vui lòng chọn quận / huyện.";
-    if (districtInput) districtInput.classList.add("is-error");
-    isValid = false;
-  }
-
   if (!ward) {
-    document.getElementById("err-ward").innerText = "Vui lòng chọn phường / xã.";
+    document.getElementById("err-ward").innerText = "Vui lòng nhập phường / xã.";
     if (wardInput) wardInput.classList.add("is-error");
     isValid = false;
   }
 
   if (!address || address.length < 5) {
-    document.getElementById("err-address").innerText = "Vui lòng nhập địa chỉ nhận hàng chi tiết.";
+    document.getElementById("err-address").innerText = "Vui lòng nhập địa chỉ cụ thể (số nhà, tên đường hoặc thôn/khu phố).";
     addressInput.classList.add("is-error");
     isValid = false;
   }
@@ -322,8 +281,19 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
   if (!isValid) return;
 
   const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked')?.value || "COD";
-  const fullAddress = [address, ward, district, province].filter(Boolean).join(", ");
+  const fullAddress = [address, ward, province].filter(Boolean).join(", ");
   const chosenItems = getSelectedCartItems();
+
+  const subtotal = chosenItems.reduce((sum, item) => sum + (Number(item.price) + Number(item.warrantyPrice || 0)) * item.quantity, 0);
+  const expectedTotal = subtotal + (subtotal >= 300000 || subtotal === 0 ? 0 : 30000)
+    - (couponCode === "GREEN100" && subtotal >= 1000000 ? 100000 : 0);
+  if (!chosenItems.length || chosenItems.some(item => {
+    const found = findVariant(item.variantId);
+    return found && item.quantity > found.variant.stock;
+  }) || totalAmount !== expectedTotal) {
+    showToast("Giỏ hàng đã thay đổi hoặc vượt tồn kho. Vui lòng kiểm tra lại giỏ hàng.", true);
+    return;
+  }
 
   const newOrder = {
     orderId: orderCode,
@@ -351,7 +321,8 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
   orders.push(newOrder);
   localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
 
-  localStorage.removeItem(CART_STORAGE_KEY);
+  const purchasedIds = new Set(chosenItems.map(item => item.variantId));
+  save(CART_STORAGE_KEY, getCart().filter(item => !purchasedIds.has(item.variantId)));
   sessionStorage.removeItem("cart_coupon");
   if (typeof updateCartBadge === "function") {
     updateCartBadge();

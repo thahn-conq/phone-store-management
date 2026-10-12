@@ -4,12 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GreenPhone - Thanh toán</title>
+  <script>
+    (function () {
+      var theme = "light";
+      try { if (JSON.parse(localStorage.getItem("theme")) === "dark") theme = "dark"; } catch (e) {}
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/shopping_cart.css">
 </head>
-<body>
+<body class="cart-page">
 
   <div id="site-header"></div>
 
@@ -21,7 +28,7 @@
 
       <h1 class="cart-page-title">Thông tin đặt hàng</h1>
 
-      <div class="cart-layout" id="checkout-layout" style="display:grid; grid-template-columns:minmax(0,1.55fr) minmax(280px,390px); gap:20px; align-items:flex-start;">
+      <div class="cart-layout" id="checkout-layout">
         <!-- Cột trái: Form thông tin & Phương thức thanh toán -->
         <div class="cart-col-main" style="min-width:0;">
           <div class="card cart-card-section">
@@ -48,24 +55,14 @@
               </div>
 
               <div class="form-group">
-                <label for="district">Quận / Huyện <span class="price">*</span></label>
-                <select id="district" class="input" disabled>
-                  <option value="">-- Chọn quận / huyện --</option>
-                </select>
-                <div class="error-text" id="err-district"></div>
-              </div>
-
-              <div class="form-group">
                 <label for="ward">Phường / Xã <span class="price">*</span></label>
-                <select id="ward" class="input" disabled>
-                  <option value="">-- Chọn phường / xã --</option>
-                </select>
+                <input type="text" id="ward" class="input" placeholder="Nhập phường / xã">
                 <div class="error-text" id="err-ward"></div>
               </div>
 
               <div class="form-group">
-                <label for="address">Địa chỉ nhận hàng chi tiết <span class="price">*</span></label>
-                <input type="text" id="address" class="input" placeholder="Số nhà, tên đường, tòa nhà, khu phố...">
+                <label for="address">Địa chỉ cụ thể  <span class="price">*</span></label>
+                <input type="text" id="address" class="input" autocomplete="street-address" placeholder="Nhập số nhà, tên đường, tòa nhà, thôn/khu phố...">
                 <div class="error-text" id="err-address"></div>
               </div>
 
@@ -175,6 +172,7 @@
   <div id="site-footer"></div>
 
   <script src="data/products.js"></script>
+  <script src="data/footer.js"></script>
   <script src="js/common.js"></script>
   <script src="js/checkout.js"></script>
 </body>

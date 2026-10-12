@@ -1,3 +1,18 @@
+/* Resolve the shared { variantId, quantity } contract without changing storage keys. */
+function resolveCartItems(items = getCart()) {
+  if (!Array.isArray(items)) return [];
+  return items.filter(item => item && Number.isInteger(Number(item.quantity)) && Number(item.quantity) > 0)
+    .map(item => {
+      const found = findVariant(item.variantId);
+      if (!found) return item.name && Number.isFinite(Number(item.price)) ? { ...item, quantity: Number(item.quantity), selected: item.selected !== false } : null;
+      const { product, variant } = found;
+      return { ...item, id: product.id, name: product.name, color: variant.color,
+        storage: variant.storage, price: variant.price, originalPrice: variant.originalPrice,
+        image: variant.image || product.image, quantity: Number(item.quantity),
+        selected: item.selected !== false, warrantyPrice: Number(item.warrantyPrice) || 0 };
+    }).filter(Boolean);
+}
+
 /* ==========================================================
    js/cart.js - MODULE GIỎ HÀNG NÂNG CAO (CHUẨN CELLPHONES)
    ========================================================== */
@@ -17,7 +32,7 @@ function readCartState() {
   const data = localStorage.getItem(CART_STORAGE_KEY);
   if (!data) return [];
   try {
-    const list = JSON.parse(data);
+    const list = resolveCartItems(JSON.parse(data));
     return list.map(item => ({
       ...item,
       selected: item.selected !== undefined ? item.selected : true,
@@ -106,7 +121,7 @@ function renderCartPage() {
 
     itemsHtml += `
       <div class="card cart-item" data-id="${item.variantId}">
-        <input type="checkbox" class="cart-item-checkbox" ${isChecked} onchange="toggleItemSelect('${item.variantId}', this.checked)">
+        <input type="checkbox" class="cart-item-checkbox" aria-label="Chọn ${item.name}" ${isChecked} onchange="toggleItemSelect('${item.variantId}', this.checked)">
         
         <img src="${item.image || 'images/products/' + item.id + '.svg'}" alt="${item.name}" 
              class="cart-item-img" onclick="showProductDetails('${item.id}')" title="Bấm để xem chi tiết thông số">
@@ -126,9 +141,9 @@ function renderCartPage() {
         </div>
 
         <div class="cart-qty-ctrl">
-          <button type="button" class="cart-qty-btn" onclick="changeQuantity('${item.variantId}', -1)">-</button>
-          <input type="text" class="cart-qty-input" value="${item.quantity}" readonly>
-          <button type="button" class="cart-qty-btn" onclick="changeQuantity('${item.variantId}', 1)">+</button>
+          <button type="button" class="cart-qty-btn" aria-label="Giảm số lượng ${item.name}" onclick="changeQuantity('${item.variantId}', -1)">-</button>
+          <input type="text" class="cart-qty-input" aria-label="Số lượng ${item.name}" value="${item.quantity}" readonly>
+          <button type="button" class="cart-qty-btn" aria-label="Tăng số lượng ${item.name}" onclick="changeQuantity('${item.variantId}', 1)">+</button>
         </div>
 
         <div class="cart-item-actions">
@@ -307,6 +322,8 @@ function openProductDetailModal(productId) {
 // ================= TÍNH NĂNG 2: BẢO HÀNH MỞ RỘNG (MODAL) =================
 function openWarrantyModal(variantId) {
   currentWarrantyTargetVariantId = variantId;
+  const item = readCartState().find(item => item.variantId === variantId);
+  document.querySelectorAll('input[name="warrantyOption"]').forEach(radio => { radio.checked = Number(radio.value) === Number(item?.warrantyPrice || 0); });
   openModal("modal-warranty");
 }
 
@@ -404,6 +421,8 @@ function changeQuantity(variantId, delta) {
     }
     return;
   }
+  const found = findVariant(variantId);
+  if (found && newQty > found.variant.stock) { showToast("Số lượng vượt tồn kho", true); return; }
   target.quantity = newQty;
   saveCart(cart);
   renderCartPage();
