@@ -1,10 +1,4 @@
 /* ==========================================================
-   order.js - JS RIÊNG CỦA MODULE ĐƠN HÀNG (TV4)
-   Dùng các hàm trong common.js: load/save, KEYS, getCurrentUser, requireLogin,
-   getCart, addToCart, findProduct, findVariant, formatPrice, showToast.
-   Đặt tên biến và hàm camelCase. Không sửa common.js, cần thêm hàm thì nhắn đội trưởng.
-   ========================================================== */
-/* ==========================================================
    order.js - Module Order
    Dữ liệu thật sẽ được checkout lưu vào KEYS.orders.
    Trong lúc Account/Cart chưa hoàn thành, dữ liệu mẫu chỉ được tạo khi
