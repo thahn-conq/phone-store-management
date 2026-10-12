@@ -1,9 +1,4 @@
 /* ==========================================================
-   order.css - CSS RIÊNG CỦA MODULE ĐƠN HÀNG (TV4)
-   Quy ước: class bắt đầu bằng "ord-" (vd: .ord-card). Không viết selector theo thẻ trần
-   (button, input, h1...) và không sửa class của base.css. Dùng lại .btn, .input, .card, .badge...
-   ========================================================== */
-/* ==========================================================
    order.css - Module Order
    Chỉ dùng class prefix ord- theo QuyTacDatTen.md
    ========================================================== */
@@ -237,15 +232,15 @@
 }
 
 
-/* Order module: synchronized dark theme with Main navbar */
-:root[data-theme="dark"] {
-  color-scheme:dark;
+/* Order dark tokens are scoped to Order content only.
+   Keep shared header/footer on the exact home.css palette. */
+:root[data-theme="dark"] body[data-order-page] .main {
   --white:#17221b; --bg:#101712; --ink:#edf6f0; --ink-soft:#a1b2a7;
   --line:#2b3d31; --muted:#1d2b22; --green-900:#d8f3e1;
   --green-700:#68cd97; --green-800:#7bdaa5; --green-100:#173b29;
   --danger:#f1848b; --shadow:0 2px 12px rgba(0,0,0,.22);
+  color:var(--ink);
 }
-:root[data-theme="dark"] body { background:var(--bg); color:var(--ink); }
 :root[data-theme="dark"] .card,
 :root[data-theme="dark"] .ord-history-panel,
 :root[data-theme="dark"] .ord-item,
@@ -278,48 +273,38 @@
 :root[data-theme="dark"] .ord-confirm-icon { background:#43252a; color:#ffa5ad; }
 :root[data-theme="dark"] .ord-confirm-dialog::backdrop { background:rgba(0,0,0,.72); }
 /* Theme button is shared from common.js, so provide its styling on Order pages. */
-.theme-toggle { display:grid; place-items:center; width:30px; height:30px; margin:3px 0 3px 14px; padding:0; border:1px solid var(--line); border-radius:50%; background:var(--white); color:var(--ink); cursor:pointer; }
-.theme-toggle svg { width:16px; height:16px; }
-.theme-toggle .i-sun { display:none; }
-:root[data-theme="dark"] .theme-toggle .i-sun { display:block; }
-:root[data-theme="dark"] .theme-toggle .i-moon { display:none; }
-.theme-toggle:hover { border-color:var(--green-700); color:var(--green-700); }
 
-/* Footer compatibility: Main's shared footer expects a dark green surface.
-   Order dark tokens make --green-900 a light heading color, so pin footer
-   colors explicitly to preserve contrast in both themes. Scoped to Order pages. */
-:root[data-theme="dark"] .site-footer {
-  background: #0b3022;
-  color: #d5e9dc;
+/* Unified Home / Order visual language. Only order pages use this file. */
+body[data-order-page] {
+  font-family: var(--font);
+  background: var(--home-bg);
+  color: var(--home-ink);
 }
-:root[data-theme="dark"] .site-footer h4,
-:root[data-theme="dark"] .site-footer .footer-contact b { color: #f2fbf5; }
-:root[data-theme="dark"] .site-footer a,
-:root[data-theme="dark"] .site-footer .footer-brand { color: #d5e9dc; }
-:root[data-theme="dark"] .site-footer a:hover { color: #ffffff; }
-:root[data-theme="dark"] .site-footer .footer-contact span,
-:root[data-theme="dark"] .site-footer .footer-note,
-:root[data-theme="dark"] .site-footer .footer-bottom-row { color: #b5d1bf; }
-:root[data-theme="dark"] .site-footer .pay-chips span,
-:root[data-theme="dark"] .site-footer .module-tags span,
-:root[data-theme="dark"] .site-footer .social a {
-  color: #f2fbf5;
-  background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.2);
+body[data-order-page] .main {
+  max-width: 100%;
+  padding: 22px 0 72px;
+  background: var(--home-bg);
 }
-:root[data-theme="dark"] .site-footer .news-form .input {
-  background: rgba(255,255,255,.08);
-  color: #f2fbf5;
-  border-color: rgba(255,255,255,.25);
+body[data-order-page] .main > .container { max-width: 1240px; }
+body[data-order-page] .ord-heading h1,
+body[data-order-page] .ord-history-top h2,
+body[data-order-page] .ord-search-copy h2 {
+  letter-spacing: -.025em;
 }
-:root[data-theme="dark"] .site-footer .news-form .input::placeholder { color: #b5d1bf; }
-:root[data-theme="dark"] .site-footer .news-form .btn,
-:root[data-theme="dark"] .site-footer .news-form .btn:hover {
-  background: #e6f4ec;
-  color: #0a4f33;
+body[data-order-page] .ord-history-panel,
+body[data-order-page] .ord-item,
+body[data-order-page] .ord-search-card,
+body[data-order-page] .ord-detail-card,
+body[data-order-page] .ord-success-card {
+  border-radius: var(--home-radius);
 }
-:root[data-theme="dark"] .site-footer .footer-bottom { border-color: rgba(255,255,255,.16); }
-:root[data-theme="dark"] .site-footer .footer-brand .logo-mark {
-  background: #e6f4ec;
-  color: #0a4f33;
-}
+body[data-order-page] .ord-breadcrumb a,
+body[data-order-page] .ord-eyebrow,
+body[data-order-page] .ord-detail-link { color: var(--home-accent); }
+body[data-order-page] .ord-tab.is-active::after { background: var(--home-accent); }
+body[data-order-page] .ord-search-box:focus-within { border-color: var(--home-accent); }
+:root[data-theme="dark"] body[data-order-page] .main h1,
+:root[data-theme="dark"] body[data-order-page] .main h2,
+:root[data-theme="dark"] body[data-order-page] .main h3 { color: var(--home-ink); }
+:root[data-theme="dark"] body[data-order-page] .main .text-soft { color: var(--home-muted); }
+:root[data-theme="dark"] body[data-order-page] .main .ord-breadcrumb { color: var(--home-muted); }
