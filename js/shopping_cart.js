@@ -107,7 +107,8 @@ function renderCartPage() {
   const directDiscount = Math.max(0, totalRawPrice - totalAmount);
   const shippingFee = (totalAmount >= 300000 || totalAmount === 0) ? 0 : 30000;
   const couponCode = sessionStorage.getItem("cart_coupon") || "";
-  const couponDiscount = couponCode === "GREEN100" && totalAmount >= 1000000 ? 100000 : 0;
+  const couponConfig = getCouponConfig(couponCode);
+  const couponDiscount = getCouponDiscount(couponCode, totalAmount);
   const finalTotal = totalAmount + shippingFee - couponDiscount;
 
   // C. Vẽ danh sách sản phẩm
@@ -245,11 +246,11 @@ function renderCartPage() {
           <section class="cart-coupon">
             <h3>Mã giảm giá</h3>
             <form class="cart-coupon-form" onsubmit="applyCartCoupon(event)">
-              <input id="cart-coupon-code" class="input" aria-label="Mã giảm giá" placeholder="Nhập mã giảm giá" value="${couponCode === 'GREEN100' ? 'GREEN100' : ''}">
+              <input id="cart-coupon-code" class="input" aria-label="Mã giảm giá" placeholder="Nhập mã giảm giá" value="${couponConfig ? couponCode : ''}">
               <button type="submit" class="btn btn-primary">Áp dụng</button>
             </form>
-            <p class="cart-coupon-hint">GREEN100: giảm 100.000đ cho đơn từ 1 triệu.</p>
-            <p id="cart-coupon-message" role="status">${couponDiscount ? 'Đã áp dụng GREEN100.' : couponCode ? 'Đơn đã chọn chưa đủ 1 triệu để áp dụng mã.' : ''}</p>
+            <p class="cart-coupon-hint">GREEN100 giảm 100.000đ từ 1 triệu; HOCBONG giảm 300.000đ từ 3 triệu; GREEN400 giảm 400.000đ từ 5 triệu.</p>
+            <p id="cart-coupon-message" role="status">${couponDiscount ? `Đã áp dụng ${couponCode}, giảm ${formatMoney(couponDiscount)}.` : couponCode ? (couponConfig ? `Đơn cần đạt ${formatMoney(couponConfig.minimum)} để áp dụng mã này.` : 'Mã giảm giá không hợp lệ.') : ''}</p>
             ${couponCode ? '<button type="button" class="cart-extra-link" onclick="removeCartCoupon()">Bỏ mã giảm giá</button>' : ''}
           </section>
           ${couponDiscount ? `<div class="cart-summary-line"><span>Giảm giá từ mã:</span><b class="price">-${formatMoney(couponDiscount)}</b></div>` : ''}
@@ -440,13 +441,16 @@ function applyCartCoupon(event) {
   const code = document.getElementById("cart-coupon-code").value.trim().toUpperCase();
   const total = readCartState().filter(item => item.selected).reduce((sum, item) =>
     sum + (Number(item.price || 0) + Number(item.warrantyPrice || 0)) * Number(item.quantity || 1), 0);
-  if (code !== "GREEN100" || total < 1000000) {
-    document.getElementById("cart-coupon-message").textContent = code === "GREEN100"
-      ? "Mã áp dụng cho đơn từ 1.000.000đ." : "Mã giảm giá không hợp lệ.";
+  const coupon = getCouponConfig(code);
+  const discount = getCouponDiscount(code, total);
+  if (!coupon || !discount) {
+    document.getElementById("cart-coupon-message").textContent = coupon
+      ? `Mã ${code} áp dụng cho đơn từ ${formatMoney(coupon.minimum)}.` : "Mã giảm giá không hợp lệ.";
     return;
   }
   sessionStorage.setItem("cart_coupon", code);
   renderCartPage();
+  document.getElementById("cart-coupon-message").textContent = `Đã áp dụng ${code}, giảm ${formatMoney(discount)}.`;
 }
 
 function removeCartCoupon() {

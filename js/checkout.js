@@ -165,17 +165,21 @@ function initCheckoutPage() {
     const input = document.getElementById("coupon-code");
     const message = document.getElementById("coupon-message");
     const code = input.value.trim().toUpperCase();
-    if (code !== "GREEN100" || totalAmount < 1000000) {
-      message.textContent = code === "GREEN100" ? "Mã áp dụng cho đơn từ 1.000.000đ." : "Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại.";
+    const coupon = getCouponConfig(code);
+    const discount = getCouponDiscount(code, totalAmount);
+    if (!coupon || !discount) {
+      message.textContent = coupon
+        ? `Mã ${code} áp dụng cho đơn từ ${formatCheckoutMoney(coupon.minimum)}.`
+        : "Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại.";
       input.setAttribute("aria-invalid", "true");
       return;
     }
     couponCode = code;
-    couponDiscount = 100000;
+    couponDiscount = discount;
     sessionStorage.setItem("cart_coupon", code);
     input.value = code;
     input.removeAttribute("aria-invalid");
-    message.textContent = "Đã áp dụng mã GREEN100, giảm 100.000đ.";
+    message.textContent = `Đã áp dụng mã ${code}, giảm ${formatCheckoutMoney(discount)}.`;
     updateCouponTotals();
   });
 
@@ -189,8 +193,9 @@ function initCheckoutPage() {
     updateCouponTotals();
   });
 
-  if (sessionStorage.getItem("cart_coupon") === "GREEN100" && totalAmount >= 1000000) {
-    document.getElementById("coupon-code").value = "GREEN100";
+  const savedCoupon = sessionStorage.getItem("cart_coupon");
+  if (savedCoupon) {
+    document.getElementById("coupon-code").value = savedCoupon;
     document.getElementById("coupon-form").dispatchEvent(new Event("submit", { cancelable: true }));
   }
 
@@ -286,7 +291,7 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
 
   const subtotal = chosenItems.reduce((sum, item) => sum + (Number(item.price) + Number(item.warrantyPrice || 0)) * item.quantity, 0);
   const expectedTotal = subtotal + (subtotal >= 300000 || subtotal === 0 ? 0 : 30000)
-    - (couponCode === "GREEN100" && subtotal >= 1000000 ? 100000 : 0);
+    - getCouponDiscount(couponCode, subtotal);
   if (!chosenItems.length || chosenItems.some(item => {
     const found = findVariant(item.variantId);
     return found && item.quantity > found.variant.stock;
