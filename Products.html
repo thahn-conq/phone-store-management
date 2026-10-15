@@ -1,128 +1,87 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sản phẩm - GreenPhone</title>
-
-    <!-- CSS dùng chung -->
-    <link rel="stylesheet" href="css/base.css">
-
-    <!-- CSS riêng trang sản phẩm -->
-    <link rel="stylesheet" href="css/product.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tìm kiếm, lọc và chọn điện thoại phù hợp tại GreenPhone.">
+  <title>Tìm kiếm sản phẩm | GreenPhone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/Product.css">
 </head>
-
 <body>
+  <div id="site-header"></div>
+  <main class="main prod-page">
+    <section class="prod-hero">
+      <div class="container prod-hero-inner">
+        <span class="prod-eyebrow">GREENPHONE · PHONE STORE</span>
+        <h1>Tìm chiếc điện thoại <span>phù hợp với bạn</span></h1>
+        <p>Tìm theo tên máy, thương hiệu, cấu hình hoặc nhu cầu. So sánh giá và chọn phiên bản dễ dàng.</p>
+      </div>
+    </section>
 
-    <!-- Header dùng chung -->
-    <div id="site-header"></div>
-
-
-    <main class="main">
-
-        <section class="prod-header">
-            <div class="container">
-
-                <h1>Sản phẩm</h1>
-
-                <p>
-                    Khám phá các sản phẩm điện thoại tại GreenPhone
-                </p>
-
+    <section class="container prod-section">
+      <div class="prod-layout">
+        <aside class="prod-sidebar" aria-label="Bộ lọc sản phẩm">
+          <div class="prod-filter-block">
+            <h3>Thương hiệu</h3>
+            <div class="prod-brand-filters">
+              <button type="button" class="prod-filter-btn active" data-brand="all" aria-pressed="true">Tất cả thương hiệu <span>✓</span></button>
+              <button type="button" class="prod-filter-btn" data-brand="Apple" aria-pressed="false">Apple <span></span></button>
+              <button type="button" class="prod-filter-btn" data-brand="Samsung" aria-pressed="false">Samsung <span></span></button>
+              <button type="button" class="prod-filter-btn" data-brand="Xiaomi" aria-pressed="false">Xiaomi <span></span></button>
+              <button type="button" class="prod-filter-btn" data-brand="OPPO" aria-pressed="false">OPPO <span></span></button>
+              <button type="button" class="prod-filter-btn" data-brand="Vivo" aria-pressed="false">Vivo <span></span></button>
             </div>
-        </section>
-
-
-        <section class="container prod-section">
-
-            <!-- Bộ lọc -->
-            <div class="prod-filter">
-
-                <button class="prod-filter-btn active" data-brand="all">
-                    Tất cả
-                </button>
-
-                <button class="prod-filter-btn" data-brand="Apple">
-                    Apple
-                </button>
-
-                <button class="prod-filter-btn" data-brand="Samsung">
-                    Samsung
-                </button>
-
-                <button class="prod-filter-btn" data-brand="Xiaomi">
-                    Xiaomi
-                </button>
-
-                <button class="prod-filter-btn" data-brand="OPPO">
-                    OPPO
-                </button>
-
-                <button class="prod-filter-btn" data-brand="Vivo">
-                    Vivo
-                </button>
-
+          </div>
+          <div class="prod-filter-block">
+            <h3>Khoảng giá (VNĐ)</h3>
+            <div class="prod-price-inputs">
+              <label><span>Giá từ</span><input type="number" id="price-min" min="0" step="500000" placeholder="0"></label>
+              <label><span>Đến giá</span><input type="number" id="price-max" min="0" step="500000" placeholder="Không giới hạn"></label>
             </div>
+            <button type="button" id="apply-price" class="prod-apply-btn">Áp dụng giá</button>
+            <p id="price-error" class="prod-field-error" aria-live="polite"></p>
+          </div>
+          <div class="prod-filter-block">
+            <h3>Tình trạng</h3>
+            <label class="prod-check"><input type="checkbox" id="in-stock-only"> Chỉ xem máy còn hàng</label>
+          </div>
+          <button type="button" id="product-reset" class="prod-reset prod-reset-sidebar">↺ Xóa bộ lọc</button>
+          <div class="prod-sidebar-note"><span>♧</span><div><strong>Chọn mua an tâm</strong><p>Giá và thông tin phiên bản được hiển thị rõ ràng.</p></div></div>
+        </aside>
 
-
-            <!-- Thanh công cụ -->
-            <div class="prod-toolbar">
-
-                <span id="product-count">
-                    0 sản phẩm
-                </span>
-
-                <select id="product-sort">
-                    <option value="default">
-                        Sắp xếp mặc định
-                    </option>
-
-                    <option value="price-asc">
-                        Giá thấp → cao
-                    </option>
-
-                    <option value="price-desc">
-                        Giá cao → thấp
-                    </option>
-
-                    <option value="name">
-                        Tên A → Z
-                    </option>
-                </select>
-
-            </div>
-
-
-            <!-- Danh sách sản phẩm -->
-            <div id="product-list" class="prod-grid">
-                <!-- JavaScript sẽ hiển thị sản phẩm ở đây -->
-            </div>
-
-
-            <!-- Không có sản phẩm -->
-            <div id="product-empty" class="prod-empty" hidden>
-                <h3>Không tìm thấy sản phẩm</h3>
-                <p>Hãy thử tìm kiếm với từ khóa khác.</p>
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- Footer dùng chung -->
-    <div id="site-footer"></div>
-
-
-    <!-- Data sản phẩm -->
-    <script src="data/products.js"></script>
-
-    <!-- JS dùng chung -->
-    <script src="js/common.js"></script>
-
-    <!-- JS riêng trang sản phẩm -->
-    <script src="js/product.js"></script>
-
+        <div class="prod-results">
+          <div class="prod-toolbar">
+            <div><p class="prod-results-label">KẾT QUẢ TÌM KIẾM</p><strong id="product-count" aria-live="polite">Đang tải sản phẩm…</strong><p id="product-query-label" class="prod-query-label"></p></div>
+            <label class="prod-sort-label" for="product-sort">Sắp xếp
+              <select id="product-sort">
+                <option value="default">Nổi bật</option>
+                <option value="price-asc">Giá thấp đến cao</option>
+                <option value="price-desc">Giá cao đến thấp</option>
+                <option value="rating">Đánh giá cao</option>
+                <option value="sold">Bán chạy</option>
+                <option value="name">Tên A – Z</option>
+              </select>
+            </label>
+          </div>
+          <div id="product-list" class="prod-grid" aria-live="polite"></div>
+          <div id="product-empty" class="prod-empty" hidden>
+            <div class="prod-empty-icon">⌕</div><h3>Chưa tìm thấy sản phẩm phù hợp</h3>
+            <p>Thử từ khóa khác hoặc nới rộng khoảng giá của bạn.</p>
+            <button type="button" id="empty-reset" class="prod-empty-button">Xóa bộ lọc</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="data/products.js"></script>
+  <script src="data/footer.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/Product.js"></script>
 </body>
 </html>
