@@ -5,8 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const productList = $("#product-list");
   const productCount = $("#product-count");
   const productEmpty = $("#product-empty");
-  const searchInput = $("#global-search");
-  const searchForm = $("#product-search-form");
+  // Dùng đúng ô tìm kiếm đang có trong header chung (common.js).
+  const searchForm = $("#search-form");
+  const searchInput = searchForm ? searchForm.querySelector('input[name="q"]') : null;
   const sortSelect = $("#product-sort");
   const minInput = $("#price-min");
   const maxInput = $("#price-max");
@@ -21,7 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const state = { brand: "all", keyword: "", sort: "default", min: null, max: null, inStock: false };
+  const params = new URLSearchParams(window.location.search);
+  const initialKeyword = params.get("q") || "";
+  if (searchInput) searchInput.value = initialKeyword;
+  const state = { brand: "all", keyword: initialKeyword.trim(), sort: "default", min: null, max: null, inStock: false };
   const collator = new Intl.Collator("vi", { sensitivity: "base", numeric: true });
   const money = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", maximumFractionDigits: 0 });
 
@@ -73,7 +77,18 @@ document.addEventListener("DOMContentLoaded", () => {
     img.src = image;
     img.alt = product.name || "Điện thoại";
     img.loading = "lazy";
-    img.onerror = () => { img.onerror = null; img.src = "images/products/iphone-15.svg"; img.alt = "Ảnh sản phẩm minh họa"; };
+    img.onerror = () => {
+      img.onerror = null;
+      // Ưu tiên ảnh riêng của sản phẩm; chỉ dùng ảnh minh họa nếu cả hai đường dẫn lỗi.
+      const fallback = product.image || "";
+      if (fallback && img.src !== new URL(fallback, document.baseURI).href) {
+        img.src = fallback;
+      } else {
+        img.removeAttribute("src");
+        img.alt = "Chưa có ảnh cho " + (product.name || "sản phẩm");
+        img.classList.add("prod-image-missing");
+      }
+    };
     imageLink.appendChild(img);
 
     if (discounted) imageLink.appendChild(make("span", "prod-badge", `-${discount}%`));
@@ -173,49 +188,68 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyPrice() {
-    const minRaw = minInput.value.trim();
-    const maxRaw = maxInput.value.trim();
+    const minRaw = minInput ? minInput.value.trim() : "";
+    const maxRaw = maxInput ? maxInput.value.trim() : "";
     const min = minRaw === "" ? null : Number(minRaw);
     const max = maxRaw === "" ? null : Number(maxRaw);
     if ((min !== null && (!Number.isFinite(min) || min < 0)) ||
         (max !== null && (!Number.isFinite(max) || max < 0))) {
-      priceError.textContent = "Vui lòng nhập mức giá hợp lệ (không âm)."; return;
+      if (priceError) priceError.textContent = "Vui lòng nhập mức giá hợp lệ (không âm)."; return;
     }
     if (min !== null && max !== null && min > max) {
-      priceError.textContent = "Giá từ không được lớn hơn giá đến."; return;
+      if (priceError) priceError.textContent = "Giá từ không được lớn hơn giá đến."; return;
     }
-    priceError.textContent = "";
+    if (priceError) priceError.textContent = "";
     state.min = min; state.max = max; render();
   }
 
   function resetFilters() {
     state.brand = "all"; state.keyword = ""; state.sort = "default";
     state.min = null; state.max = null; state.inStock = false;
-    searchInput.value = ""; sortSelect.value = "default";
-    minInput.value = ""; maxInput.value = ""; inStockOnly.checked = false;
-    priceError.textContent = "";
+    if (searchInput) searchInput.value = "";
+    if (sortSelect) sortSelect.value = "default";
+    if (minInput) minInput.value = "";
+    if (maxInput) maxInput.value = "";
+    if (inStockOnly) inStockOnly.checked = false;
+    if (priceError) priceError.textContent = "";
     setBrand("all");
   }
 
   filterButtons.forEach(button => button.addEventListener("click", () => setBrand(button.dataset.brand)));
-  searchInput.addEventListener("input", () => { state.keyword = searchInput.value.trim(); render(); });
-  searchForm.addEventListener("submit", event => {
-    event.preventDefault(); state.keyword = searchInput.value.trim(); render();
-  });
+
+  // Tìm kiếm dùng form search-form của header; hỗ trợ cả tìm ngay khi gõ và submit.
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      state.keyword = searchInput.value.trim();
+      render();
+    });
+  }
+  if (searchForm) {
+    searchForm.addEventListener("submit", event => {
+      event.preventDefault();
+      state.keyword = searchInput ? searchInput.value.trim() : "";
+      render();
+      const url = new URL(window.location.href);
+      if (state.keyword) url.searchParams.set("q", state.keyword);
+      else url.searchParams.delete("q");
+      window.history.replaceState({}, "", url);
+    });
+  }
   document.querySelectorAll("[data-keyword]").forEach(button => button.addEventListener("click", () => {
-    searchInput.value = button.dataset.keyword;
+    if (searchInput) searchInput.value = button.dataset.keyword;
     state.keyword = button.dataset.keyword;
     render();
-    searchInput.focus();
+    if (searchInput) searchInput.focus();
   }));
-  sortSelect.addEventListener("change", () => { state.sort = sortSelect.value; render(); });
-  $("#apply-price").addEventListener("click", applyPrice);
-  [minInput, maxInput].forEach(input => input.addEventListener("keydown", event => {
+  if (sortSelect) sortSelect.addEventListener("change", () => { state.sort = sortSelect.value; render(); });
+  const applyPriceButton = $("#apply-price");
+  if (applyPriceButton) applyPriceButton.addEventListener("click", applyPrice);
+  [minInput, maxInput].filter(Boolean).forEach(input => input.addEventListener("keydown", event => {
     if (event.key === "Enter") { event.preventDefault(); applyPrice(); }
   }));
-  inStockOnly.addEventListener("change", () => { state.inStock = inStockOnly.checked; render(); });
-  $("#product-reset").addEventListener("click", resetFilters);
-  $("#empty-reset").addEventListener("click", resetFilters);
+  if (inStockOnly) inStockOnly.addEventListener("change", () => { state.inStock = inStockOnly.checked; render(); });
+  $("#product-reset")?.addEventListener("click", resetFilters);
+  $("#empty-reset")?.addEventListener("click", resetFilters);
 
   render();
 });
