@@ -89,7 +89,7 @@ function initCheckoutPage() {
   const cart = getSelectedCartItems();
   if (cart.length === 0) {
     alert("Bạn chưa chọn sản phẩm nào để thanh toán!");
-    window.location.href = "shopping_cart.html";
+    window.location.href = "shopping-cart.html";
     return;
   }
 

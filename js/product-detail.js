@@ -46,6 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
   setText("detail-spec-brand", product.brand || "Đang cập nhật");
   setText("detail-spec-name", product.name);
   setText("detail-description-heading", `Giới thiệu ${product.name}`);
+  // Nội dung cam kết thay đổi nhẹ theo thương hiệu/loại sản phẩm.
+  const brandName = String(product.brand || "").trim();
+  const warrantyText = /apple|iphone/i.test(brandName)
+    ? "Bảo hành theo chính sách Apple và điều kiện bảo hành của sản phẩm."
+    : /samsung/i.test(brandName)
+      ? "Bảo hành chính hãng Samsung theo chính sách hiện hành."
+      : brandName
+        ? `Bảo hành theo chính sách chính hãng ${brandName}.`
+        : "Bảo hành chính hãng theo chính sách của nhà sản xuất.";
+  setText("detail-commitment-origin", `${product.name}: sản phẩm mới, đầy đủ phụ kiện theo cấu hình công bố.`);
+  setText("detail-commitment-warranty", warrantyText);
 
   const image = $("detail-image");
   if (image) {
@@ -79,6 +90,77 @@ document.addEventListener("DOMContentLoaded", () => {
       variantSelect.appendChild(option);
       variantSelect.disabled = true;
     }
+  }
+
+
+  // Bộ chọn phiên bản dạng thẻ trực quan (màu sắc + dung lượng), đồng bộ với select ẩn.
+  let variantPicker = null;
+  if (variantSelect && variants.length) {
+    variantPicker = document.createElement("div");
+    variantPicker.className = "detail-variant-picker";
+    variantPicker.setAttribute("aria-label", "Chọn màu sắc và dung lượng");
+    variantSelect.insertAdjacentElement("afterend", variantPicker);
+
+    const renderVariantPicker = () => {
+      variantPicker.innerHTML = "";
+      const visibleVariants = variants.slice(0, 6);
+      visibleVariants.forEach((variant, index) => {
+        const key = String(variant.variantId || index);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "detail-variant-card" +
+          ((selectedVariant && selectedVariant.variantId === variant.variantId) ? " active" : "");
+        button.disabled = Number(variant.stock) <= 0;
+        button.dataset.variantKey = key;
+        const thumb = document.createElement("img");
+        thumb.className = "detail-variant-thumb";
+        thumb.src = variant.image || product.image || "images/products/iphone-15.svg";
+        thumb.alt = "";
+        const info = document.createElement("span");
+        const color = document.createElement("span");
+        color.className = "variant-color";
+        color.textContent = variant.color || "Màu tiêu chuẩn";
+        const storage = document.createElement("span");
+        storage.className = "variant-storage";
+        storage.textContent = `${variant.storage || "Dung lượng tiêu chuẩn"}${Number(variant.stock) <= 0 ? " · Hết hàng" : ""}`;
+        info.append(color, storage);
+        button.append(thumb, info);
+        variantPicker.appendChild(button);
+      });
+      if (variants.length > 6) {
+        const more = document.createElement("button");
+        more.type = "button";
+        more.className = "detail-variant-more";
+        more.textContent = "Xem thêm phiên bản khác⌄";
+        more.addEventListener("click", () => {
+          variants.slice(6).forEach((variant, offset) => {
+            const index = offset + 6;
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "detail-variant-card" +
+              ((selectedVariant && selectedVariant.variantId === variant.variantId) ? " active" : "");
+            button.disabled = Number(variant.stock) <= 0;
+            button.dataset.variantKey = String(variant.variantId || index);
+            button.innerHTML = `<span><span class="variant-color"></span><span class="variant-storage"></span></span>`;
+            button.querySelector(".variant-color").textContent = variant.color || "Màu tiêu chuẩn";
+            button.querySelector(".variant-storage").textContent = variant.storage || "Dung lượng tiêu chuẩn";
+            variantPicker.insertBefore(button, more);
+          });
+          more.remove();
+        });
+        variantPicker.appendChild(more);
+      }
+    };
+    renderVariantPicker();
+    variantPicker.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-variant-key]");
+      if (!button || button.disabled) return;
+      variantSelect.value = button.dataset.variantKey;
+      selectedVariant = variants.find((variant, index) =>
+        String(variant.variantId || index) === variantSelect.value) || null;
+      updateVariant();
+      renderVariantPicker();
+    });
   }
 
   const qty = $("detail-quantity");
@@ -168,9 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (plus) plus.disabled = stock <= 0;
     if (addButton) addButton.disabled = stock <= 0;
     if (buyButton) buyButton.disabled = stock <= 0;
-    if (image && selectedVariant.image) {
-      image.onerror = () => { image.onerror = null; image.src = product.image || ""; };
-      image.src = selectedVariant.image;
+    // Ảnh chính cố định theo sản phẩm, không thay đổi khi chọn màu/dung lượng.
+    if (image && product.image && image.dataset.fixedProductImage !== product.image) {
+      image.src = product.image;
+      image.dataset.fixedProductImage = product.image;
     }
     if (message) message.textContent = "";
   }
@@ -179,6 +262,11 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedVariant = variants.find((variant, index) =>
       String(variant.variantId || index) === variantSelect.value) || null;
     updateVariant();
+    if (variantPicker) {
+      variantPicker.querySelectorAll("[data-variant-key]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.variantKey === variantSelect.value);
+      });
+    }
   });
   updateVariant();
 

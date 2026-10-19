@@ -39,15 +39,13 @@ function getCouponDiscount(code, subtotal) {
    Mọi liên kết trong header, footer và trang chủ sẽ tự cập nhật theo. */
 const PAGES = {
   home:          { url: "index.html", title: "Trang chủ",                  module: "Khung chung" },
-  products:      { url: "Products.html", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
-  productDetail: { url: "Product_detail.html", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
-  compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
-  cart:          { url: "shopping_cart.html", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
+  products:      { url: "products.html", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
+  productDetail: { url: "product-detail.html", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
+  cart:          { url: "shopping-cart.html", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
   checkout:      { url: "checkout.html", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
   login:         { url: "login.html", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
   account:       { url: "account.html", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
-  orders:        { url: "#", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },
-  info:          { url: "#", title: "Trang thông tin",          module: "Khung chung" }
+  orders:        { url: "orders.html", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },
 };
 function pageUrl(name, query = "") {
   const p = PAGES[name];
@@ -248,31 +246,6 @@ const ICON = {
   caret:  '<svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z" fill="currentColor"/></svg>'
 };
 
-/* ---- 8b. GIAO DIỆN SÁNG / TỐI ----
-   Thuộc tính data-theme trên <html> được đặt sớm bằng đoạn script nhỏ trong <head> (tránh nháy màu khi tải trang).
-   Chưa chọn lần nào thì mặc định giao diện sáng; bấm nút ở góc trên bên phải thì ghi nhớ lựa chọn. */
-function currentTheme() {
-  return document.documentElement.dataset.theme || load(KEYS.theme) || "light";
-}
-function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-  const btn = document.getElementById("theme-toggle");
-  if (!btn) return;
-  const label = theme === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
-  btn.setAttribute("aria-label", label);
-  btn.title = label;
-}
-function toggleTheme() {
-  const next = currentTheme() === "dark" ? "light" : "dark";
-  const root = document.documentElement;
-  root.classList.add("theme-anim");                       // đổi màu mượt trong 0,45 giây
-  applyTheme(next);
-  save(KEYS.theme, next);
-  clearTimeout(toggleTheme.timer);
-  toggleTheme.timer = setTimeout(() => root.classList.remove("theme-anim"), 450);
-}
-/* Không tự đổi theo hệ điều hành: giao diện mặc định luôn là sáng. */
-
 /* ---- 9. HEADER (kiểu CellphoneS, dựng theo phong cách shadcn) ---- */
 function closeMenus() {
   document.querySelectorAll(".menu.open").forEach(m => {
@@ -313,14 +286,12 @@ function renderHeader() {
     ? ""
     : `<button type="button" class="hbtn header-back-btn" id="btn-back" title="Quay lại">${ICON.back}<span class="hbtn-text">Quay lại</span></button>`;
 
-  /* Chữ chạy: ưu đãi minh họa (đổi nội dung tại đây) */
+  /* Chữ chạy: ưu đãi và cam kết mua sắm */
   const promos = [
-    "Công Thành đẹp trai",
-    "quá quá đẹp trai",
-    "tối nay leo td lq",
-    "không có tí vibecode nào",
-    "sao em ko rep tin nhắn anh",
-    "H oi rep a"
+    `<a class="marquee-promo-link" href="https://cellphones.com.vn/qua-20-10" target="_blank" rel="noopener noreferrer"><strong>Mừng 20/10 - Deal Thật Hời. Lời Thật Thương!</strong></a>`,
+    `<span class="marquee-promo-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><strong>Sản phẩm Chính hãng - Xuất VAT</strong> đầy đủ</span>`,
+    `<span class="marquee-promo-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7zM7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><strong>Giao nhanh - Miễn phí</strong> cho đơn 300k</span>`,
+    `<span class="marquee-promo-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4zM8 8V5h8v3M8 13h8M12 10v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Thu cũ</strong> giá ngon - <strong>Lên đời</strong> tiết kiệm</span>`
   ];
   const promoGroup = hidden => `<div class="marquee-group" ${hidden ? 'aria-hidden="true"' : ""}>${promos.map(t => `<span>${t}</span>`).join("")}</div>`;
 
@@ -332,7 +303,7 @@ function renderHeader() {
         <div class="strip-links">
           <a href="https://www.google.com/maps/search/?api=1&query=GreenPhone" target="_blank" rel="noopener noreferrer">${ICON.pin}Truy cập cửa hàng gần nhất</a>
           <a ${pageAttrs("orders")}>${ICON.order}Tra cứu đơn hàng</a>
-          <a href="tel:19000000" class="strip-hotline">${ICON.phone}Hotline: 1900 0000</a>
+          <a href="tel:0339331610" class="strip-hotline">${ICON.phone}Hotline: 0339 331 610</a>
           <!-- Nút đổi giao diện sáng / tối: góc trên cùng bên phải -->
           <button type="button" class="theme-toggle" id="theme-toggle">${ICON.moon}${ICON.sun}</button>
         </div>
@@ -357,7 +328,6 @@ function renderHeader() {
           <a ${pageAttrs("products", "?brand=OPPO")}>OPPO</a>
           <a ${pageAttrs("products", "?brand=Vivo")}>Vivo</a>
           <hr>
-          <a ${pageAttrs("compare")}>So sánh sản phẩm</a>
         </nav>
       </div>
 
@@ -417,8 +387,6 @@ function renderHeader() {
     if (pageUrl("products") === "#") { e.preventDefault(); showToast("Tìm kiếm thuộc module Sản phẩm, đang được xây dựng"); }
   });
 
-  document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
-  applyTheme(currentTheme());
 
   updateLocationLabel();
   updateCartBadge();
@@ -431,13 +399,13 @@ function renderFooter() {
 
   /* Nội dung footer nằm ở data/footer.js để dễ chỉnh sửa. */
   const f = typeof FOOTER_DATA !== "undefined" ? FOOTER_DATA : {
-    support: { title: "Tổng đài hỗ trợ (minh họa)", purchase: "1900 0000", purchaseHours: "(8h00 - 21h30)", complaint: "1900 0001", complaintHours: "(8h00 - 21h00)", email: "hotro@greenphone.vn" },
+    support: { title: "Tổng đài hỗ trợ", purchase: "0339331610", purchaseHours: "", complaint: "0382570433", complaintHours: "", email: "chuducanh4a3@gmail.com" },
     paymentMethods: ["Tiền mặt (COD)", "Chuyển khoản", "Thanh toán online"],
     newsletter: { title: "Đăng ký nhận tin khuyến mãi", emailPlaceholder: "Nhập email của bạn", phonePlaceholder: "Nhập số điện thoại", note: "Nhận thông tin ưu đãi và sản phẩm mới (chức năng minh họa)." },
     policies: [], services: [], socialTitle: "Kết nối với GreenPhone", aboutTitle: "Về dự án", aboutText: "", modules: [], copyright: "© 2026 GreenPhone", bottomNote: ""
   };
 
-  const info = t => `<li><a ${pageAttrs("info")}>${t}</a></li>`;
+  const info = t => `<li><span class="footer-static-link">${t}</span></li>`;
   const policyLinks = f.policies.map(info).join("");
   const serviceLinks = f.services.map(info).join("");
   const paymentChips = f.paymentMethods.map(t => `<span>${t}</span>`).join("");
@@ -450,9 +418,9 @@ function renderFooter() {
       <div class="footer-col">
         <h4>${f.support.title}</h4>
         <ul class="footer-contact">
-          <li>Mua hàng, bảo hành <b>${f.support.purchase}</b> <span>${f.support.purchaseHours}</span></li>
-          <li>Khiếu nại, góp ý <b>${f.support.complaint}</b> <span>${f.support.complaintHours}</span></li>
-          <li>Email <b>${f.support.email}</b></li>
+          <li>Mua hàng, bảo hành <a href="tel:${String(f.support.purchase).replace(/\\D/g, '')}" class="footer-contact-link"><b>${f.support.purchase}</b></a> <span>${f.support.purchaseHours}</span></li>
+          <li>Khiếu nại, góp ý <a href="tel:${String(f.support.complaint).replace(/\\D/g, '')}" class="footer-contact-link"><b>${f.support.complaint}</b></a> <span>${f.support.complaintHours}</span></li>
+          <li>Email <a href="mailto:${f.support.email}" class="footer-contact-link"><b>${f.support.email}</b></a></li>
         </ul>
 
         <h4>Phương thức thanh toán</h4>
@@ -485,7 +453,6 @@ function renderFooter() {
         <h4>Dịch vụ và thông tin khác</h4>
         <ul class="footer-links">
           ${serviceLinks}
-          <li><a ${pageAttrs("compare")}>So sánh sản phẩm</a></li>
           <li><a ${pageAttrs("cart")}>Giỏ hàng</a></li>
         </ul>
       </div>
@@ -493,11 +460,11 @@ function renderFooter() {
       <div class="footer-col">
         <h4>${f.socialTitle}</h4>
         <div class="social">
-          <a ${pageAttrs("info")} aria-label="YouTube" title="YouTube">▶</a>
-          <a ${pageAttrs("info")} aria-label="Facebook" title="Facebook">f</a>
-          <a ${pageAttrs("info")} aria-label="Instagram" title="Instagram">in</a>
-          <a ${pageAttrs("info")} aria-label="TikTok" title="TikTok">♪</a>
-          <a ${pageAttrs("info")} aria-label="Zalo" title="Zalo">Z</a>
+          <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+          <a href="#" aria-label="Facebook" title="Facebook">f</a>
+          <a href="#" aria-label="Instagram" title="Instagram">in</a>
+          <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+          <a href="#" aria-label="Zalo" title="Zalo">Z</a>
         </div>
         <h4>${f.aboutTitle}</h4>
         <p class="footer-note">${f.aboutText}</p>
@@ -548,8 +515,8 @@ function renderFloatingContact() {
   const a = document.createElement("a");
   a.className = "float-contact";
   a.href = "tel:19000000";
-  a.title = "Gọi hotline 1900 0000 (số minh họa)";
-  a.setAttribute("aria-label", "Liên hệ hotline 1900 0000");
+  a.title = "Gọi hotline 0339331610";
+  a.setAttribute("aria-label", "Liên hệ hotline 0339331610");
   a.innerHTML = ICON.headset + "<span>Liên hệ</span>";
   document.body.appendChild(a);
 }

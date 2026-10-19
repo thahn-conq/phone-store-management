@@ -227,71 +227,7 @@ document.addEventListener(
 
 
 
-/* =========================================================
-   THEME TOGGLE - chỉ dùng cho các trang account/register/profile/forgot
-   Không phụ thuộc vào common.js, home.js hay các file bị khóa.
-========================================================= */
-(function setupAccountTheme() {
-    function applyTheme(theme) {
-        document.body.classList.toggle("theme-dark", theme === "dark");
-        localStorage.setItem("greenphone-theme", theme);
-        const button = document.getElementById("accountThemeToggle");
-        if (button) {
-            const dark = theme === "dark";
-            button.innerHTML = dark
-                ? '<svg class="gp-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
-                : '<svg class="gp-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z"/></svg>';
-            button.setAttribute("aria-label", dark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
-            button.title = dark ? "Light mode" : "Dark mode";
-        }
-    }
-
-    function initTheme() {
-        if (!document.body) return;
-
-        const page = location.pathname.split("/").pop().toLowerCase();
-        const supported = ["login.html", "register.html", "account.html", "forgot-password.html", "register-modal.html"];
-        if (!supported.includes(page)) return;
-
-        if (page === "register-modal.html") {
-            document.body.classList.add("is-register-iframe");
-        }
-
-        const pagesWithoutThemeToggle = ["login.html", "register.html", "forgot-password.html"];
-        if (!pagesWithoutThemeToggle.includes(page) &&
-            !document.getElementById("accountThemeToggle") &&
-            page !== "register-modal.html") {
-            const createdButton = document.createElement("button");
-            createdButton.type = "button";
-            createdButton.id = "accountThemeToggle";
-            createdButton.className = "account-theme-toggle";
-            createdButton.setAttribute("aria-label", "Chuyển giao diện");
-            createdButton.title = "Chuyển giao diện sáng/tối";
-            document.body.appendChild(createdButton);
-        }
-
-        // Gắn sự kiện cho cả nút có sẵn trong account.html và nút được tạo động.
-        // Trước đây chỉ nút tạo động có listener, khiến nút trong header Profile không bấm được.
-        const themeButton = document.getElementById("accountThemeToggle");
-        if (themeButton && themeButton.dataset.themeListenerAttached !== "true") {
-            themeButton.addEventListener("click", function (event) {
-                event.preventDefault();
-                applyTheme(document.body.classList.contains("theme-dark") ? "light" : "dark");
-            });
-            themeButton.dataset.themeListenerAttached = "true";
-        }
-
-        const saved = localStorage.getItem("greenphone-theme");
-        const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        applyTheme(saved || (systemDark ? "dark" : "light"));
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initTheme, { once: true });
-    } else {
-        initTheme();
-    }
-})();
+/* Giao diện sáng/tối được điều khiển tập trung bởi js/home.js. */
 
 /* =========================================================
    REGISTER
@@ -1608,34 +1544,9 @@ function setupAccountRegisterModal() {
     const modal = document.getElementById("accountRegisterModal");
     const frame = document.getElementById("accountRegisterFrame");
     const title = document.getElementById("account-register-modal-title");
-    const themeButton = document.getElementById("registerModalThemeToggle");
     if (!modal || !frame) return;
 
-    function syncModalThemeButton() {
-        if (!themeButton) return;
-        const dark = document.body.classList.contains("theme-dark");
-        themeButton.innerHTML = dark
-            ? '<svg class="gp-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
-            : '<svg class="gp-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z"/></svg>';
-        themeButton.setAttribute("aria-label", dark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
-        themeButton.title = dark ? "Light mode" : "Dark mode";
-    }
-
-    if (themeButton) {
-        syncModalThemeButton();
-        themeButton.addEventListener("click", function () {
-            const dark = !document.body.classList.contains("theme-dark");
-            document.body.classList.toggle("theme-dark", dark);
-            localStorage.setItem("greenphone-theme", dark ? "dark" : "light");
-            syncModalThemeButton();
-            // Đồng bộ ngay theme vào iframe đang mở.
-            try {
-                if (frame.contentDocument && frame.contentDocument.body) {
-                    frame.contentDocument.body.classList.toggle("theme-dark", dark);
-                }
-            } catch (error) {}
-        });
-    }
+    // Giao diện sáng/tối do bộ điều khiển chung js/home.js xử lý.
 
     function closeModal() {
         modal.classList.remove("is-open");

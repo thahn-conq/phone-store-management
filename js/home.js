@@ -4,6 +4,38 @@
    Dùng addToCart(), formatPrice() trong common.js.
    ========================================================== */
 
+/* ---------- THEME CHUNG TOÀN WEBSITE: nguồn điều khiển duy nhất ---------- */
+(function greenPhoneThemeController() {
+  const KEY = "theme";
+  const readTheme = () => { try { const value = JSON.parse(localStorage.getItem(KEY)); if (value === "dark" || value === "light") return value; } catch (_) {} try { return localStorage.getItem("greenphone-theme") === "dark" ? "dark" : "light"; } catch (_) { return "light"; } };
+  function applyGreenPhoneTheme(theme) {
+    const value = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = value;
+    document.body?.classList.toggle("theme-dark", value === "dark");
+    try { localStorage.setItem(KEY, JSON.stringify(value)); localStorage.setItem("greenphone-theme", value); } catch (_) {}
+    document.querySelectorAll("#theme-toggle, #accountThemeToggle, #registerModalThemeToggle, .register-modal-theme-toggle").forEach(button => {
+      const dark = value === "dark";
+      button.setAttribute("aria-label", dark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối");
+      button.title = dark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
+      if (button.id === "accountThemeToggle" || button.id === "registerModalThemeToggle" || button.classList.contains("register-modal-theme-toggle")) {
+        button.innerHTML = dark ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z"/></svg>';
+      }
+    });
+    // Đồng bộ iframe đăng ký nếu đang mở.
+    const frame = document.getElementById("accountRegisterFrame");
+    try { if (frame?.contentDocument?.documentElement) { frame.contentDocument.documentElement.dataset.theme = value; frame.contentDocument.body?.classList.toggle("theme-dark", value === "dark"); } } catch (_) {}
+  }
+  window.applyGreenPhoneTheme = applyGreenPhoneTheme;
+  window.toggleGreenPhoneTheme = () => applyGreenPhoneTheme(readTheme() === "dark" ? "light" : "dark");
+  document.addEventListener("DOMContentLoaded", () => {
+    applyGreenPhoneTheme(readTheme());
+    document.addEventListener("click", event => {
+      const button = event.target.closest("#theme-toggle, #accountThemeToggle, #registerModalThemeToggle, .register-modal-theme-toggle");
+      if (button) { event.preventDefault(); window.toggleGreenPhoneTheme(); }
+    });
+  }, { once: true });
+})();
+
 /* ---------- Tiện ích ---------- */
 
 /* Biến thể mặc định: biến thể còn hàng đầu tiên (nếu hết thì lấy biến thể đầu) */
@@ -266,6 +298,8 @@ function renderPhones(brand = "all") {
 
 /* ---------- Khởi tạo ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  // home.js cũng cung cấp bộ giao diện chung cho các trang khác; chỉ chạy phần dựng trang chủ tại index.html.
+  if (!document.getElementById("hero-banner")) return;
   if (typeof PRODUCTS === "undefined") {
     const hb = document.getElementById("hero-banner");
     if (hb) hb.innerHTML = '<div class="home-empty"><div><i data-lucide="circle-alert"></i><p>Không thể tải dữ liệu sản phẩm.</p></div></div>';

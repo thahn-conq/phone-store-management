@@ -1,263 +1,230 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GreenPhone - Chi tiết sản phẩm</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css">
-  <style>
-    .product-detail-wrap {
-      display: grid;
-      grid-template-columns: 1.1fr 1.2fr;
-      gap: 28px;
-      background: #fff;
-      border: 1px solid rgba(11, 84, 52, 0.1);
-      border-radius: 22px;
-      box-shadow: 0 18px 38px rgba(17, 24, 39, 0.06);
-      padding: 28px;
-    }
-    .product-detail-gallery {
-      background: linear-gradient(180deg, #f0fff7 0%, #ecfdf5 100%);
-      border-radius: 18px;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 330px;
-    }
-    .product-detail-gallery img {
-      max-width: 100%;
-      max-height: 420px;
-      object-fit: contain;
-    }
-    .product-detail-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .product-badge {
-      display: inline-flex;
-      width: fit-content;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(34, 160, 107, 0.12);
-      color: var(--green-700);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .product-detail-meta h1 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      line-height: 1.2;
-    }
-    .product-price-wrap {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .product-price-wrap .price {
-      font-size: clamp(1.8rem, 2vw, 2.3rem);
-      font-weight: 800;
-      color: var(--green-900);
-    }
-    .product-old-price {
-      font-size: 1rem;
-      color: #6b7280;
-      text-decoration: line-through;
-    }
-    .product-variants {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 4px;
-    }
-    .variant-btn {
-      border: 1px solid rgba(11, 84, 52, 0.2);
-      border-radius: 12px;
-      background: #fff;
-      color: var(--text);
-      padding: 10px 12px;
-      min-width: 150px;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .variant-btn:hover,
-    .variant-btn.active {
-      border-color: var(--green-700);
-      background: rgba(34, 160, 107, 0.08);
-      box-shadow: 0 0 0 3px rgba(34, 160, 107, 0.08);
-    }
-    .variant-btn.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .product-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .product-spec-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      background: rgba(15, 123, 79, 0.02);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .product-spec-table td {
-      border-bottom: 1px solid rgba(11, 84, 52, 0.08);
-      padding: 10px 12px;
-      vertical-align: top;
-    }
-    .product-spec-table td:first-child {
-      width: 38%;
-      color: #475569;
-      font-weight: 600;
-    }
-    @media (max-width: 760px) {
-      .product-detail-wrap {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chi tiết sản phẩm - GreenPhone</title>
+
+    <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/product-detail.css">
 </head>
+
 <body>
-  <div id="site-header"></div>
+    <div id="site-header"></div>
 
-  <main class="main">
-    <div class="container">
-      <div style="margin: 18px 0 22px;">
-        <a href="products.html" class="btn btn-outline">← Quay lại</a>
-      </div>
-      <div id="product-detail"></div>
-    </div>
-  </main>
+    <main class="main detail-page">
+        <div class="container detail-container">
 
-  <div id="site-footer"></div>
+            <!-- Breadcrumb -->
+            <nav class="detail-breadcrumb">
+                <a href="index.html">Trang chủ</a>
+                <span>›</span>
+                <a href="products.html">Sản phẩm</a>
+                <span>›</span>
+                <span id="detail-breadcrumb-name">Chi tiết sản phẩm</span>
+            </nav>
 
-  <script src="data/products.js"></script>
-  <script src="js/common.js"></script>
-  <script>
-    let currentProduct = null;
-    let currentVariant = null;
-
-    function buildVariantButton(variant) {
-      const selected = currentVariant && currentVariant.variantId === variant.variantId;
-      const soldOut = variant.stock <= 0;
-      return `
-        <button type="button" class="variant-btn ${selected ? "active" : ""} ${soldOut ? "disabled" : ""}" data-product-variant="${variant.variantId}" ${soldOut ? "disabled" : ""}>
-          ${variant.color} / ${variant.storage}${soldOut ? " (Hết hàng)" : ""}
-        </button>
-      `;
-    }
-
-    function renderProductDetail() {
-      const root = document.getElementById("product-detail");
-      if (!root || !currentProduct) return;
-
-      const v = currentVariant || currentProduct.variants.find(item => item.stock > 0) || currentProduct.variants[0];
-      currentVariant = v;
-
-      const starCount = "★".repeat(Math.round(currentProduct.rating)) + "☆".repeat(5 - Math.round(currentProduct.rating));
-      const specs = currentProduct.specs || {};
-
-      root.innerHTML = `
-        <div class="product-detail-wrap">
-          <div class="product-detail-gallery">
-            <img src="${currentProduct.image}" alt="${currentProduct.name}">
-          </div>
-          <div class="product-detail-meta">
-            <span class="product-badge">${currentProduct.brand}</span>
-            <h1>${currentProduct.name}</h1>
-            <div class="text-soft">${starCount} ${currentProduct.rating} / 5 · ${currentProduct.sold} đã bán</div>
-            <div class="product-price-wrap">
-              <span class="price">${formatPrice(v.price)}</span>
-              ${v.originalPrice && v.originalPrice > v.price ? `<span class="product-old-price">${formatPrice(v.originalPrice)}</span>` : ""}
-            </div>
-            <p class="text-soft">${currentProduct.description || "Sản phẩm chính hãng, giá tốt, hỗ trợ bảo hành và giao hàng nhanh."}</p>
-
-            <div>
-              <div class="label">Phiên bản</div>
-              <div class="product-variants">
-                ${currentProduct.variants.map(buildVariantButton).join("")}
-              </div>
+            <!-- Không tìm thấy sản phẩm -->
+            <div id="detail-empty" class="detail-empty" hidden>
+                <h2>Không tìm thấy sản phẩm</h2>
+                <p>Sản phẩm không tồn tại hoặc đường dẫn không hợp lệ.</p>
+                <a href="products.html" class="detail-back-button">
+                    Quay lại danh sách sản phẩm
+                </a>
             </div>
 
-            <div class="product-actions">
-              <button type="button" class="btn btn-primary btn-lg" id="add-to-cart" ${v.stock <= 0 ? "disabled" : ""}>${v.stock <= 0 ? "Hết hàng" : "Thêm vào giỏ"}</button>
-              <a href="products.html" class="btn btn-outline btn-lg">Xem thêm</a>
-            </div>
+            <!-- Khu vực thông tin chính -->
+            <section id="product-detail" class="detail-product" hidden>
 
-            <div class="product-spec-table-wrap">
-              <h3 style="margin: 8px 0 6px;">Thông số kỹ thuật</h3>
-              <table class="product-spec-table">
-                <tr><td>Màn hình</td><td>${specs.screen || "-"}</td></tr>
-                <tr><td>CPU</td><td>${specs.chip || "-"}</td></tr>
-                <tr><td>RAM</td><td>${specs.ram || "-"}</td></tr>
-                <tr><td>Camera</td><td>${specs.camera || "-"}</td></tr>
-                <tr><td>Pin</td><td>${specs.battery || "-"}</td></tr>
-                <tr><td>Hệ điều hành</td><td>${specs.os || "-"}</td></tr>
-              </table>
-            </div>
-          </div>
+                <!-- CỘT TRÁI: HÌNH ẢNH + THÔNG SỐ BÊN DƯỚI -->
+                <div class="detail-left-column">
+                <div class="detail-gallery">
+
+                    <div class="detail-image-box">
+                        <img id="detail-image" src="" alt="">
+                    </div>
+
+                    <div class="detail-gallery-caption">
+                       
+                    </div>
+</div>
+                            <!-- THÔNG SỐ KỸ THUẬT -->
+            <section id="detail-spec-section"
+                     class="detail-content-section"
+                     hidden>
+
+                <h2 class="detail-section-title">CHI TIẾT SẢN PHẨM</h2>
+
+                <div class="detail-spec-table">
+                    <div class="detail-spec-row">
+                        <span class="detail-spec-label">Thương hiệu</span>
+                        <span id="detail-spec-brand"
+                              class="detail-spec-value"></span>
+                    </div>
+
+                    <div class="detail-spec-row">
+                        <span class="detail-spec-label">Tên sản phẩm</span>
+                        <span id="detail-spec-name"
+                              class="detail-spec-value"></span>
+                    </div>
+
+                    <div id="product-specs" class="detail-specs"></div>
+                </div>
+            </section>
+
+
+                </div>
+
+                <!-- CỘT PHẢI: THÔNG TIN -->
+                <div class="detail-info">
+
+                   
+
+                    <h1 id="detail-name" class="detail-name"></h1>
+
+                    <!-- Đánh giá và lượt bán -->
+                    <div class="detail-rating">
+                        <div class="detail-rating-score">
+                            <span id="detail-rating"></span>
+                            <span class="detail-star">★</span>
+                        </div>
+
+                        <span class="detail-divider"></span>
+
+                        <span id="detail-sold" class="detail-sold"></span>
+                    </div>
+
+                    <p id="detail-description-short"
+                       class="detail-short-description"></p>
+
+                    <!-- Giá sản phẩm -->
+                    <div class="detail-price-box">
+                        <span id="detail-price" class="detail-price"></span>
+
+                        <span id="detail-original-price"
+                              class="detail-original-price"></span>
+
+                        <span id="detail-discount"
+                              class="detail-discount" hidden></span>
+                    </div>
+
+                    <!-- Chọn phiên bản -->
+                    <div class="detail-option-row">
+                        <label for="detail-variant">Phân loại</label>
+
+                        <div class="detail-option-content">
+                            <select id="detail-variant" class="input"></select>
+                            <p class="detail-option-hint">
+                                Chọn màu sắc và dung lượng phù hợp
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tồn kho -->
+                    <div class="detail-option-row">
+                        <span class="detail-label">Tình trạng</span>
+
+                        <div class="detail-option-content">
+                            <span id="detail-stock-text"
+                                  class="detail-stock-text"></span>
+                        </div>
+                    </div>
+
+                    <!-- Số lượng -->
+                    <div class="detail-option-row">
+                        <label for="detail-quantity">Số lượng</label>
+
+                        <div class="detail-option-content">
+                            <div class="quantity-control">
+                                <button type="button"
+                                        id="quantity-minus"
+                                        aria-label="Giảm số lượng">−</button>
+
+                                <input type="number"
+                                       id="detail-quantity"
+                                       min="1"
+                                       value="1"
+                                       inputmode="numeric"
+                                       aria-label="Số lượng sản phẩm">
+
+                                <button type="button"
+                                        id="quantity-plus"
+                                        aria-label="Tăng số lượng">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nút mua hàng -->
+                    <div class="detail-purchase-actions">
+                        <button type="button"
+                                id="detail-add-cart"
+                                class="detail-add-cart">
+                            <span class="detail-cart-icon">🛒</span>
+                            Thêm Vào Giỏ Hàng
+                        </button>
+
+                        <button type="button"
+                                id="detail-buy-now"
+                                class="detail-buy-now">
+                            Mua Ngay
+                        </button>
+                    </div>
+
+                    <p id="detail-message"
+                       class="detail-message"
+                       role="status"></p>
+
+                    <!-- Cam kết sản phẩm: dùng chung bố cục, nội dung theo thương hiệu -->
+                    <section class="detail-commitments" aria-labelledby="detail-commitments-title">
+                      <h2 id="detail-commitments-title">Cam kết sản phẩm</h2>
+                      <div class="detail-commitment-grid">
+                        <article class="detail-commitment-card">
+                          <span class="detail-commitment-icon" aria-hidden="true">♧</span>
+                          <div><strong>Hàng chính hãng</strong><p id="detail-commitment-origin">Mới, đầy đủ phụ kiện từ nhà sản xuất.</p></div>
+                        </article>
+                        <article class="detail-commitment-card">
+                          <span class="detail-commitment-icon" aria-hidden="true">♢</span>
+                          <div><strong>Bảo hành minh bạch</strong><p id="detail-commitment-warranty">Bảo hành chính hãng theo chính sách của nhà sản xuất.</p></div>
+                        </article>
+                        <article class="detail-commitment-card">
+                          <span class="detail-commitment-icon" aria-hidden="true">⚙</span>
+                          <div><strong>Kiểm tra trước khi giao</strong><p>Kiểm tra ngoại quan và phụ kiện trước khi bàn giao sản phẩm.</p></div>
+                        </article>
+                        <article class="detail-commitment-card">
+                          <span class="detail-commitment-icon" aria-hidden="true">◇</span>
+                          <div><strong>Hỗ trợ sau mua</strong><p>Hỗ trợ hướng dẫn sử dụng, bảo hành và tư vấn trong quá trình sử dụng.</p></div>
+                        </article>
+                      </div>
+                    </section>
+
+                </div>
+            </section>
+
+            <!-- MÔ TẢ SẢN PHẨM -->
+            <section id="detail-description-section"
+                     class="detail-content-section"
+                     hidden>
+
+                <h2 class="detail-section-title">MÔ TẢ SẢN PHẨM</h2>
+
+                <div class="detail-description-content">
+                    <h3 id="detail-description-heading"></h3>
+                    <p id="product-description" class="detail-description"></p>
+                </div>
+            </section>
+
         </div>
-      `;
-    }
+    </main>
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const params = new URLSearchParams(window.location.search);
-      const productId = params.get("id");
-      const chosenVariantId = params.get("editVariant");
+    <div id="site-footer"></div>
 
-      if (!productId || typeof PRODUCTS === "undefined") {
-        document.getElementById("product-detail").innerHTML = `
-          <div class="card" style="padding: 32px; text-align: center;">
-            <h2>Không tìm thấy sản phẩm</h2>
-            <p>Vui lòng quay lại danh sách sản phẩm.</p>
-            <a href="products.html" class="btn btn-primary">Về danh sách sản phẩm</a>
-          </div>
-        `;
-        return;
-      }
-
-      currentProduct = findProduct(productId);
-      if (!currentProduct) {
-        document.getElementById("product-detail").innerHTML = `
-          <div class="card" style="padding: 32px; text-align: center;">
-            <h2>Không tìm thấy sản phẩm</h2>
-            <p>Vui lòng quay lại danh sách sản phẩm.</p>
-            <a href="products.html" class="btn btn-primary">Về danh sách sản phẩm</a>
-          </div>
-        `;
-        return;
-      }
-
-      currentVariant = currentProduct.variants.find(variant => variant.variantId === chosenVariantId)
-        || currentProduct.variants.find(variant => variant.stock > 0)
-        || currentProduct.variants[0];
-
-      renderProductDetail();
-    });
-
-    document.addEventListener("click", function (event) {
-      const variantButton = event.target.closest("[data-product-variant]");
-      if (variantButton && currentProduct) {
-        currentVariant = currentProduct.variants.find(item => item.variantId === variantButton.dataset.productVariant);
-        renderProductDetail();
-        return;
-      }
-
-      if (event.target.closest("#add-to-cart") && currentVariant) {
-        addToCart(currentVariant.variantId, 1);
-      }
-    });
-  </script>
+    <script src="data/products.js"></script>
+    <script src="data/footer.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/product-detail.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

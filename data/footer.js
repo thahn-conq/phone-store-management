@@ -4,12 +4,12 @@
    ========================================================== */
 const FOOTER_DATA = {
   support: {
-    title: "Tổng đài hỗ trợ (minh họa)",
-    purchase: "1900 0000",
-    purchaseHours: "(8h00 - 21h30)",
-    complaint: "1900 0001",
-    complaintHours: "(8h00 - 21h00)",
-    email: "hotro@greenphone.vn"
+    title: "Tổng đài hỗ trợ",
+    purchase: "0339331610",
+    purchaseHours: "",
+    complaint: "0382570433",
+    complaintHours: "",
+    email: "chuducanh4a3@gmail.com"
   },
 
   paymentMethods: ["Tiền mặt (COD)", "Chuyển khoản", "Thanh toán online"],
