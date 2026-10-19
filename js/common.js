@@ -14,6 +14,7 @@ const KEYS = {
   theme: "theme"               // giao diện sáng / tối: "light" | "dark" (không có = theo hệ thống)
 };
 
+
 const COUPONS = {
   GREEN100: { discount: 100000, minimum: 1000000 },
   HOCBONG: { discount: 300000, minimum: 3000000 },
@@ -26,7 +27,10 @@ function getCouponConfig(code) {
 
 function getCouponDiscount(code, subtotal) {
   const coupon = getCouponConfig(code);
-  return coupon && Number(subtotal) >= coupon.minimum ? coupon.discount : 0;
+
+  return coupon && Number(subtotal) >= coupon.minimum
+    ? coupon.discount
+    : 0;
 }
 
 /* ---- 2. BẢN ĐỒ LIÊN KẾT CÁC TRANG ----
