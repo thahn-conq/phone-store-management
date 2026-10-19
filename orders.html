@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đơn hàng của tôi - GreenPhone</title>
+  <script>/* đặt giao diện sáng/tối trước khi vẽ trang để không bị nháy màu */
+    (function () { try { var t = JSON.parse(localStorage.getItem("theme")); if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.dataset.theme = t; } catch (e) {} })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/order.css">
+</head>
+<body data-order-page="orders">
+  <div id="site-header"></div>
+
+  <main class="main">
+    <div class="container">
+      <nav class="ord-breadcrumb" aria-label="Breadcrumb">
+        <a data-page="home">Trang chủ</a><span>/</span><span>Đơn hàng</span>
+      </nav>
+
+      <section class="ord-heading">
+        <div>
+          <p class="ord-eyebrow">ORDER</p>
+          <h1>Đơn hàng của tôi</h1>
+          <p class="text-soft">Tra cứu và theo dõi các đơn hàng đã đặt tại GreenPhone.</p>
+        </div>
+      </section>
+
+      <section class="card ord-history-panel" aria-labelledby="ord-list-title">
+        <div class="ord-history-top">
+          <div>
+            <h2 id="ord-list-title">Lịch sử mua hàng</h2>
+            <p class="text-soft" id="ord-order-count"></p>
+          </div>
+          <div class="ord-history-note">Theo dõi đơn hàng từ lúc đặt đến khi giao thành công</div>
+        </div>
+
+        <div class="ord-tabs" id="ord-status-tabs" role="group" aria-label="Lọc đơn hàng theo trạng thái">
+          <button class="ord-tab is-active" type="button" data-status="all">Tất cả <span data-count="all">0</span></button>
+          <button class="ord-tab" type="button" data-status="pending">Chờ xác nhận <span data-count="pending">0</span></button>
+          <button class="ord-tab" type="button" data-status="confirmed">Đang xử lý <span data-count="confirmed">0</span></button>
+          <button class="ord-tab" type="button" data-status="shipping">Đang giao <span data-count="shipping">0</span></button>
+          <button class="ord-tab" type="button" data-status="completed">Hoàn thành <span data-count="completed">0</span></button>
+          <button class="ord-tab" type="button" data-status="cancelled">Đã hủy <span data-count="cancelled">0</span></button>
+        </div>
+
+        <div class="ord-tools">
+          <form class="ord-search-form" id="ord-search-form">
+            <label class="ord-search-box" for="ord-search-input">
+              <span class="ord-search-icon" aria-hidden="true">⌕</span>
+              <input id="ord-search-input" type="search" placeholder="Tìm theo mã đơn hàng" autocomplete="off">
+            </label>
+            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            <button class="btn btn-outline" type="button" id="ord-clear-search" hidden>Xóa lọc</button>
+          </form>
+          <div class="ord-date-filter" aria-label="Lọc theo ngày đặt hàng">
+            <span class="ord-date-label">Ngày đặt</span>
+            <input class="ord-date-input" id="ord-date-from" type="date" aria-label="Từ ngày">
+            <span class="ord-date-arrow">→</span>
+            <input class="ord-date-input" id="ord-date-to" type="date" aria-label="Đến ngày">
+          </div>
+        </div>
+        <p class="ord-search-message" id="ord-search-message" aria-live="polite"></p>
+
+        <div class="ord-list" id="ord-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="data/products.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/order.js"></script>
+</body>
+</html>
