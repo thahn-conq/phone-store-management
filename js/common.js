@@ -35,8 +35,8 @@ function getCouponDiscount(code, subtotal) {
    Mọi liên kết trong header, footer và trang chủ sẽ tự cập nhật theo. */
 const PAGES = {
   home:          { url: "index.html", title: "Trang chủ",                  module: "Khung chung" },
-  products:      { url: "#", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
-  productDetail: { url: "#", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
+  products:      { url: "Products.html", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
+  productDetail: { url: "Product_detail.html", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
   compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
   cart:          { url: "shopping_cart.html", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
   checkout:      { url: "checkout.html", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
