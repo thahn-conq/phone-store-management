@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Tài khoản - GreenPhone</title>
+
+    <link
+        rel="stylesheet"
+        href="css/base.css">
+
+    <link
+        rel="stylesheet"
+        href="css/account.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="profile-topbar">
+
+    <button type="button" class="profile-back-btn" id="profile-back-btn">
+        ← Quay lại
+    </button>
+
+    <a href="index.html" class="profile-logo" title="Về trang chủ">
+        <span class="gp-leaf-mark" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M19.5 4.5C12 4.4 6.1 6.4 5 12.1c-.6 3.1 1.5 5.3 4.3 5.1 5.8-.4 8.1-6.7 10.2-12.7Z"/><path d="M4 20c3.5-5.2 7.2-8.3 12.2-11.2"/></svg></span> GreenPhone
+    </a>
+
+
+    <div class="profile-search">
+
+        <span class="profile-search-icon">
+            🔍
+        </span>
+
+        <input
+            type="text"
+            placeholder="Bạn muốn mua gì hôm nay?">
+
+    </div>
+
+
+    <div class="profile-top-links">
+
+        <a href="index.html">
+            🏪 Cửa hàng gần nhất
+        </a>
+
+        <a href="index.html">
+            ☎ 1800 2097
+        </a>
+
+        <a href="index.html">
+            🛒 Giỏ hàng
+        </a>
+
+    </div>
+
+    <button type="button" id="accountThemeToggle" class="account-theme-toggle account-theme-inline profile-theme-toggle" aria-label="Chuyển giao diện" title="Chuyển giao diện"><svg class="gp-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z"/></svg></button>
+
+</header>
+
+
+
+<!-- =====================================================
+     WRAPPER
+===================================================== -->
+
+<div class="profile-wrapper">
+
+
+    <!-- =================================================
+         THÔNG TIN USER
+    ================================================= -->
+
+    <section class="profile-summary">
+
+
+        <!-- USER -->
+
+        <div class="profile-user">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+
+            <div>
+
+                <div
+                    class="profile-user-name"
+                    id="sidebar-username">
+
+                    Khách hàng
+
+                </div>
+
+
+                <div
+                    class="profile-user-phone"
+                    id="profile-phone">
+
+                    0000000000
+
+                </div>
+
+
+                <div class="profile-user-update">
+
+                    ◷ Cập nhật thông tin tài khoản
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ĐƠN HÀNG -->
+
+        <div class="profile-summary-stat">
+
+            <div class="profile-summary-icon">
+                🛒
+            </div>
+
+
+            <div>
+
+                <strong id="total-orders">
+                    0
+                </strong>
+
+                <span>
+                    Tổng số đơn hàng đã mua
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TIỀN -->
+
+        <div class="profile-summary-stat">
+
+            <div class="profile-summary-icon">
+                💰
+            </div>
+
+
+            <div>
+
+                <strong id="total-money">
+                    0₫
+                </strong>
+
+                <span>
+                    Tổng tiền đã mua hàng
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- KÊNH -->
+
+        <div class="profile-channel">
+
+            <div class="profile-channel-title">
+                Bạn đang ở kênh thành viên
+            </div>
+
+
+            <div class="profile-channel-box">
+
+                <div class="profile-channel-logo">
+                    G
+                </div>
+
+
+                <div>
+
+                    <div class="profile-channel-name">
+                        GreenPhone
+                    </div>
+
+                    <small>
+                        greenphone.com
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SHORTCUT
+    ================================================= -->
+
+    <section class="profile-shortcuts">
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                🏷️
+            </div>
+
+            <span>
+                Hạng thành viên
+            </span>
+
+        </div>
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                🎟️
+            </div>
+
+            <span>
+                Mã giảm giá
+            </span>
+
+        </div>
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                📋
+            </div>
+
+            <span>
+                Lịch sử mua hàng
+            </span>
+
+        </div>
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                📍
+            </div>
+
+            <span>
+                Số địa chỉ
+            </span>
+
+        </div>
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                🎓
+            </div>
+
+            <span>
+                G-Student & G-Teacher
+            </span>
+
+        </div>
+
+
+        <div class="profile-shortcut">
+
+            <div class="profile-shortcut-icon">
+                🔗
+            </div>
+
+            <span>
+                Liên kết tài khoản
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <div class="profile-main">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================= -->
+
+        <aside class="profile-sidebar">
+
+
+            <div class="profile-menu">
+
+
+                <div
+                    class="profile-menu-item active"
+                    data-page="overview">
+
+                    <span class="profile-menu-icon">
+                        🏠
+                    </span>
+
+                    <span>
+                        Tổng quan
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="orders">
+
+                    <span class="profile-menu-icon">
+                        📋
+                    </span>
+
+                    <span>
+                        Lịch sử mua hàng
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="warranty-search">
+
+                    <span class="profile-menu-icon">
+                        🛡️
+                    </span>
+
+                    <span>
+                        Tra cứu bảo hành
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="trade-in">
+
+                    <span class="profile-menu-icon">
+                        ♻️
+                    </span>
+
+                    <span>
+                        Thông tin thu cũ
+                    </span>
+
+                </div>
+
+
+                <div class="profile-menu-divider"></div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="membership">
+
+                    <span class="profile-menu-icon">
+                        🏷️
+                    </span>
+
+                    <span>
+                        Hạng thành viên và ưu đãi
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="business">
+
+                    <span class="profile-menu-icon">
+                        💼
+                    </span>
+
+                    <span>
+                        Ưu đãi và đơn hàng G-Business
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="student">
+
+                    <span class="profile-menu-icon">
+                        🎓
+                    </span>
+
+                    <span>
+                        Ưu đãi G-Student và G-Teacher
+                    </span>
+
+                </div>
+
+
+                <div class="profile-menu-divider"></div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="profile">
+
+                    <span class="profile-menu-icon">
+                        ⚙️
+                    </span>
+
+                    <span>
+                        Thông tin tài khoản
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="address">
+                    <span class="profile-menu-icon">📍</span>
+                    <span>Địa chỉ đặt đơn</span>
+                </div>
+
+                <div
+                    class="profile-menu-item"
+                    data-page="password">
+                    <span class="profile-menu-icon">🔒</span>
+                    <span>Đổi mật khẩu</span>
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="stores">
+
+                    <span class="profile-menu-icon">
+                        🏪
+                    </span>
+
+                    <span>
+                        Tìm kiếm cửa hàng
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="warranty">
+
+                    <span class="profile-menu-icon">
+                        📄
+                    </span>
+
+                    <span>
+                        Chính sách bảo hành
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="support">
+
+                    <span class="profile-menu-icon">
+                        ✉️
+                    </span>
+
+                    <span>
+                        Góp ý - Phản hồi - Hỗ trợ
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="profile-menu-item"
+                    data-page="terms">
+
+                    <span class="profile-menu-icon">
+                        ↗️
+                    </span>
+
+                    <span>
+                        Điều khoản sử dụng
+                    </span>
+
+                </div>
+
+
+                <div class="profile-menu-divider"></div>
+
+
+                <div
+                    class="profile-menu-item profile-logout"
+                    data-page="logout">
+
+                    <span class="profile-menu-icon">
+                        ⇥
+                    </span>
+
+                    <span>
+                        Đăng xuất
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================= -->
+
+        <main class="profile-content">
+
+
+            <!-- THÔNG BÁO -->
+
+            <div class="profile-notice">
+
+                <span class="profile-notice-icon">
+                    ⓘ
+                </span>
+
+                <span class="profile-notice-text">
+                    Đăng ký G-Student / G-Teacher để nhận thêm ưu đãi
+                </span>
+
+                <a href="#" class="open-account-register" data-register-type="student">
+                    Đăng ký ngay
+                </a>
+
+                <button class="profile-notice-close">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="profile-notice">
+
+                <span class="profile-notice-icon">
+                    ⓘ
+                </span>
+
+                <span class="profile-notice-text">
+                    Đăng ký G-Business để nhận ưu đãi độc quyền cho doanh nghiệp.
+                </span>
+
+                <a href="#" class="open-account-register" data-register-type="business">
+                    Đăng ký ngay
+                </a>
+
+                <button class="profile-notice-close">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="profile-notice">
+
+                <span class="profile-notice-icon">
+                    ⓘ
+                </span>
+
+                <span class="profile-notice-text">
+                    Thêm địa chỉ để đặt đơn hàng nhanh hơn.
+                </span>
+
+                <a href="#" data-open-panel="account-address-panel">
+                    Thêm địa chỉ
+                </a>
+
+                <button class="profile-notice-close">
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 THÔNG TIN CÁ NHÂN / SỔ ĐỊA CHỈ
+            ================================================= -->
+            <section class="profile-card account-visible-info">
+                <div class="account-visible-head">
+                    <h2 class="profile-card-title">Thông tin cá nhân</h2>
+                    <button type="button" class="account-inline-edit" data-open-panel="account-info-panel">✎ Cập nhật</button>
+                </div>
+                <div class="account-info-grid">
+                    <div><span>Họ và tên:</span><strong id="visible-fullName">-</strong></div>
+                    <div><span>Số điện thoại:</span><strong id="visible-phone">-</strong></div>
+                    <div><span>Giới tính:</span><strong id="visible-gender">-</strong></div>
+                    <div><span>Email:</span><strong id="visible-email">-</strong></div>
+                    <div><span>Ngày sinh:</span><strong id="visible-birthday">-</strong></div>
+                    <div><span>Địa chỉ mặc định:</span><strong id="visible-address">-</strong></div>
+                </div>
+            </section>
+
+            <section class="profile-card account-visible-address">
+                <div class="account-visible-head">
+                    <h2 class="profile-card-title">Sổ địa chỉ</h2>
+                    <button type="button" class="account-inline-edit" data-open-panel="account-address-panel">＋ Thêm địa chỉ</button>
+                </div>
+                <div id="visible-address-card" class="visible-address-empty">
+                    <div class="visible-address-icon">📍</div>
+                    <p>Bạn chưa có địa chỉ nhận hàng nào.</p>
+                    <button type="button" class="btn btn-outline" data-open-panel="account-address-panel">Thêm địa chỉ đặt đơn</button>
+                </div>
+            </section>
+
+            <!-- =================================================
+                 QUẢN LÝ TÀI KHOẢN
+            ================================================= -->
+
+            <section class="profile-card account-panel" id="account-info-panel">
+                <div class="account-panel-head">
+                    <div>
+                        <h2 class="profile-card-title">Cập nhật thông tin</h2>
+                        <p class="account-panel-desc">Thay đổi họ tên, số điện thoại và email của tài khoản.</p>
+                    </div>
+                </div>
+
+                <form id="account-info-form" class="account-form">
+                    <div class="account-form-grid">
+                        <div class="form-group">
+                            <label for="account-fullName">Họ và tên</label>
+                            <input class="input" id="account-fullName" type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-phone">Số điện thoại</label>
+                            <input class="input" id="account-phone" type="tel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-email">Email</label>
+                            <input class="input" id="account-email" type="email" placeholder="Chưa cập nhật">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-gender">Giới tính</label>
+                            <select class="input" id="account-gender">
+                                <option value="">Chọn giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                                <option value="Khác">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="account-birthday">Ngày sinh</label>
+                            <input class="input" id="account-birthday" type="date">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Lưu thông tin</button>
+                </form>
+            </section>
+
+            <section class="profile-card account-panel" id="account-address-panel">
+                <div class="account-panel-head">
+                    <div>
+                        <h2 class="profile-card-title">Địa chỉ đặt đơn</h2>
+                        <p class="account-panel-desc">Lưu địa chỉ nhận hàng để dùng nhanh khi đặt đơn.</p>
+                    </div>
+                </div>
+
+                <form id="account-address-form" class="account-form">
+                    <div class="account-form-grid">
+                        <div class="form-group full">
+                            <label for="account-address">Địa chỉ nhận hàng</label>
+                            <textarea class="input" id="account-address" rows="3"
+                                placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Lưu địa chỉ</button>
+                </form>
+            </section>
+
+            <section class="profile-card account-panel" id="account-password-panel">
+                <div class="account-panel-head">
+                    <div>
+                        <h2 class="profile-card-title">Đổi mật khẩu</h2>
+                        <p class="account-panel-desc">Mật khẩu mới nên có ít nhất 6 ký tự.</p>
+                    </div>
+                </div>
+
+                <form id="account-password-form" class="account-form">
+                    <div class="account-form-grid">
+                        <div class="form-group full">
+                            <label for="current-password">Mật khẩu hiện tại</label>
+                            <div class="password-box">
+                                <input class="input" id="current-password" type="password" required>
+                                <button type="button" class="password-toggle" data-password-target="current-password" aria-label="Hiện mật khẩu">👁</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">Mật khẩu mới</label>
+                            <div class="password-box">
+                                <input class="input" id="new-password" type="password" minlength="6" required>
+                                <button type="button" class="password-toggle" data-password-target="new-password" aria-label="Hiện mật khẩu">👁</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-new-password">Nhập lại mật khẩu mới</label>
+                            <div class="password-box">
+                                <input class="input" id="confirm-new-password" type="password" minlength="6" required>
+                                <button type="button" class="password-toggle" data-password-target="confirm-new-password" aria-label="Hiện mật khẩu">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Đổi mật khẩu</button>
+                </form>
+            </section>
+
+            <div class="account-action-row">
+                <button type="button" class="btn btn-outline account-action-btn" data-open-panel="account-info-panel">✏️ Cập nhật thông tin</button>
+                <button type="button" class="btn btn-outline account-action-btn" data-open-panel="account-address-panel">📍 Địa chỉ đặt đơn</button>
+                <button type="button" class="btn btn-outline account-action-btn" data-open-panel="account-password-panel">🔒 Đổi mật khẩu</button>
+            </div>
+
+            <!-- ĐƠN HÀNG + ƯU ĐÃI -->
+
+            <div class="profile-two-column">
+
+
+                <section class="profile-card">
+
+                    <h2 class="profile-card-title">
+                        Đơn hàng gần đây
+                    </h2>
+
+
+                    <div class="profile-empty">
+
+                        <div class="profile-empty-icon">
+                            🛍️
+                        </div>
+
+                        <p>
+                            Bạn chưa có đơn hàng nào gần đây.
+                        </p>
+
+                        <p>
+                            Hãy bắt đầu mua sắm ngay nào!
+                        </p>
+
+                        <a href="index.html">
+                            Mua sắm ngay
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="profile-card">
+
+                    <h2 class="profile-card-title">
+                        Ưu đãi của bạn
+                    </h2>
+
+
+                    <div class="profile-empty">
+
+                        <div class="profile-empty-icon">
+                            🎁
+                        </div>
+
+                        <p>
+                            Chưa có ưu đãi nào.
+                        </p>
+
+                        <a href="index.html">
+                            Xem ưu đãi
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- THU CŨ -->
+
+            <section class="profile-card profile-tradein">
+
+                <h2 class="profile-card-title">
+                    Gói cam kết giá thu
+                    <span style="color:#087443;">
+                        ♻ GreenTrade
+                    </span>
+                </h2>
+
+
+                <div class="profile-tradein-content">
+
+                    <div class="profile-tradein-icon">
+                        ♻️
+                    </div>
+
+                    <p>
+                        Bạn chưa có gói cam kết giá thu nào
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- YÊU THÍCH -->
+
+            <section class="profile-card profile-favorite">
+
+                <h2 class="profile-card-title">
+                    Sản phẩm yêu thích
+                </h2>
+
+
+                <div class="profile-empty">
+
+                    <div class="profile-empty-icon">
+                        ❤️
+                    </div>
+
+                    <p>
+                        Bạn chưa có sản phẩm nào yêu thích.
+                    </p>
+
+                    <p>
+                        Hãy bắt đầu mua sắm ngay nào!
+                    </p>
+
+                    <a href="index.html">
+                        Mua sắm ngay
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- CHƯƠNG TRÌNH -->
+
+            <section class="profile-card">
+
+                <h2 class="profile-card-title">
+                    Chương trình nổi bật
+                </h2>
+
+
+                <div class="profile-featured">
+
+                    <div class="profile-feature-box">
+                        🌿 GreenPhone
+                    </div>
+
+                    <div class="profile-feature-box">
+                        🎁 Ưu đãi thành viên
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- LỊCH SỬ MUA HÀNG -->
+            <section class="profile-card order-history-page" id="order-history-page" hidden>
+                <div class="order-history-heading">
+                    <h2 class="profile-card-title">Lịch sử mua hàng</h2>
+                    <div class="order-date-filter">
+                        <label for="orders-date-from">Từ ngày</label>
+                        <input id="orders-date-from" type="date">
+                        <span>→</span>
+                        <label for="orders-date-to">Đến ngày</label>
+                        <input id="orders-date-to" type="date">
+                        <button type="button" id="orders-date-reset">Đặt lại</button>
+                    </div>
+                </div>
+                <div class="order-status-tabs" role="tablist" aria-label="Lọc trạng thái đơn hàng">
+                    <button type="button" class="order-status-tab active" data-order-status="all">Tất cả</button>
+                    <button type="button" class="order-status-tab" data-order-status="pending">Chờ xác nhận</button>
+                    <button type="button" class="order-status-tab" data-order-status="processing">Đang xử lý</button>
+                    <button type="button" class="order-status-tab" data-order-status="shipping">Đang vận chuyển</button>
+                    <button type="button" class="order-status-tab" data-order-status="completed">Đã nhận hàng</button>
+                    <button type="button" class="order-status-tab" data-order-status="cancelled">Đã hủy</button>
+                </div>
+                <div id="order-history-list" class="order-history-list" aria-live="polite"></div>
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL ĐĂNG KÝ G-STUDENT / G-BUSINESS -->
+<div class="register-modal" id="accountRegisterModal" aria-hidden="true">
+    <div class="register-modal-backdrop" data-close-account-register></div>
+    <section class="register-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="account-register-modal-title">
+        <div class="register-modal-header">
+            <button type="button" class="register-modal-close" data-close-account-register aria-label="Đóng">×</button>
+            <h2 id="account-register-modal-title">Đăng ký G-Student / G-Teacher</h2>
+            <button type="button" class="register-modal-theme-toggle" id="registerModalThemeToggle" aria-label="Chuyển giao diện sáng tối" title="Chuyển giao diện sáng/tối">🌙</button>
+        </div>
+        <iframe id="accountRegisterFrame" title="Đăng ký thành viên" src="about:blank"></iframe>
+    </section>
+</div>
+
+
+<script src="js/account.js"></script>
+
+</body>
+
+</html>

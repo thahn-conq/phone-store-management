@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng nhập - GreenPhone</title>
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/account.css">
+</head>
+
+<body>
+
+<a href="index.html" class="login-back-btn" aria-label="Quay lại trang trước" title="Quay lại"><span aria-hidden="true">←</span></a>
+
+<div class="account-page">
+
+    <!-- BÊN TRÁI -->
+    <div class="account-left">
+
+        <div class="account-brand">
+            <div class="brand-logo"><span class="gp-leaf-mark" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M19.5 4.5C12 4.4 6.1 6.4 5 12.1c-.6 3.1 1.5 5.3 4.3 5.1 5.8-.4 8.1-6.7 10.2-12.7Z"/><path d="M4 20c3.5-5.2 7.2-8.3 12.2-11.2"/></svg></span> GreenPhone</div>
+        </div>
+
+        <h1>
+            Trở thành khách hàng thành viên
+            <span>GreenPhone</span>
+        </h1>
+
+        <p class="account-subtitle">
+            Để không bỏ lỡ các ưu đãi hấp dẫn từ GreenPhone
+        </p>
+
+        <div class="account-benefits">
+
+            <div class="benefit-item"><span>🎁</span><p><b>Chiết khấu đến 5%</b> khi mua sản phẩm tại GreenPhone</p></div>
+            <div class="benefit-item"><span>🚚</span><p><b>Miễn phí giao hàng</b> cho đơn hàng từ 300.000₫</p></div>
+            <div class="benefit-item"><span>🎂</span><p><b>Voucher sinh nhật đến 500.000₫</b> cho khách hàng thành viên</p></div>
+            <div class="benefit-item"><span>♻️</span><p><b>Trợ giá thu cũ lên đến 1 triệu₫</b> khi đổi máy</p></div>
+            <div class="benefit-item"><span>⭐</span><p><b>Thăng hạng</b> nhận voucher đến 300.000₫</p></div>
+            <div class="benefit-item"><span>🎓</span><p><b>G-Student / G-Teacher</b> ưu đãi thêm đến 10%</p></div>
+            <div class="benefit-item"><span>💼</span><p><b>G-Business</b> nhận ưu đãi độc quyền, chiết khấu đến 8%</p></div>
+            <a href="#" id="benefit-register-link" aria-label="Yêu cầu đăng nhập để xem chi tiết chính sách ưu đãi">Xem chi tiết chính sách ưu đãi ›</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BÊN PHẢI -->
+    <div class="account-right">
+
+        <div class="login-box">
+
+            <div class="account-form-heading"><h2>Đăng nhập tài khoản</h2></div>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Số điện thoại
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Nhập số điện thoại của bạn"
+                    >
+
+                    <small id="phoneError"></small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Mật khẩu
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Nhập mật khẩu của bạn"
+                        >
+
+                        <button
+                            type="button"
+                            id="showPassword"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                    <small id="passwordError"></small>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn-login"
+                >
+                    Đăng nhập
+                </button>
+
+            </form>
+
+
+            <a
+                href="forgot-password.html"
+                class="forgot-password"
+            >
+                Quên mật khẩu?
+            </a>
+
+
+            <div class="login-divider">
+                <span>Hoặc đăng nhập bằng</span>
+            </div>
+
+
+            <div class="social-login">
+
+                <a href="https://accounts.google.com/" target="_blank" rel="noopener noreferrer" class="social-provider social-google" aria-label="Đăng nhập bằng Google">
+                    <span class="google-logo" aria-hidden="true">G</span>
+                    <span>Google</span>
+                </a>
+
+                <a href="https://id.zalo.me/" target="_blank" rel="noopener noreferrer" class="social-provider social-zalo" aria-label="Đăng nhập bằng Zalo">
+                    <span class="zalo-logo" aria-hidden="true">Zalo</span>
+                    <span>Zalo</span>
+                </a>
+
+            </div>
+
+
+            <p class="register-text">
+                Bạn chưa có tài khoản?
+                <a href="register.html" class="login-register-link">
+                    Đăng ký ngay
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL ĐĂNG KÝ: mở từ nút "Đăng ký ngay" -->
+<div class="register-modal" id="registerModal" aria-hidden="true">
+    <div class="register-modal-backdrop" data-close-register></div>
+    <section class="register-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="register-modal-title">
+        <div class="register-modal-header">
+            <button type="button" class="register-modal-close" data-close-register aria-label="Đóng">×</button>
+            <h2 id="register-modal-title">Đăng ký mới Tân sinh viên</h2>
+        </div>
+        <iframe id="registerModalFrame" title="Đăng ký thành viên" src="about:blank"></iframe>
+    </section>
+</div>
+
+<script src="js/account.js"></script>
+
+<script>
+    // Chi tiết ưu đãi chỉ dành cho khách hàng đã đăng nhập.
+    document.getElementById('benefit-register-link')?.addEventListener('click', function (event) {
+        event.preventDefault();
+        alert('Vui lòng đăng nhập để xem chi tiết chính sách ưu đãi.');
+        document.getElementById('phone')?.focus();
+    });
+</script>
+</body>
+</html>
