@@ -27,6 +27,7 @@ function getCouponConfig(code) {
 
 function getCouponDiscount(code, subtotal) {
   const coupon = getCouponConfig(code);
+
   return coupon && Number(subtotal) >= coupon.minimum
     ? coupon.discount
     : 0;
@@ -41,8 +42,8 @@ const PAGES = {
   products:      { url: "#", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
   productDetail: { url: "#", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
   compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
-  cart:          { url: "#", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
-  checkout:      { url: "#", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
+  cart:          { url: "shopping_cart.html", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
+  checkout:      { url: "checkout.html", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
   login:         { url: "login.html", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
   account:       { url: "account.html", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
   orders:        { url: "#", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },
