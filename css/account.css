@@ -4054,3 +4054,25 @@ body.theme-dark .profile-main [id*="address"] textarea {
 @media (max-width: 520px) {
     .login-back-btn { top: 12px; left: 12px; width: 38px; height: 38px; }
 }
+
+
+/* FIX: chữ trong sổ địa chỉ luôn dễ đọc ở chế độ Dark */
+body.theme-dark .profile-main .account-visible-address,
+body.theme-dark .profile-main .account-visible-address *,
+body.theme-dark .profile-main .visible-address-card,
+body.theme-dark .profile-main .visible-address-card *,
+body.theme-dark .profile-main .visible-address-empty,
+body.theme-dark .profile-main .visible-address-empty *,
+body.theme-dark .profile-main .account-visible-head,
+body.theme-dark .profile-main .account-visible-head * {
+    color: #f4f8f5 !important;
+}
+
+body.theme-dark .profile-main .visible-address-card {
+    background: #111a15 !important;
+    border-color: #405649 !important;
+}
+
+body.theme-dark .profile-main .visible-address-icon {
+    background: #263a2e !important;
+}
