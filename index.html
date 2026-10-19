@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="GreenPhone cung cấp điện thoại chính hãng, giá minh bạch và giao hàng toàn quốc.">
   <title>GreenPhone - Điện thoại chính hãng</title>
-  <script>/* đặt giao diện sáng/tối trước khi vẽ trang để không bị nháy màu */
-    (function () { try { var t = JSON.parse(localStorage.getItem("theme")); if (t !== "dark" && t !== "light") t = "light"; document.documentElement.dataset.theme = t; } catch (e) {} })();
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
@@ -26,7 +23,6 @@
           <p>So sánh cấu hình, xem giá rõ ràng và chọn máy phù hợp trong vài phút.</p>
           <div class="home-hero-actions">
             <a class="btn btn-primary" data-page="products">Xem sản phẩm <i data-lucide="arrow-up-right"></i></a>
-            <a class="btn btn-outline" data-page="compare"><i data-lucide="git-compare-arrows"></i> So sánh máy</a>
           </div>
           <dl class="home-hero-facts" aria-label="Cam kết mua sắm">
             <div><dt>8+</dt><dd>Mẫu nổi bật</dd></div>
@@ -61,14 +57,9 @@
       </section>
 
       <section class="home-section home-phone-catalog" aria-labelledby="phones-title">
-        <aside class="home-catalog-ad" aria-label="Quảng cáo nổi bật">
-          <div class="home-catalog-ad-glow"></div>
-          <div class="home-catalog-ad-top"><span>GREENPHONE</span><i data-lucide="sparkles"></i></div>
-          <p class="home-catalog-ad-kicker">ƯU ĐÃI ĐẶC BIỆT</p>
-          <h3>Chọn máy tốt,<br><strong>giá dễ chịu.</strong></h3>
-          <p class="home-catalog-ad-copy">Mẫu điện thoại nổi bật, thông tin rõ ràng và hỗ trợ nhanh.</p>
-          <div class="home-catalog-ad-device"><img src="images/products/iphone-15-pro-max.svg" alt="iPhone 15 Pro Max"></div>
-          <a class="home-catalog-ad-btn" data-page="products">Xem ngay <i data-lucide="arrow-up-right"></i></a>
+        <aside class="home-catalog-ad home-catalog-ad-image" aria-label="Ưu đãi nổi bật Xiaomi 17T 5G">
+          <img class="home-catalog-ad-banner" src="images/home-catalog-ad.png" alt="Deal thật hời, Xiaomi 17T 5G 12GB 512GB - Chọn quà ngay">
+          <a class="home-catalog-ad-banner-link" href="products.html" aria-label="Xem các sản phẩm ưu đãi"></a>
         </aside>
 
         <div class="home-catalog-main">

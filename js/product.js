@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return normalize([product.name, product.brand, product.description, specText, variantText, product.id].join(" "));
   }
   function safeDetailUrl(product) {
-    return "Product_detail.html?id=" + encodeURIComponent(product.id || "");
+    return "product-detail.html?id=" + encodeURIComponent(product.id || "");
   }
   function make(tag, className, text) {
     const el = document.createElement(tag);
