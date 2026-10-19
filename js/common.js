@@ -14,17 +14,36 @@ const KEYS = {
   theme: "theme"               // giao diện sáng / tối: "light" | "dark" (không có = theo hệ thống)
 };
 
+
+const COUPONS = {
+  GREEN100: { discount: 100000, minimum: 1000000 },
+  HOCBONG: { discount: 300000, minimum: 3000000 },
+  GREEN400: { discount: 400000, minimum: 5000000 }
+};
+
+function getCouponConfig(code) {
+  return COUPONS[String(code || "").trim().toUpperCase()] || null;
+}
+
+function getCouponDiscount(code, subtotal) {
+  const coupon = getCouponConfig(code);
+
+  return coupon && Number(subtotal) >= coupon.minimum
+    ? coupon.discount
+    : 0;
+}
+
 /* ---- 2. BẢN ĐỒ LIÊN KẾT CÁC TRANG ----
    Hiện chưa có trang nào ngoài index.html nên url đang là "#".
    Khi một module làm xong trang, CHỈ CẦN đổi url ở đây (vd products: "products.html").
    Mọi liên kết trong header, footer và trang chủ sẽ tự cập nhật theo. */
 const PAGES = {
   home:          { url: "index.html", title: "Trang chủ",                  module: "Khung chung" },
-  products:      { url: "#", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
-  productDetail: { url: "#", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
+  products:      { url: "Products.html", title: "Danh sách điện thoại",     module: "Sản phẩm và tìm kiếm" },
+  productDetail: { url: "Product_detail.html", title: "Chi tiết sản phẩm",        module: "Sản phẩm và tìm kiếm" },
   compare:       { url: "#", title: "So sánh sản phẩm",         module: "Sản phẩm và tìm kiếm" },
-  cart:          { url: "#", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
-  checkout:      { url: "#", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
+  cart:          { url: "shopping_cart.html", title: "Giỏ hàng",                 module: "Giỏ hàng và Thanh toán" },
+  checkout:      { url: "checkout.html", title: "Thanh toán",               module: "Giỏ hàng và Thanh toán" },
   login:         { url: "login.html", title: "Đăng nhập / Đăng ký",      module: "Tài khoản khách hàng" },
   account:       { url: "account.html", title: "Tài khoản của tôi",        module: "Tài khoản khách hàng" },
   orders:        { url: "#", title: "Tra cứu đơn hàng",         module: "Đơn hàng" },

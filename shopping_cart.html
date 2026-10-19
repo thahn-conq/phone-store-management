@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GreenPhone - Giỏ hàng của bạn</title>
+  <script>
+    (function () {
+      var theme = "light";
+      try { if (JSON.parse(localStorage.getItem("theme")) === "dark") theme = "dark"; } catch (e) {}
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/shopping_cart.css">
+</head>
+<body class="cart-page">
+
+  <div id="site-header"></div>
+
+  <main class="main">
+    <div class="container">
+      
+      <!-- Điều hướng đường dẫn kiểu CellphoneS -->
+      <div class="cart-breadcrumb">
+        <a data-page="home">Trang chủ</a> / <span>Giỏ hàng của bạn</span>
+      </div>
+
+      <!-- Dải thông báo cam kết CellphoneS -->
+      <div class="cart-policy-strip">
+        <div class="cart-policy-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Sản phẩm Chính hãng - Xuất VAT đầy đủ</span>
+        </div>
+        <div class="cart-policy-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Giao nhanh - Miễn phí cho đơn 300k</span>
+        </div>
+        <div class="cart-policy-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          <span>Thu cũ giá ngon - Lên đời tiết kiệm</span>
+        </div>
+      </div>
+
+      <!-- Khung chứa giỏ hàng -->
+      <div id="cart-container"></div>
+
+    </div>
+  </main>
+
+  <!-- MODAL 1: XEM CHI TIẾT SẢN PHẨM / THÔNG SỐ KỸ THUẬT -->
+  <div class="cart-modal-backdrop" id="modal-product-detail">
+    <div class="cart-modal-box">
+      <button type="button" class="cart-modal-close" onclick="closeModal('modal-product-detail')">&times;</button>
+      <div class="cart-modal-header">
+        <h3 id="modal-detail-title">Chi tiết sản phẩm</h3>
+        <span class="badge" id="modal-detail-brand">Apple</span>
+      </div>
+      <div class="cart-modal-body" id="modal-detail-content">
+        <!-- Render thông số động qua JS -->
+      </div>
+      <div class="cart-modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modal-product-detail')">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CHỌN GÓI BẢO HÀNH MỞ RỘNG (Giống ảnh 2 của CellphoneS) -->
+  <div class="cart-modal-backdrop" id="modal-warranty">
+    <div class="cart-modal-box">
+      <button type="button" class="cart-modal-close" onclick="closeModal('modal-warranty')">&times;</button>
+      <div class="cart-modal-header">
+        <h3>Chọn bảo hành mở rộng</h3>
+      </div>
+      <div class="cart-modal-body">
+        <div class="cart-warranty-alert">
+          <strong>🛡️ Bảo vệ toàn diện với Bảo hành mở rộng</strong>
+          <p class="text-soft">Khách hàng đăng ký gói bảo hành để được hỗ trợ sửa chữa và đổi máy mới nhanh nhất khi có sự cố rơi vỡ, vào nước.</p>
+        </div>
+
+        <div class="cart-warranty-list">
+          <label class="cart-warranty-item">
+            <input type="radio" name="warrantyOption" value="2640000" data-name="Rơi vỡ rớt nước 12 tháng">
+            <div>
+              <div class="cart-warranty-name">Rơi vỡ rớt nước 12 tháng: Đổi mới tương đương khi có lỗi NSX, Hỗ trợ 90% chi phí</div>
+              <div class="price">+2.640.000đ</div>
+            </div>
+          </label>
+
+          <label class="cart-warranty-item">
+            <input type="radio" name="warrantyOption" value="1430000" data-name="1 đổi 1 VIP 6 tháng">
+            <div>
+              <div class="cart-warranty-name">1 đổi 1 VIP 6 tháng: Đổi máy mới tương đương khi có lỗi từ NSX trong 6 tháng</div>
+              <div class="price">+1.430.000đ</div>
+            </div>
+          </label>
+
+          <label class="cart-warranty-item">
+            <input type="radio" name="warrantyOption" value="3850000" data-name="1 đổi 1 VIP 24 tháng">
+            <div>
+              <div class="cart-warranty-name">1 đổi 1 VIP 24 tháng: Đổi máy mới tương đương khi có lỗi từ NSX trong 24 tháng</div>
+              <div class="price">+3.850.000đ</div>
+            </div>
+          </label>
+
+          <label class="cart-warranty-item">
+            <input type="radio" name="warrantyOption" value="0" checked data-name="Mặc định">
+            <div>
+              <div class="cart-warranty-name">Bảo hành tiêu chuẩn (Mặc định chính hãng 12 tháng)</div>
+              <div class="text-soft">0đ</div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="cart-modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modal-warranty')">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="confirmWarranty()">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+
+
+  <script src="data/products.js"></script>
+  <script src="data/footer.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/shopping_cart.js"></script>
+</body>
+</html>
