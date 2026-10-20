@@ -745,3 +745,19 @@
 :root[data-theme="dark"] .detail-gallery {
     position: static !important;
 }
+
+
+/* Đồng bộ breadcrumb trang chi tiết theo màu xanh chủ đạo */
+.detail-breadcrumb a { color:#087443 !important; }
+.detail-breadcrumb a:hover { color:#065b35 !important; }
+.detail-breadcrumb span:last-child { color:#087443; }
+.detail-name { color:#087443 !important; }
+
+
+/* Tăng tương phản footer ở chế độ sáng trên trang chi tiết sản phẩm */
+#site-footer .site-footer a, #site-footer .site-footer p, #site-footer .site-footer li, #site-footer .site-footer label, #site-footer .site-footer .footer-static-link { color:#46594d !important; opacity:1 !important; }
+#site-footer .site-footer .footer-note, #site-footer .site-footer .footer-contact span, #site-footer .site-footer .footer-bottom-row { color:#52665a !important; opacity:1 !important; }
+#site-footer .site-footer h3, #site-footer .site-footer h4, #site-footer .site-footer strong, #site-footer .site-footer b { color:#14291d !important; opacity:1 !important; }
+:root[data-theme="dark"] #site-footer .site-footer a, :root[data-theme="dark"] #site-footer .site-footer p, :root[data-theme="dark"] #site-footer .site-footer li, :root[data-theme="dark"] #site-footer .site-footer label, :root[data-theme="dark"] #site-footer .site-footer .footer-static-link { color:#d2e2d8 !important; }
+:root[data-theme="dark"] #site-footer .site-footer .footer-note, :root[data-theme="dark"] #site-footer .site-footer .footer-contact span, :root[data-theme="dark"] #site-footer .site-footer .footer-bottom-row { color:#b8cfc0 !important; }
+:root[data-theme="dark"] #site-footer .site-footer h3, :root[data-theme="dark"] #site-footer .site-footer h4, :root[data-theme="dark"] #site-footer .site-footer strong, :root[data-theme="dark"] #site-footer .site-footer b { color:#f3f8f4 !important; }

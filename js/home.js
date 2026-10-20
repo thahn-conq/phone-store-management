@@ -64,7 +64,7 @@ function productCardHtml(p, opts = {}) {
        </div>`
     : `<div class="home-product-rating" aria-label="Đánh giá ${p.rating} trên 5"><i data-lucide="star"></i><span>${p.rating} (${p.sold} đã bán)</span></div>`;
   const cartBtn = opts.noCart ? "" :
-    `<button class="btn btn-primary" data-variant="${v.variantId}" ${soldOut ? "disabled" : ""} aria-label="${soldOut ? "Hết hàng" : `Thêm ${p.name} vào giỏ`}">${soldOut ? "Hết hàng" : '<i data-lucide="shopping-bag"></i>'}</button>`;
+    `<button class="btn btn-primary" data-variant="${v.variantId}" ${soldOut ? "disabled" : ""} aria-label="${soldOut ? "Hết hàng" : `Thêm ${p.name} vào giỏ`}">${soldOut ? "Hết hàng" : '<svg class="home-cart-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>'}</button>`;
   return `
   <article class="home-product">
     ${discount ? `<span class="badge home-product-badge">-${discount}%</span>` : ""}

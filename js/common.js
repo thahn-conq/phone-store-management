@@ -282,7 +282,8 @@ function renderHeader() {
      một trang thì chuyển về trang chủ để không bị đứng ở trang hiện tại. */
   const currentFile = location.pathname.split("/").pop() || "index.html";
   const isHomePage = currentFile === "" || currentFile === "index.html";
-  const backButtonHtml = isHomePage
+  const isProductDetailPage = currentFile === "product-detail.html";
+  const backButtonHtml = (isHomePage || isProductDetailPage)
     ? ""
     : `<button type="button" class="hbtn header-back-btn" id="btn-back" title="Quay lại">${ICON.back}<span class="hbtn-text">Quay lại</span></button>`;
 

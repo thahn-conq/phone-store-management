@@ -60,74 +60,57 @@ document.addEventListener("DOMContentLoaded", () => {
     return el;
   }
 
+  // Dùng cùng cấu trúc thẻ và class với trang chủ để đồng bộ giao diện sáng/tối.
   function createCard(product) {
     const variant = cheapestVariant(product);
     const price = variant ? Number(variant.price) || 0 : Number(product.price) || 0;
     const original = variant ? Number(variant.originalPrice) || 0 : Number(product.originalPrice) || 0;
-    const discounted = original > price;
-    const discount = discounted ? Math.round((1 - price / original) * 100) : 0;
-    const image = (variant && variant.image) || product.image || "";
+    const discount = original > price ? Math.round((1 - price / original) * 100) : 0;
     const detailUrl = safeDetailUrl(product);
-    const card = make("article", "prod-card");
+    const card = make("article", "home-product");
 
-    const imageLink = make("a", "prod-card-image");
+    if (discount) card.appendChild(make("span", "badge home-product-badge", `-${discount}%`));
+    const imageLink = make("a", "home-product-img");
     imageLink.href = detailUrl;
-    imageLink.setAttribute("aria-label", "Xem " + (product.name || "sản phẩm"));
+    imageLink.setAttribute("aria-label", `Xem ${product.name || "sản phẩm"}`);
     const img = make("img");
-    img.src = image;
+    img.src = product.image || (variant && variant.image) || "";
     img.alt = product.name || "Điện thoại";
     img.loading = "lazy";
-    img.onerror = () => {
-      img.onerror = null;
-      // Ưu tiên ảnh riêng của sản phẩm; chỉ dùng ảnh minh họa nếu cả hai đường dẫn lỗi.
-      const fallback = product.image || "";
-      if (fallback && img.src !== new URL(fallback, document.baseURI).href) {
-        img.src = fallback;
-      } else {
-        img.removeAttribute("src");
-        img.alt = "Chưa có ảnh cho " + (product.name || "sản phẩm");
-        img.classList.add("prod-image-missing");
-      }
-    };
+    img.onerror = () => { img.onerror = null; img.removeAttribute("src"); img.alt = "Chưa có ảnh sản phẩm"; };
     imageLink.appendChild(img);
+    card.appendChild(imageLink);
 
-    if (discounted) imageLink.appendChild(make("span", "prod-badge", `-${discount}%`));
-    if (variants(product).length && variants(product).every(v => Number(v.stock) <= 0)) {
-      imageLink.appendChild(make("span", "prod-out-badge", "Tạm hết hàng"));
-    }
-
-    const body = make("div", "prod-card-content");
-    const brand = make("p", "prod-card-brand", product.brand || "Điện thoại");
-    const name = make("h3", "prod-card-name");
-    const nameLink = make("a", "", product.name || "Sản phẩm chưa đặt tên");
-    nameLink.href = detailUrl;
-    name.appendChild(nameLink);
-
-    const priceBox = make("div", "prod-card-price");
-    priceBox.appendChild(make("strong", "prod-price-current", money.format(price)));
-    if (discounted) {
-      priceBox.appendChild(make("del", "prod-price-old", money.format(original)));
-    }
-
-    const meta = make("div", "prod-card-meta");
-    meta.appendChild(make("span", "prod-rating", `★ ${(Number(product.rating) || 0).toFixed(1)}`));
-    meta.appendChild(make("span", "prod-sold", `Đã bán ${Number(product.sold) || 0}`));
-
-    const specLine = make("p", "prod-card-spec");
-    const specs = product.specs || {};
-    specLine.textContent = [specs.chip, specs.ram, specs.screen].filter(Boolean).join(" · ") || product.description || "Thông tin đang cập nhật";
-
-    const footer = make("div", "prod-card-footer");
-    const stock = variants(product).reduce((sum, v) => sum + Math.max(0, Number(v.stock) || 0), 0);
-    footer.appendChild(make("span", stock > 0 ? "prod-stock" : "prod-stock is-out", stock > 0 ? "● Còn hàng" : "● Hết hàng"));
-    const link = make("a", "prod-card-button", "Xem chi tiết");
-    link.href = detailUrl;
-    link.setAttribute("aria-label", `Xem chi tiết ${product.name}`);
-    link.appendChild(make("span", "", " ↗"));
-    footer.appendChild(link);
-
-    body.append(brand, name, priceBox, meta, specLine, footer);
-    card.append(imageLink, body);
+    const body = make("div", "home-product-body");
+    body.appendChild(make("span", "home-product-brand", product.brand || "Điện thoại"));
+    const title = make("h3");
+    const titleLink = make("a", "", product.name || "Sản phẩm");
+    titleLink.href = detailUrl;
+    title.appendChild(titleLink);
+    body.appendChild(title);
+    const spec = product.specs || {};
+    body.appendChild(make("div", "home-product-spec", `${variant?.storage || ""} | RAM ${spec.ram || "Đang cập nhật"}`));
+    const prices = make("div", "home-product-price");
+    prices.appendChild(make("span", "price", money.format(price)));
+    if (discount) prices.appendChild(make("span", "home-product-old", money.format(original)));
+    body.appendChild(prices);
+    const rating = make("div", "home-product-rating", `★ ${(Number(product.rating) || 0).toFixed(1)} (${Number(product.sold) || 0} đã bán)`);
+    body.appendChild(rating);
+    const actions = make("div", "home-product-actions");
+    const detail = make("a", "btn btn-outline", "Chi tiết ↗");
+    detail.href = detailUrl;
+    actions.appendChild(detail);
+    const cart = make("button", "btn btn-primary");
+    cart.type = "button";
+    cart.textContent = "🛒";
+    cart.setAttribute("aria-label", `Thêm ${product.name || "sản phẩm"} vào giỏ`);
+    cart.disabled = !variant || Number(variant.stock) <= 0;
+    cart.addEventListener("click", () => {
+      if (typeof addToCart === "function" && variant) addToCart(variant.variantId, 1);
+    });
+    actions.appendChild(cart);
+    body.appendChild(actions);
+    card.appendChild(body);
     return card;
   }
 

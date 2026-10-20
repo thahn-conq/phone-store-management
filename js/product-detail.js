@@ -250,10 +250,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (plus) plus.disabled = stock <= 0;
     if (addButton) addButton.disabled = stock <= 0;
     if (buyButton) buyButton.disabled = stock <= 0;
-    // Ảnh chính cố định theo sản phẩm, không thay đổi khi chọn màu/dung lượng.
-    if (image && product.image && image.dataset.fixedProductImage !== product.image) {
-      image.src = product.image;
-      image.dataset.fixedProductImage = product.image;
+    // Đổi ảnh chính theo màu/phiên bản đang chọn.
+    if (image) {
+      const variantImage = selectedVariant && selectedVariant.image;
+      const nextImage = variantImage || product.image || "";
+      if (nextImage && image.getAttribute("src") !== nextImage) image.src = nextImage;
+      image.alt = `${product.name}${selectedVariant && selectedVariant.color ? " - " + selectedVariant.color : ""}`;
     }
     if (message) message.textContent = "";
   }
