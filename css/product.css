@@ -97,3 +97,16 @@
 @media (max-width: 760px) { .prod-hero { padding: 36px 0 34px; } .prod-layout { grid-template-columns: 1fr; } .prod-sidebar { position: static; } .prod-brand-filters { grid-template-columns: repeat(3,minmax(0,1fr)); } .prod-filter-btn { padding: 9px 8px; font-size: 11px; } .prod-sidebar-note { display: none; } .prod-price-inputs { grid-template-columns: repeat(2,minmax(0,1fr)); } .prod-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } .prod-card-image { height: 180px; } .prod-card-content { padding: 12px; } .prod-card-name { font-size: 13px; } .prod-price-current { font-size: 15px; } }
 @media (max-width: 480px) { .prod-hero h1 { font-size: 30px; } .prod-search { gap: 5px; border-radius: 12px; } .prod-search-icon { padding-left: 7px; font-size: 25px; } .prod-search input { font-size: 12px; } .prod-search button { padding: 12px 11px; font-size: 11px; } .prod-quick-hints { gap: 6px; } .prod-section { padding-top: 27px; } .prod-toolbar { align-items: start; flex-direction: column; } .prod-sort-label { width: 100%; justify-content: space-between; } .prod-sort-label select { flex: 1; max-width: none; } .prod-brand-filters { grid-template-columns: repeat(2,minmax(0,1fr)); } .prod-grid { gap: 9px; } .prod-card-image { height: 145px; padding: 10px; } .prod-card-content { padding: 10px; } .prod-card-name { min-height: 39px; font-size: 12px; } .prod-price-current { font-size: 13px; } .prod-card-meta { gap: 6px; font-size: 9px; } .prod-card-spec { font-size: 9px; } .prod-card-footer { align-items: flex-start; flex-direction: column; } .prod-card-button { width: 100%; box-sizing: border-box; } }
 @media (prefers-reduced-motion: reduce) { .prod-card, .prod-card-image img, .prod-search button { transition: none; } }
+
+/* Danh mục dùng chính thẻ .home-product từ home.css, không ghi đè màu nền/chữ. */
+#product-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; align-items:stretch; }
+#product-list .home-product { min-width:0; }
+#product-list .home-product-img img { width:100%; height:100%; object-fit:cover; padding:0; }
+#product-list .home-product-actions .btn-primary { min-width:48px; }
+@media(max-width:760px) { #product-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } }
+@media(max-width:480px) {
+  #product-list { grid-template-columns:1fr; }
+  #product-list .home-product { display:flex; flex-direction:column; }
+  #product-list .home-product-img { aspect-ratio:1/1; }
+  #product-list .home-product-body { padding:12px 4px 4px; }
+}

@@ -24,7 +24,7 @@ const BANK_CONFIG = {
   bankId: "MB",
   bankName: "MB Bank (Quân Đội)",
   accountNo: "0339597863",
-  accountName: "CHU THI HUONG"
+  accountName: "GREEN PHONE"
 };
 
 // Danh sách 34 tỉnh, thành phố; phường/xã do khách hàng tự nhập.
@@ -300,26 +300,44 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
     return;
   }
 
+  const currentUser = typeof getCurrentUser === "function" ? getCurrentUser() : null;
+  const orderDate = new Date().toISOString();
+  // Lưu theo đúng cấu trúc mà trang orders.html / order.js sử dụng.
   const newOrder = {
+    id: orderCode,
     orderId: orderCode,
-    createdAt: new Date().toISOString(),
+    userId: currentUser?.id || currentUser?.userId || "demo-user",
+    orderDate,
+    createdAt: orderDate,
+    shippingInfo: {
+      fullName,
+      phone,
+      address: fullAddress,
+      note
+    },
     customer: {
-      fullName: fullName,
+      fullName,
       phoneNumber: phone,
       address: fullAddress,
-      note: note
+      note
     },
-    items: chosenItems,
-    totalAmount: totalAmount,
+    items: chosenItems.map(item => ({
+      ...item,
+      productName: item.name || "Sản phẩm",
+      variantName: [item.storage, item.color].filter(Boolean).join(" - ") || item.variantId,
+      unitPrice: Number(item.price || 0) + Number(item.warrantyPrice || 0)
+    })),
+    totalAmount: Number(totalAmount),
     couponCode,
     couponDiscount,
-    paymentMethod: selectedPayment,
-    status: "Chờ xác nhận"
+    paymentMethod: String(selectedPayment).toLowerCase() === "qr" ? "transfer" : String(selectedPayment).toLowerCase(),
+    status: "pending"
   };
 
   let orders = [];
   try {
-    orders = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY)) || [];
+    const savedOrders = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY));
+    orders = Array.isArray(savedOrders) ? savedOrders : [];
   } catch (e) {
     orders = [];
   }
@@ -334,9 +352,10 @@ function submitOrder(orderCode, totalAmount, couponCode = "", couponDiscount = 0
   }
 
   sessionStorage.setItem("latestOrder", JSON.stringify(newOrder));
+  sessionStorage.setItem("lastOrderId", orderCode);
 
-  alert("🎉 Đặt hàng thành công! Mã đơn của bạn là: " + orderCode);
-  window.location.href = "index.html";
+  alert("🎉 Đặt hàng thành công! Mã đơn của bạn là: " + orderCode + "\nSản phẩm đã được lưu vào lịch sử mua hàng.");
+  window.location.href = "order-success.html?id=" + encodeURIComponent(orderCode);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

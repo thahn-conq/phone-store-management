@@ -604,3 +604,9 @@ body { background: var(--home-bg); color: var(--home-ink); }
 .home-catalog-ad.home-catalog-ad-image:hover .home-catalog-ad-banner {
   filter: saturate(1.04);
 }
+
+
+/* Icon giỏ hàng luôn hiển thị ổn định trong ô xanh của thẻ sản phẩm */
+.home-product-actions .btn-primary { display:inline-flex; align-items:center; justify-content:center; min-width:48px; min-height:48px; padding:0 13px; }
+.home-cart-svg { width:21px; height:21px; display:block; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.home-product-actions .btn-primary:disabled .home-cart-svg { opacity:.55; }
