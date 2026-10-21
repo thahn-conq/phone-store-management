@@ -289,16 +289,34 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const quantity = getQuantity();
-    // Tích hợp với giỏ hàng dùng chung trong common.js, không tạo một kho giỏ hàng riêng.
-    if (typeof addToCart === "function") {
+    if (typeof addToCart !== "function" || typeof getCart !== "function" ||
+        typeof save !== "function" || typeof KEYS === "undefined") {
+      if (message) message.textContent = "Chức năng giỏ hàng chưa được kết nối.";
+      return;
+    }
+
+    if (!goToCheckout) {
       const success = addToCart(selectedVariant.variantId, quantity);
       if (success && message) message.textContent = `Đã thêm ${quantity} sản phẩm vào giỏ hàng.`;
-      if (success && goToCheckout) {
-        if (typeof showToast === "function") showToast("Đã thêm vào giỏ hàng. Bạn có thể tiếp tục thanh toán khi trang thanh toán được kết nối.");
-      }
-    } else {
-      if (message) message.textContent = "Chức năng giỏ hàng chưa được kết nối.";
+      return;
     }
+
+    // Mua ngay: chỉ thanh toán đúng phiên bản và số lượng vừa chọn.
+    // Giữ các sản phẩm khác trong giỏ, nhưng bỏ chọn để không thanh toán nhầm.
+    const cart = getCart();
+    const target = cart.find(item => item.variantId === selectedVariant.variantId);
+    if (target) {
+      target.quantity = quantity;
+      target.selected = true;
+    } else {
+      cart.push({ variantId: selectedVariant.variantId, quantity, selected: true });
+    }
+    cart.forEach(item => {
+      if (item.variantId !== selectedVariant.variantId) item.selected = false;
+    });
+    save(KEYS.cart, cart);
+    if (typeof updateCartBadge === "function") updateCartBadge();
+    window.location.href = "checkout.html";
   }
   addButton?.addEventListener("click", () => purchase(false));
   buyButton?.addEventListener("click", () => purchase(true));
