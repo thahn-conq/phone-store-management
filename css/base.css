@@ -33,7 +33,7 @@
 /* 2. RESET */
 *, *::before, *::after { box-sizing: border-box; }
 body {
-  margin: 0; font-family: var(--font); font-size: 15px; line-height: 1.6;
+  margin: 0; font-family: var(--font); font-size: 25px; line-height: 1.6;
   color: var(--ink); background: var(--bg);
 }
 img { max-width: 100%; display: block; }

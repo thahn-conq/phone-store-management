@@ -283,7 +283,8 @@ function renderHeader() {
   const currentFile = location.pathname.split("/").pop() || "index.html";
   const isHomePage = currentFile === "" || currentFile === "index.html";
   const isProductDetailPage = currentFile === "product-detail.html";
-  const backButtonHtml = (isHomePage || isProductDetailPage)
+  const isProductsPage = currentFile.toLowerCase() === "products.html";
+  const backButtonHtml = (isHomePage || isProductDetailPage || isProductsPage)
     ? ""
     : `<button type="button" class="hbtn header-back-btn" id="btn-back" title="Quay lại">${ICON.back}<span class="hbtn-text">Quay lại</span></button>`;
 

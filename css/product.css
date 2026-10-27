@@ -1,4 +1,18 @@
 /* GreenPhone - Product search and catalog */
+
+body.products-page .main {
+    padding-top: 8px;
+}
+
+body.products-page .home-section {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body.products-page .home-section-head {
+    margin-bottom: 12px !important;
+}
+
 .prod-page { 
     background: #f6f8f7; 
     color: #172b24; 
