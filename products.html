@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/product.css">
 </head>
-<body>
+<body class="products-page">
   <div id="site-header"></div>
 
   <main class="main">
@@ -56,6 +56,25 @@
       if (count) count.textContent = `${list.length} sản phẩm`;
 
       renderList("product-grid", list);
+      const productGrid = document.getElementById("product-grid");
+
+      if (productGrid) {
+        productGrid.addEventListener("click", function (event) {
+          const cartButton = event.target.closest("button[data-variant]");
+
+          if (!cartButton || !productGrid.contains(cartButton)) {
+            return;
+          }
+
+          event.preventDefault();
+
+          if (typeof addToCart === "function") {
+            addToCart(cartButton.dataset.variant, 1);
+          } else {
+            console.error("Không tìm thấy hàm addToCart().");
+          }
+        });
+      }
     });
   </script>
 </body>
